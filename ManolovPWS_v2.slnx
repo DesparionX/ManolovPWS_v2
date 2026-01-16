@@ -1,0 +1,12 @@
+<Solution>
+  <Project Path="ManolovPWS_v2.Domain/ManolovPWS_v2.Domain.csproj" Id="df71c25b-81e2-4a15-aa72-2a34e9550a16" />
+  <Project Path="ManolovPWS_v2.AppHost/ManolovPWS_v2.AppHost.csproj" />
+  <Project Path="ManolovPWS_v2.Infrastructure/ManolovPWS_v2.Infrastructure.csproj" Id="5f536776-15a0-4404-9a19-4a2048150a03" />
+  <Project Path="ManolovPWS_v2.Modules.Contact/ManolovPWS_v2.Modules.Contact.csproj" Id="f6d54468-bccb-41e2-93d3-51fa5ce2b5c7" />
+  <Project Path="ManolovPWS_v2.Modules.Content/ManolovPWS_v2.Modules.Content.csproj" Id="f7eec076-a5c1-4614-8644-60d381ca52c3" />
+  <Project Path="ManolovPWS_v2.Modules.Identity/ManolovPWS_v2.Modules.Identity.csproj" Id="3e3ab032-2799-4e2a-8f4c-3f9b0ed1aad8" />
+  <Project Path="ManolovPWS_v2.Modules.Projects/ManolovPWS_v2.Modules.Projects.csproj" Id="795baa8a-7dcc-4b5d-98dd-213cc1b4a47b" />
+  <Project Path="ManolovPWS_v2.ServiceDefaults/ManolovPWS_v2.ServiceDefaults.csproj" />
+  <Project Path="ManolovPWS_v2.Shared/ManolovPWS_v2.Shared.csproj" Id="139cd2ed-a0a5-4fb9-8ec7-ab1fb17c0901" />
+  <Project Path="ManolovPWS_v2.Api/ManolovPWS_v2.Api.csproj" />
+</Solution>
