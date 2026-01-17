@@ -15,6 +15,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         public Email Email { get; }
         public ProfilePicture? ProfilePicture { get; }
         public BirthDate BirthDate { get; }
+        public Gender Gender { get; }
 
 
         private User(

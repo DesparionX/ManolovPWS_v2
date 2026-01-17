@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ManolovPWS_v2\ManolovPWS_v2.Api.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Api\ManolovPWS_v2.Api.csproj" />
   </ItemGroup>
 
 </Project>

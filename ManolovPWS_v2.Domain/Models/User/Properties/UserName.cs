@@ -1,7 +1,4 @@
-﻿using ManolovPWS_v2.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties
 {
