@@ -1,5 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
 using ManolovPWS_v2.Domain.Models.User.Properties;
+using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
+using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -16,6 +18,8 @@ namespace ManolovPWS_v2.Domain.Models.User
         public ProfilePicture? ProfilePicture { get; }
         public BirthDate BirthDate { get; }
         public Gender Gender { get; }
+        public SkillSet SkillSet { get; }
+        public Experience Experience { get; }
 
 
         private User(
