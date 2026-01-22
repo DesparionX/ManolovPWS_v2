@@ -1,5 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
 using ManolovPWS_v2.Domain.Models.User.Properties;
+using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
+using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
 using System;
@@ -18,8 +20,10 @@ namespace ManolovPWS_v2.Domain.Models.User
         public ProfilePicture? ProfilePicture { get; }
         public BirthDate BirthDate { get; }
         public Gender Gender { get; }
-        public SkillSet SkillSet { get; }
-        public Experience Experience { get; }
+        public SkillSet? SkillSet { get; }
+        public Experience? Experience { get; }
+        public EducationHistory? EducationHistory { get; }
+        public Certificates? Certificates { get; }
 
 
         private User(

@@ -49,11 +49,23 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         // Equality
         public bool Equals(Experience? other) =>
             other is not null
-            && _jobs.SequenceEqual(other._jobs);
+            && _jobs.Count == other._jobs.Count
+            && !_jobs.Except(other._jobs).Any()
+            && !_jobs.OrderBy(j => j.Title).SequenceEqual(other._jobs.OrderBy(j => j.Title));
 
         public override bool Equals(object? obj) => Equals(obj as Experience);
 
-        public override int GetHashCode() => HashCode.Combine(_jobs);
+        public override int GetHashCode()
+        {
+            var hash = new HashCode();
+
+            foreach (var job in _jobs)
+            {
+                hash.Add(job);
+            }
+
+            return hash.ToHashCode();
+        }
 
         public override string ToString() => string.Join(", ", _jobs.Select(j => j.Title));
         
