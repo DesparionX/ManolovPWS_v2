@@ -2,46 +2,42 @@
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties
 {
-    public sealed class UserId<TKey> : IEquatable<UserId<TKey>> where TKey : IEquatable<TKey>
+    public sealed class UserId : IEquatable<UserId>
     {
-        public TKey Value { get; }
-        private UserId(TKey value)
+        public Guid Value { get; }
+        private UserId(Guid value)
         {
             Value = value;
         }
 
-        public static UserId<TKey> From(TKey value)
+        public static UserId From(string value)
         {
-            ValidateUserId(value);
+            var id = ValidateUserId(value);
 
-            return new UserId<TKey>(value);
+            return new(id);
         }
 
         // Validations
-        private static void ValidateUserId(TKey value)
+        private static Guid ValidateUserId(string value)
         {
-            if (value.Equals(default))
-                throw new InvalidUserIdException("UserId cannot be null or default.");
+            if (!Guid.TryParse(value.ToString(), out Guid id))
+                throw new InvalidUserIdException("This is not a valid GUID.");
 
-            if (IsValidGuid(value))
-                throw new InvalidUserIdException("UserId cannot be an empty GUID.");
-        }
-        private static bool IsValidGuid(TKey value)
-        {
-            if (typeof(TKey) != typeof(Guid))
-                return true; // Not applicable
+            if (id == Guid.Empty)
+                throw new InvalidUserIdException("GUID cannot be null or empty.");
 
-            if ((Guid.TryParse(value.ToString(), out Guid id)) && id != Guid.Empty)
-                return true;
-
-            return false;
+            return id;
         }
 
         // Equality
-        public override bool Equals(object? obj) => Equals(obj as UserId<TKey>);
-        public bool Equals(UserId<TKey>? other) => 
-            other is not null 
-            && Value.Equals(other.Value);
+        public bool Equals(UserId? other) =>
+            other is not null
+            && Guid.Equals(Value, other.Value);
+
+        public override bool Equals(object? obj) => Equals(obj as UserId);
+        
         public override int GetHashCode() => Value.GetHashCode();
+
+        public override string ToString() => Value.ToString();
     }
 }

@@ -8,16 +8,16 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
 {
     public sealed class SkillSet : IEquatable<SkillSet>
     {
-        private readonly ReadOnlyCollection<Skill> _skills;
-        private readonly ReadOnlyCollection<LanguageSkill> _languages;
+        private readonly List<Skill> _skills;
+        private readonly List<LanguageSkill> _languages;
 
         public IReadOnlyCollection<Skill> Skills => _skills;
         public IReadOnlyCollection<LanguageSkill> Languages => _languages;
 
         private SkillSet(IEnumerable<Skill> skills,IEnumerable<LanguageSkill> languages)
         {
-            _skills = skills.ToList().AsReadOnly();
-            _languages = languages.ToList().AsReadOnly();
+            _skills = [.. skills];
+            _languages = [.. languages];
         }
 
         public static SkillSet Empty() => new([], []);

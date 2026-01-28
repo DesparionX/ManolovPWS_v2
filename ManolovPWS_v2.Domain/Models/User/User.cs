@@ -11,9 +11,9 @@ using System.Text;
 
 namespace ManolovPWS_v2.Domain.Models.User
 {
-    public sealed class User : IEntity<UserId<Guid>>
+    public sealed class User : IEntity<UserId>
     {
-        public UserId<Guid>? Id { get; private set; }
+        public UserId? Id { get; private set; }
         public UserName UserName { get; }
         public Name Name { get; }
         public Email Email { get; }
@@ -32,7 +32,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             Email email,
             BirthDate birthDate,
             ProfilePicture? profilePicture = default,
-            UserId<Guid>? id = default)
+            UserId? id = default)
         {
             Id = id;
             UserName = userName;
@@ -53,7 +53,7 @@ namespace ManolovPWS_v2.Domain.Models.User
 
 
         // Property-like methods for immutability
-        internal User WithId(UserId<Guid> id) 
+        internal User WithId(UserId id) 
             => new(UserName, Name, Email, BirthDate, ProfilePicture, id);
 
         public User UpdateUserName(UserName userName)

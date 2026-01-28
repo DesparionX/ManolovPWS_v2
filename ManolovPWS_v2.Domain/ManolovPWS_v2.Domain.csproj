@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Post\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

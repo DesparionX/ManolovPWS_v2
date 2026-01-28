@@ -1,0 +1,41 @@
+﻿using ManolovPWS_v2.Domain.Models.Project.Exceptions;
+using ManolovPWS_v2.Domain.Models.User.Exceptions;
+
+namespace ManolovPWS_v2.Domain.Models.Project.Properties
+{
+    public sealed class ProjectLiveUrl : IEquatable<ProjectLiveUrl>
+    {
+        public Uri Value { get; }
+
+        private ProjectLiveUrl(Uri value)
+        {
+            Value = value;
+        }
+
+        public static ProjectLiveUrl Create(string url)
+        {
+            var uri = ValidateLiveUrl(url);
+            return new(uri);
+        }
+
+        // Validations
+        private static Uri ValidateLiveUrl(string url)
+        {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
+                throw new InvalidProjectLiveUrlException("Entered URL is invalid.");
+
+            return uri;
+        }
+
+        // Equality
+        public bool Equals(ProjectLiveUrl? other) =>
+            other is not null
+            && Uri.Equals(Value, other.Value);
+
+        public override bool Equals(object? obj) => Equals(obj as ProjectLiveUrl);
+
+        public override int GetHashCode() => Value.GetHashCode();
+
+        public override string ToString() => Value.ToString();
+    }
+}

@@ -7,13 +7,13 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
 {
     public sealed class Certificates : IEquatable<Certificates>
     {
-        private readonly ReadOnlyCollection<Certificate> _certificates;
+        private readonly List<Certificate> _certificates;
 
         public IReadOnlyList<Certificate> CertificatesList => _certificates;
 
         private Certificates(IEnumerable<Certificate> certificates)
         {
-            _certificates = certificates.ToList().AsReadOnly();
+            _certificates = [.. certificates];
         }
 
         public static Certificates Create(IEnumerable<Certificate> certificates)

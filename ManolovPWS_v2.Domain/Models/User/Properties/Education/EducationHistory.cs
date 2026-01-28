@@ -5,13 +5,13 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
 {
     public sealed class EducationHistory : IEquatable<EducationHistory>
     {
-        private readonly ReadOnlyCollection<Education> _educationEntries;
+        private readonly List<Education> _educationEntries;
 
         public IReadOnlyCollection<Education> EducationEntries => _educationEntries;
 
         private EducationHistory(IEnumerable<Education> educationEntries)
         {
-            _educationEntries = educationEntries.ToList().AsReadOnly();
+            _educationEntries = [.. educationEntries];
         }
 
         public static EducationHistory Create(IEnumerable<Education> educationEntries)
@@ -47,7 +47,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         public bool Equals(EducationHistory? other) =>
             other is not null
             && _educationEntries.Count == other._educationEntries.Count
-            && !_educationEntries.OrderBy(e => e.School.Name)
+            && _educationEntries.OrderBy(e => e.School.Name)
             .SequenceEqual(other.EducationEntries.OrderBy(o => o.School.Name))
             && !_educationEntries.Except(other.EducationEntries).Any();
 

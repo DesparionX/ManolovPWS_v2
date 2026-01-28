@@ -8,13 +8,13 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
 {
     public sealed class Experience : IEquatable<Experience>
     {
-        private readonly ReadOnlyCollection<Job> _jobs;
+        private readonly List<Job> _jobs;
 
-        public IReadOnlyList<Job> Jobs => _jobs;
+        public IReadOnlyCollection<Job> Jobs => _jobs;
 
         private Experience(IEnumerable<Job> jobs)
         {
-            _jobs = jobs.ToList().AsReadOnly();
+            _jobs = [.. jobs];
         }
 
         public static Experience Create(IEnumerable<Job> jobs)
@@ -51,7 +51,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
             other is not null
             && _jobs.Count == other._jobs.Count
             && !_jobs.Except(other._jobs).Any()
-            && !_jobs.OrderBy(j => j.Title).SequenceEqual(other._jobs.OrderBy(j => j.Title));
+            && _jobs.OrderBy(j => j.Title).SequenceEqual(other._jobs.OrderBy(j => j.Title));
 
         public override bool Equals(object? obj) => Equals(obj as Experience);
 
