@@ -48,20 +48,22 @@ namespace ManolovPWS_v2.Domain.Models.Project
             Gallery = gallery ?? ProjectGallery.Empty();
             Thumb = thumb;
         }
+
         private Project With(
             ProjectName? name = default,
             ProjectDescription? description = default,
             ProjectState? state = default,
 
-            ProjectPicture? thumb = default,
-            ProjectUploadedDate? uploadedDate = default,
-
             ProjectLiveUrl? liveUrl = default,
             ProjectGitHubUrl? gitHubUrl = default,
+
+            ProjectPicture? thumb = default,
             ProjectGallery? gallery = default
             )
         {
             var updateDate = ProjectUpdatedDate.Create(DateOnly.FromDateTime(DateTime.UtcNow));
+
+            ValidateUpdateDate(UploadedDate, updateDate);
 
             return new(
                 Id,
@@ -70,13 +72,14 @@ namespace ManolovPWS_v2.Domain.Models.Project
                 description ?? Description,
                 state ?? State,
                 thumb ?? Thumb,
-                uploadedDate ?? UploadedDate,
+                UploadedDate,
                 updateDate,
                 liveUrl ?? LiveUrl,
                 gitHubUrl ?? GitHubUrl,
                 gallery ?? Gallery
                 );
         }
+
         public static Project Create(
             ProjectId? id,
             Guid ownerId,
@@ -93,20 +96,24 @@ namespace ManolovPWS_v2.Domain.Models.Project
             ProjectGitHubUrl? gitHubUrl = default,
             ProjectGallery? gallery = default
             )
-            => new(
-                id, 
-                ownerId, 
-                name, 
-                description, 
-                state, 
-                thumb, 
-                uploadedDate, 
-                updatedDate, 
-                liveUrl, 
-                gitHubUrl, 
+        {
+            ValidateUpdateDate(uploadedDate, updatedDate);
+
+            return new(
+                id,
+                ownerId,
+                name,
+                description,
+                state,
+                thumb,
+                uploadedDate,
+                updatedDate,
+                liveUrl,
+                gitHubUrl,
                 gallery
                 );
-
+        }
+        
         // Project manipulations
         public Project UpdateName(ProjectName newName)
         {
@@ -178,6 +185,13 @@ namespace ManolovPWS_v2.Domain.Models.Project
             var updated = this.Gallery.RemovePictures(picturesToRemove);
 
             return With(gallery: updated);
+        }
+
+        // Validations
+        private static void ValidateUpdateDate(ProjectUploadedDate uploaded, ProjectUpdatedDate? updated)
+        {
+            if (updated is not null && updated.Value < uploaded.Value)
+                throw new InvalidProjectDateException("Updated date cannot be earlier than uploaded date.");
         }
     }
 }

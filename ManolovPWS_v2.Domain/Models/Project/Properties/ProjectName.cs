@@ -18,7 +18,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         {
             ValidateProjectName(value);
 
-            return new ProjectName(value);
+            return new(value);
         }
 
         // Validations

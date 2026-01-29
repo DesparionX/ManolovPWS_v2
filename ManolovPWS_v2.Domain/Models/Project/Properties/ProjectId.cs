@@ -39,6 +39,6 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
 
         public override int GetHashCode() => Value.GetHashCode();
 
-        public override string ToString() => Value.ToString()!;
+        public override string ToString() => Value.ToString();
     }
 }
