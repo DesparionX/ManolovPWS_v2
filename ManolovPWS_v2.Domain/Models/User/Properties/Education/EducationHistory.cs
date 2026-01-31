@@ -24,6 +24,8 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         // Manipulations
         public static EducationHistory Empty() => new([]);
 
+        internal EducationHistory Clear() => Empty();
+
         internal EducationHistory AddEducationEntry(Education educationEntry) =>
             new(_educationEntries.Append(educationEntry));
 

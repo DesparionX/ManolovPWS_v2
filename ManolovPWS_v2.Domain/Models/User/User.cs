@@ -141,6 +141,14 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
 
         // SkillSet - Skills
+        public User ClearSkills()
+        {
+            var clearedSkills = Skills.ClearSkills();
+
+            if (Skills.Equals(clearedSkills)) return this;
+
+            return With(skills: clearedSkills);
+        }
         public User ReplaceSkills(IEnumerable<Skill> newSkills)
         {
             var updatedSkills = Skills.ReplaceSkills(newSkills);
@@ -175,6 +183,14 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
 
         // SkillSet - Languages
+        public User ClearLanguages()
+        {
+            var clearedLanguages = Skills.ClearLanguages();
+
+            if (Skills.Equals(clearedLanguages)) return this;
+
+            return With(skills: clearedLanguages);
+        }
         public User ReplaceLanguages(IEnumerable<LanguageSkill> newLanguages)
         {
             var updatedSkills = Skills.ReplaceLanguages(newLanguages);
@@ -209,6 +225,14 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
 
         // Experience
+        public User ClearExperience()
+        {
+            var cleared = Experience.Clear();
+
+            if (Experience.Equals(cleared)) return this;
+
+            return With(experience: cleared);
+        }
         public User ReplaceExperience(Experience newExperience)
         {
             if (Experience.Equals(newExperience)) return this;
@@ -241,6 +265,14 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
 
         // Education
+        public User ClearEducation()
+        {
+            var cleared = EducationHistory.Clear();
+
+            if (EducationHistory.Equals(cleared)) return this;
+
+            return With(educationHistory: cleared);
+        }
         public User ReplaceEducation(EducationHistory newEducationHistory)
         {
             if (EducationHistory.Equals(newEducationHistory)) return this;
@@ -273,6 +305,14 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
 
         // Certificates
+        public User ClearCertificates()
+        {
+            var cleared = Certificates.Clear();
+
+            if (Certificates.Equals(cleared)) return this;
+
+            return With(certificates: cleared);
+        }
         public User ReplaceCertificates(Certificates newCertificates)
         {
             if (Certificates.Equals(newCertificates)) return this;
