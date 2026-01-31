@@ -24,13 +24,13 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         // Manipulations
         public static EducationHistory Empty() => new([]);
 
-        public EducationHistory AddEducationEntry(Education educationEntry) =>
+        internal EducationHistory AddEducationEntry(Education educationEntry) =>
             new(_educationEntries.Append(educationEntry));
 
-        public EducationHistory RemoveEducationEntry(Education educationEntry) =>
+        internal EducationHistory RemoveEducationEntry(Education educationEntry) =>
             new(_educationEntries.Where(e => !e.Equals(educationEntry)));
 
-        public EducationHistory UpdateEducationEntry(Education oldEntry, Education newEntry) =>
+        internal EducationHistory UpdateEducationEntry(Education oldEntry, Education newEntry) =>
             new(_educationEntries.Select(e => e.Equals(oldEntry) ? newEntry : e));
 
         // Validations
@@ -38,9 +38,6 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         {
             if (educationEntries is null)
                 throw new InvalidEducationException("Education entries collection is null.");
-
-            if (!educationEntries.Any())
-                throw new InvalidEducationException("Education entries collection is empty.");
         }
 
         // Equality

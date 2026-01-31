@@ -2,29 +2,27 @@
 using ManolovPWS_v2.Domain.Models.Post.Exceptions;
 using ManolovPWS_v2.Domain.Models.Post.Properties;
 using ManolovPWS_v2.Domain.Models.Post.Properties.PostContent;
-using ManolovPWS_v2.Domain.Models.Project.Exceptions;
-using ManolovPWS_v2.Domain.Models.Project.Properties;
 
 namespace ManolovPWS_v2.Domain.Models.Post
 {
     public sealed class Post : IEntity<PostId>
     {
-        public PostId? Id { get; } 
+        public PostId Id { get; } 
         public Guid AuthorId { get; }
         public PostTitle Title { get; }
         public PostContent Content { get; }
         public PostPublishedDate PublishedDate { get; }
-        public PostUpdatedDate UpdatedDate { get; }
+        public PostUpdatedDate? UpdatedDate { get; }
         public bool IsPinned { get; }
 
         private Post(
-            PostId? id,
+            PostId id,
             Guid authorId,
             PostTitle title,
             PostContent content,
+            bool isPinned,
             PostPublishedDate publishedDate,
-            PostUpdatedDate updatedDate,
-            bool isPinned
+            PostUpdatedDate? updatedDate = default
             )
         {
             Id = id;
@@ -51,29 +49,43 @@ namespace ManolovPWS_v2.Domain.Models.Post
                 AuthorId,
                 title ?? Title,
                 content ?? Content,
+                isPinned ?? IsPinned,
                 PublishedDate,
-                updateDate,
-                isPinned ?? IsPinned
+                updateDate
                 );
         }
 
         public static Post Create(
-            PostId? id,
+            PostId id,
             Guid authorId,
             PostTitle title,
             PostContent content,
+            bool isPinned,
             PostPublishedDate publishedDate,
-            PostUpdatedDate updatedDate,
-            bool isPinned
+            PostUpdatedDate? updatedDate = default
             )
         {
             ValidateUpdateDate(publishedDate, updatedDate);
 
-            return new(id, authorId, title, content, publishedDate, updatedDate, isPinned);
+            return new(id, authorId, title, content, isPinned, publishedDate, updatedDate);
         }
 
         // Post manipulations
+        public Post UpdateTitle(PostTitle newTitle)
+        {
+            if (Title.Equals(newTitle)) return this;
 
+            return With(title: newTitle);
+        }
+        public Post UpdateContent(PostContent newContent)
+        {
+            if (Content.Equals(newContent)) return this;
+
+            return With(content: newContent);
+        }
+        public Post PinPost() => IsPinned ? this : With(isPinned: true);
+        public Post UnpinPost() => !IsPinned ? this : With(isPinned: false);
+        
 
         // Validations
         private static void ValidateUpdateDate(PostPublishedDate published, PostUpdatedDate? updated)

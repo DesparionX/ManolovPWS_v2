@@ -12,6 +12,8 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
             Value = value;
         }
 
+        public static ProjectId New() => new(Guid.NewGuid());
+
         public static ProjectId From(string value)
         {
             var id = ValidateProjectId(value);

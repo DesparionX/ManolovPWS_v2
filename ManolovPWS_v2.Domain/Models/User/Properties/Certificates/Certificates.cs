@@ -22,13 +22,13 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         // Manipulations
         public static Certificates Empty() => new([]);
 
-        public Certificates AddCertificate(Certificate certificate)
+        internal Certificates AddCertificate(Certificate certificate)
             => new(_certificates.Append(certificate));
 
-        public Certificates RemoveCertificate(Certificate certificate)
+        internal Certificates RemoveCertificate(Certificate certificate)
             => new(_certificates.Where(c => c.Equals(certificate)));
 
-        public Certificates UpdateCertificate(Certificate oldCertificate, Certificate newCertificate)
+        internal Certificates UpdateCertificate(Certificate oldCertificate, Certificate newCertificate)
             => new(_certificates.Select(c => c.Equals(oldCertificate) ? newCertificate : c));
 
         // Equality

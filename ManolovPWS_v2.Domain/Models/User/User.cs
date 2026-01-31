@@ -4,67 +4,304 @@ using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
 using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace ManolovPWS_v2.Domain.Models.User
 {
     public sealed class User : IEntity<UserId>
     {
-        public UserId? Id { get; private set; }
+        public UserId Id { get; private set; }
         public UserName UserName { get; }
         public Name Name { get; }
         public Email Email { get; }
         public ProfilePicture? ProfilePicture { get; }
         public BirthDate BirthDate { get; }
         public Gender Gender { get; }
-        public SkillSet? SkillSet { get; }
-        public Experience? Experience { get; }
-        public EducationHistory? EducationHistory { get; }
-        public Certificates? Certificates { get; }
+        public SkillSet Skills { get; }
+        public Experience Experience { get; }
+        public EducationHistory EducationHistory { get; }
+        public Certificates Certificates { get; }
 
-
+#pragma warning disable S107 // Constructor has too many parameters
         private User(
+            UserId id,
             UserName userName,
             Name name,
             Email email,
             BirthDate birthDate,
-            ProfilePicture? profilePicture = default,
-            UserId? id = default)
+            Gender gender,
+            ProfilePicture? profilePicture,
+            SkillSet skills,
+            Experience experience,
+            EducationHistory educationHistory,
+            Certificates certificates)
         {
             Id = id;
             UserName = userName;
             Name = name;
             Email = email;
-            ProfilePicture = profilePicture;
             BirthDate = birthDate;
+            ProfilePicture = profilePicture;
+            Gender = gender;
+            Skills = skills;
+            Experience = experience;
+            EducationHistory = educationHistory;
+            Certificates = certificates;
         }
 
+        private User With(
+            UserName? userName = default,
+            Name? name = default,
+            Email? email = default,
+            BirthDate? birthDate = default,
+            ProfilePicture? picture = default,
+            Gender? gender = default,
+            SkillSet? skills = default,
+            Experience? experience = default,
+            EducationHistory? educationHistory = default,
+            Certificates? certificates = default
+            )
+            => new(
+                Id,
+                userName ?? UserName,
+                name ?? Name,
+                email ?? Email,
+                birthDate ?? BirthDate,
+                gender ?? Gender,
+                picture ?? ProfilePicture,
+                skills ?? Skills,
+                experience ?? Experience,
+                educationHistory ?? EducationHistory,
+                certificates ?? Certificates
+                );
+
         public static User Create(
+            UserId id,
             UserName userName,
             Name name,
             Email email,
             BirthDate birthDate,
-            ProfilePicture? profilePicture = default
-            ) 
-            => new(userName, name, email, birthDate, profilePicture);
+            Gender gender,
+            ProfilePicture? profilePicture = default,
+            SkillSet? skills = default,
+            Experience? experience = default,
+            EducationHistory? educationHistory = default,
+            Certificates? certificates = default
+            )
+            => new(
+                id,
+                userName,
+                name,
+                email,
+                birthDate,
+                gender,
+                profilePicture,
+                skills ?? SkillSet.Empty(),
+                experience ?? Experience.Empty(),
+                educationHistory ?? EducationHistory.Empty(),
+                certificates ?? Certificates.Empty()
+                );
 
+        // User manipulations
+        public User UpdateUserName(UserName newUserName)
+        {
+            if (UserName.Equals(newUserName)) return this;
 
-        // Property-like methods for immutability
-        internal User WithId(UserId id) 
-            => new(UserName, Name, Email, BirthDate, ProfilePicture, id);
+            return With(userName: newUserName);
+        }
+        public User UpdateName(Name newName)
+        {
+            if (Name.Equals(newName)) return this;
 
-        public User UpdateUserName(UserName userName)
-            => new(userName, Name, Email, BirthDate, ProfilePicture, Id);
+            return With(name: newName);
+        }
+        public User UpdateEmail(Email newEmail)
+        {
+            if (Email.Equals(newEmail)) return this;
 
-        public User UpdateName(Name name) 
-            => new(UserName, name, Email, BirthDate, ProfilePicture, Id);
+            return With(email: newEmail);
+        }
+        public User UpdateBirthDate(BirthDate newBirthDate)
+        {
+            if (BirthDate.Equals(newBirthDate)) return this;
 
-        public User UpdateEmail(Email email)
-            => new(UserName, Name, email, BirthDate, ProfilePicture, Id);
+            return With(birthDate: newBirthDate);
+        }
+        public User UpdateProfilePicture(ProfilePicture newProfilePicture)
+        {
+            if (ProfilePicture is not null && ProfilePicture.Equals(newProfilePicture))
+                return this;
 
+            return With(picture: newProfilePicture);
+        }
+        public User ChangeGender(Gender newGender)
+        {
+            if (Gender.Equals(newGender)) return this;
 
+            return With(gender: newGender);
+        }
+
+        // SkillSet - Skills
+        public User ReplaceSkills(IEnumerable<Skill> newSkills)
+        {
+            var updatedSkills = Skills.ReplaceSkills(newSkills);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+        public User AddSkill(Skill skill)
+        {
+            var updatedSkills = Skills.AddSkill(skill);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+        public User UpdateSkill(Skill oldSkill, Skill newSkill)
+        {
+            var updatedSkills = Skills.UpdateSkill(oldSkill, newSkill);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+        public User RemoveSkill(Skill skillToRemove)
+        {
+            var updatedSkills = Skills.RemoveSkill(skillToRemove);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+
+        // SkillSet - Languages
+        public User ReplaceLanguages(IEnumerable<LanguageSkill> newLanguages)
+        {
+            var updatedSkills = Skills.ReplaceLanguages(newLanguages);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+        public User AddLanguage(LanguageSkill language)
+        {
+            var updatedSkills = Skills.AddLanguage(language);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+        public User UpdateLanguage(LanguageSkill oldLanguage, LanguageSkill newLanguage)
+        {
+            var updatedSkills = Skills.UpdateLanguage(oldLanguage, newLanguage);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+        public User RemoveLanguage(LanguageSkill languageToRemove)
+        {
+            var updatedSkills = Skills.RemoveLanguage(languageToRemove);
+
+            if (Skills.Equals(updatedSkills)) return this;
+
+            return With(skills: updatedSkills);
+        }
+
+        // Experience
+        public User ReplaceExperience(Experience newExperience)
+        {
+            if (Experience.Equals(newExperience)) return this;
+
+            return With(experience: newExperience);
+        }
+        public User AddJob(Job job)
+        {
+            var updatedExperience = Experience.AddJob(job);
+
+            if (Experience.Equals(updatedExperience)) return this;
+
+            return With(experience: updatedExperience);
+        }
+        public User UpdateJob(Job oldJob, Job newJob)
+        {
+            var updatedExperience = Experience.UpdateJob(oldJob, newJob);
+
+            if (Experience.Equals(updatedExperience)) return this;
+
+            return With(experience: updatedExperience);
+        }
+        public User RemoveJob(Job jobToRemove)
+        {
+            var updatedExperience = Experience.RemoveJob(jobToRemove);
+
+            if (Experience.Equals(updatedExperience)) return this;
+
+            return With(experience: updatedExperience);
+        }
+
+        // Education
+        public User ReplaceEducation(EducationHistory newEducationHistory)
+        {
+            if (EducationHistory.Equals(newEducationHistory)) return this;
+
+            return With(educationHistory: newEducationHistory);
+        }
+        public User AddEducation(Education education)
+        {
+            var updatedEducationHistory = EducationHistory.AddEducationEntry(education);
+
+            if (EducationHistory.Equals(updatedEducationHistory)) return this;
+
+            return With(educationHistory: updatedEducationHistory);
+        }
+        public User UpdateEducation(Education oldEducation, Education newEducation)
+        {
+            var updatedEducationHistory = EducationHistory.UpdateEducationEntry(oldEducation, newEducation);
+
+            if (EducationHistory.Equals(updatedEducationHistory)) return this;
+
+            return With(educationHistory: updatedEducationHistory);
+        }
+        public User RemoveEducation(Education educationToRemove)
+        {
+            var updatedEducationHistory = EducationHistory.RemoveEducationEntry(educationToRemove);
+
+            if (EducationHistory.Equals(updatedEducationHistory)) return this;
+
+            return With(educationHistory: updatedEducationHistory);
+        }
+
+        // Certificates
+        public User ReplaceCertificates(Certificates newCertificates)
+        {
+            if (Certificates.Equals(newCertificates)) return this;
+
+            return With(certificates: newCertificates);
+        }
+        public User AddCertificate(Certificate certificate)
+        {
+            var updatedCertificates = Certificates.AddCertificate(certificate);
+
+            if (Certificates.Equals(updatedCertificates)) return this;
+
+            return With(certificates: updatedCertificates);
+        }
+        public User UpdateCertificate(Certificate oldCertificate, Certificate newCertificate)
+        {
+            var updatedCertificates = Certificates.UpdateCertificate(oldCertificate, newCertificate);
+
+            if (Certificates.Equals(updatedCertificates)) return this;
+
+            return With(certificates: updatedCertificates);
+        }
+        public User RemoveCertificate(Certificate certificateToRemove)
+        {
+            var updatedCertificates = Certificates.RemoveCertificate(certificateToRemove);
+
+            if (Certificates.Equals(updatedCertificates)) return this;
+
+            return With(certificates: updatedCertificates);
+        }
     }
 }

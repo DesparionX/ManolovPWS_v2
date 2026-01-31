@@ -6,7 +6,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
 {
     public sealed class Project : IEntity<ProjectId>
     {
-        public ProjectId? Id { get; }
+        public ProjectId Id { get; }
         public Guid OwnerId { get; }
         public ProjectName Name { get; }
         public ProjectDescription Description { get; }
@@ -20,7 +20,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
 
 #pragma warning disable S107 // Constructor has too many parameters
         private Project(
-            ProjectId? id,
+            ProjectId id,
             Guid ownerId,
 
             ProjectName name,
@@ -81,7 +81,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
         }
 
         public static Project Create(
-            ProjectId? id,
+            ProjectId id,
             Guid ownerId,
 
             ProjectName name,

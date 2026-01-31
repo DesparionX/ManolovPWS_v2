@@ -11,6 +11,8 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties
             Value = value;
         }
 
+        public static PostId New() => new(Guid.NewGuid());
+
         public static PostId From(string value)
         {
             var id = ValidatePostId(value);

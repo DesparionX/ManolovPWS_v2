@@ -27,13 +27,13 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         // Manipulations
         public static Experience Empty() => new([]);
 
-        public Experience AddJob(Job job)
+        internal Experience AddJob(Job job)
             => new(_jobs.Append(job));
 
-        public Experience RemoveJob(Job job)
+        internal Experience RemoveJob(Job job)
             => new(_jobs.Where(j => !j.Equals(job)));
 
-        public Experience UpdateJob(Job oldJob, Job newJob)
+        internal Experience UpdateJob(Job oldJob, Job newJob)
             => new(_jobs.Select(j => j.Equals(oldJob) ? newJob : j));
 
         // Validations
@@ -41,9 +41,6 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         {
             if (jobs is null)
                 throw new InvalidExperienceException("Jobs collection is null.");
-
-            if (!jobs.Any())
-                throw new InvalidExperienceException("Jobs collection is empty.");
         }
 
         // Equality

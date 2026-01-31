@@ -10,6 +10,8 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
             Value = value;
         }
 
+        public static UserId New() => new(Guid.NewGuid());
+
         public static UserId From(string value)
         {
             var id = ValidateUserId(value);
