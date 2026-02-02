@@ -27,8 +27,6 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         // Manipulations
         public static Experience Empty() => new([]);
 
-        internal Experience Clear() => Empty();
-
         internal Experience AddJob(Job job)
             => new(_jobs.Append(job));
 

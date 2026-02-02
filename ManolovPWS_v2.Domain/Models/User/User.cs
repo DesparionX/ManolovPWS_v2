@@ -225,14 +225,9 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
 
         // Experience
-        public User ClearExperience()
-        {
-            var cleared = Experience.Clear();
+        public User ClearExperience() 
+            => With(experience: Experience.Empty());
 
-            if (Experience.Equals(cleared)) return this;
-
-            return With(experience: cleared);
-        }
         public User ReplaceExperience(Experience newExperience)
         {
             if (Experience.Equals(newExperience)) return this;
@@ -266,13 +261,8 @@ namespace ManolovPWS_v2.Domain.Models.User
 
         // Education
         public User ClearEducation()
-        {
-            var cleared = EducationHistory.Clear();
+            => With(educationHistory: EducationHistory.Empty());
 
-            if (EducationHistory.Equals(cleared)) return this;
-
-            return With(educationHistory: cleared);
-        }
         public User ReplaceEducation(EducationHistory newEducationHistory)
         {
             if (EducationHistory.Equals(newEducationHistory)) return this;
@@ -306,13 +296,8 @@ namespace ManolovPWS_v2.Domain.Models.User
 
         // Certificates
         public User ClearCertificates()
-        {
-            var cleared = Certificates.Clear();
+            => With(certificates: Certificates.Empty());
 
-            if (Certificates.Equals(cleared)) return this;
-
-            return With(certificates: cleared);
-        }
         public User ReplaceCertificates(Certificates newCertificates)
         {
             if (Certificates.Equals(newCertificates)) return this;

@@ -22,8 +22,6 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         // Manipulations
         public static Certificates Empty() => new([]);
 
-        internal Certificates Clear() => Empty();
-
         internal Certificates AddCertificate(Certificate certificate)
             => new(_certificates.Append(certificate));
 

@@ -4,7 +4,7 @@
     {
         public PostContext Context { get; }
         public PostPicture? Thumb { get; }
-        public PostGallery? Gallery { get; }
+        public PostGallery Gallery { get; }
         
         private PostContent(PostContext context, PostPicture? thumb = default, PostGallery? gallery = default)
         {
@@ -12,6 +12,16 @@
             Thumb = thumb;
             Gallery = gallery ?? PostGallery.Empty();
         }
+
+        private PostContent With(
+            PostContext? context = default,
+            PostPicture? thumb = default,
+            PostGallery? gallery = default)
+            => new(
+                context ?? Context,
+                thumb ?? Thumb,
+                gallery ?? Gallery
+                );
 
         public static PostContent Create(
             PostContext context,
@@ -21,14 +31,56 @@
             => new(context, thumb, gallery);
 
         // Content manipulations
-        public PostContent UpdateContext(PostContext newContext)
+        internal PostContent UpdateContext(PostContext newContext)
             => new(newContext, Thumb, Gallery);
 
-        public PostContent UpdateThumb(PostPicture thumb)
+        internal PostContent UpdateThumb(PostPicture thumb)
             => new(Context, thumb, Gallery);
 
-        public PostContent UpdateGallery(PostGallery gallery)
+
+        // Gallery manipulations
+        internal PostContent ReplaceGallery(PostGallery gallery)
             => new(Context, Thumb, gallery);
+        internal PostContent AddToGallery(PostPicture newPicture)
+        {
+            var withNewPicture = Gallery.AddPicture(newPicture);
+
+            if (Gallery.Equals(withNewPicture)) return this;
+
+            return With(gallery: withNewPicture);
+        }
+        internal PostContent AddToGallery(IEnumerable<PostPicture> newPictures)
+        {
+            var withNewPictures = Gallery.AddPictures(newPictures);
+
+            if (Gallery.Equals(withNewPictures)) return this;
+
+            return With(gallery: withNewPictures);
+        }
+        internal PostContent UpdateGalleryPicture(PostPicture oldPicture, PostPicture newPicture)
+        {
+            var withUpdatedPicture = Gallery.UpdatePicture(oldPicture, newPicture);
+
+            if (Gallery.Equals(withUpdatedPicture)) return this;
+
+            return With(gallery: withUpdatedPicture);
+        }
+        internal PostContent RemoveFromGallery(PostPicture pictureToRemove)
+        {
+            var withRemovedPicture = Gallery.RemovePicture(pictureToRemove);
+
+            if (Gallery.Equals(withRemovedPicture)) return this;
+
+            return With(gallery: withRemovedPicture);
+        }
+        internal PostContent RemoveFromGallery(IEnumerable<PostPicture> picturesToRemove)
+        {
+            var withRemovedPictures = Gallery.RemovePictures(picturesToRemove);
+
+            if (Gallery.Equals(withRemovedPictures)) return this;
+
+            return With(gallery: withRemovedPictures);
+        }
 
         // Equality
         public bool Equals(PostContent? other) =>

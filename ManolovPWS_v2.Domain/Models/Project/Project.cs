@@ -156,7 +156,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
         public Project ClearGallery()
             => With(gallery: ProjectGallery.Empty());
 
-        public Project UpdateGallery(ProjectGallery newGallery)
+        public Project ReplaceGallery(ProjectGallery newGallery)
         {
             if (Gallery.Equals(newGallery)) return this;
             
@@ -166,11 +166,15 @@ namespace ManolovPWS_v2.Domain.Models.Project
         {
             var updated = this.Gallery.AddPicture(newPicture);
 
+            if (Gallery.Equals(updated)) return this;
+
             return With(gallery: updated);
         }
         public Project AddToGallery(IEnumerable<ProjectPicture> newPictures)
         {
             var updated = this.Gallery.AddPictures(newPictures);
+
+            if (Gallery.Equals(updated)) return this;
 
             return With(gallery: updated);
         }
@@ -178,11 +182,15 @@ namespace ManolovPWS_v2.Domain.Models.Project
         {
             var updated = this.Gallery.RemovePicture(pictureToRemove);
 
+            if (Gallery.Equals(updated)) return this;
+
             return With(gallery: updated);
         }
         public Project RemoveFromGallery(IEnumerable<ProjectPicture> picturesToRemove)
         {
             var updated = this.Gallery.RemovePictures(picturesToRemove);
+
+            if (Gallery.Equals(updated)) return this;
 
             return With(gallery: updated);
         }

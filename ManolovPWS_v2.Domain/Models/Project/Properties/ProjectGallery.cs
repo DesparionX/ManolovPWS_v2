@@ -18,19 +18,19 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         public static ProjectGallery Create(IEnumerable<ProjectPicture> pictures) => new(pictures);
 
         // Gallery manipulations
-        public ProjectGallery AddPicture(ProjectPicture picture)
+        internal ProjectGallery AddPicture(ProjectPicture picture)
             => new(_pictures.Append(picture));
 
-        public ProjectGallery AddPictures(IEnumerable<ProjectPicture> pictures)
+        internal ProjectGallery AddPictures(IEnumerable<ProjectPicture> pictures)
             => new(_pictures.Concat(pictures));
 
-        public ProjectGallery RemovePicture(ProjectPicture picture)
+        internal ProjectGallery RemovePicture(ProjectPicture picture)
             => new(_pictures.Where(p => !p.Equals(picture)));
 
-        public ProjectGallery RemovePictures(IEnumerable<ProjectPicture> pictures)
+        internal ProjectGallery RemovePictures(IEnumerable<ProjectPicture> pictures)
             => new(_pictures.Except(pictures));
 
-        public ProjectGallery UpdatePicture(ProjectPicture oldPicture, ProjectPicture newPicture)
+        internal ProjectGallery UpdatePicture(ProjectPicture oldPicture, ProjectPicture newPicture)
             => new(_pictures.Select(p => p.Equals(oldPicture) ? newPicture : p));
 
         // Equality

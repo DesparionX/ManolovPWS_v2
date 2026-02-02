@@ -16,20 +16,20 @@
         public static PostGallery Create(IEnumerable<PostPicture> pictures) => new(pictures);
 
         // Gallery manipulations
-        public PostGallery AddPicture(PostPicture picture)
+        internal PostGallery AddPicture(PostPicture picture)
             => new(_pictures.Append(picture));
 
-        public PostGallery AddPictures(IEnumerable<PostPicture> pictures)
+        internal PostGallery AddPictures(IEnumerable<PostPicture> pictures)
             => new(_pictures.Concat(pictures));
 
-        public PostGallery RemovePicture(PostPicture picture)
+        internal PostGallery UpdatePicture(PostPicture oldPicture, PostPicture newPicture)
+            => new(_pictures.Select(p => p.Equals(oldPicture) ? newPicture : p));
+
+        internal PostGallery RemovePicture(PostPicture picture)
             => new(_pictures.Where(p => !p.Equals(picture)));
 
-        public PostGallery RemovePictures(IEnumerable<PostPicture> pictures)
+        internal PostGallery RemovePictures(IEnumerable<PostPicture> pictures)
             => new(_pictures.Except(pictures));
-
-        public PostGallery UpdatePicture(PostPicture oldPicture, PostPicture newPicture)
-            => new(_pictures.Select(p => p.Equals(oldPicture) ? newPicture : p));
 
         // Equality
         public bool Equals(PostGallery? other) =>
