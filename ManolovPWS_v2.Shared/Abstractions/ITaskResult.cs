@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ManolovPWS_v2.Shared.Abstractions
+﻿namespace ManolovPWS_v2.Shared.Abstractions
 {
     public interface ITaskResult
     {
@@ -16,7 +12,6 @@ namespace ManolovPWS_v2.Shared.Abstractions
     public interface ITaskResult<T> : ITaskResult
     {
         T? Value { get; }
-        static abstract ITaskResult<T> Success(T value);
-        static new abstract ITaskResult<T> Failure(IError error);
+        static abstract ITaskResult Success(T value);
     }
 }
