@@ -13,6 +13,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         public UserName UserName { get; }
         public Name Name { get; }
         public Email Email { get; }
+        public UserPhoneNumber? PhoneNumber { get; }
         public ProfilePicture? ProfilePicture { get; }
         public BirthDate BirthDate { get; }
         public Gender Gender { get; }
@@ -27,6 +28,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             UserName userName,
             Name name,
             Email email,
+            UserPhoneNumber? phoneNumber,
             BirthDate birthDate,
             Gender gender,
             ProfilePicture? profilePicture,
@@ -39,6 +41,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             UserName = userName;
             Name = name;
             Email = email;
+            PhoneNumber = phoneNumber;
             BirthDate = birthDate;
             ProfilePicture = profilePicture;
             Gender = gender;
@@ -52,6 +55,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             UserName? userName = default,
             Name? name = default,
             Email? email = default,
+            UserPhoneNumber? phoneNumber = default,
             BirthDate? birthDate = default,
             ProfilePicture? picture = default,
             Gender? gender = default,
@@ -65,6 +69,7 @@ namespace ManolovPWS_v2.Domain.Models.User
                 userName ?? UserName,
                 name ?? Name,
                 email ?? Email,
+                phoneNumber ?? PhoneNumber,
                 birthDate ?? BirthDate,
                 gender ?? Gender,
                 picture ?? ProfilePicture,
@@ -81,6 +86,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             Email email,
             BirthDate birthDate,
             Gender gender,
+            UserPhoneNumber? phoneNumber = default,
             ProfilePicture? profilePicture = default,
             SkillSet? skills = default,
             Experience? experience = default,
@@ -92,6 +98,7 @@ namespace ManolovPWS_v2.Domain.Models.User
                 userName,
                 name,
                 email,
+                phoneNumber,
                 birthDate,
                 gender,
                 profilePicture,
@@ -119,6 +126,13 @@ namespace ManolovPWS_v2.Domain.Models.User
             if (Email.Equals(newEmail)) return this;
 
             return With(email: newEmail);
+        }
+        public User UpdatePhoneNumber(UserPhoneNumber newPhoneNumber)
+        {
+            if (PhoneNumber is not null && PhoneNumber.Equals(newPhoneNumber))
+                return this;
+
+            return With(phoneNumber: newPhoneNumber);
         }
         public User UpdateBirthDate(BirthDate newBirthDate)
         {
