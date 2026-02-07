@@ -1,4 +1,6 @@
-﻿namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
+﻿using System.Text.Json.Serialization;
+
+namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
 {
     public sealed class SkillSet : IEquatable<SkillSet>
     {
@@ -8,6 +10,7 @@
         public IReadOnlyCollection<Skill> Skills => _skills;
         public IReadOnlyCollection<LanguageSkill> Languages => _languages;
 
+        [JsonConstructor]
         private SkillSet(IEnumerable<Skill> skills,IEnumerable<LanguageSkill> languages)
         {
             _skills = [.. skills];

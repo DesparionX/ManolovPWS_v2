@@ -1,5 +1,6 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
 {
@@ -9,6 +10,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
 
         public IReadOnlyCollection<Education> EducationEntries => _educationEntries;
 
+        [JsonConstructor]
         private EducationHistory(IEnumerable<Education> educationEntries)
         {
             _educationEntries = [.. educationEntries];

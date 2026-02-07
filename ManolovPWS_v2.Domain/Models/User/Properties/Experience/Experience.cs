@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
 {
@@ -12,6 +13,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
 
         public IReadOnlyCollection<Job> Jobs => _jobs;
 
+        [JsonConstructor]
         private Experience(IEnumerable<Job> jobs)
         {
             _jobs = [.. jobs];

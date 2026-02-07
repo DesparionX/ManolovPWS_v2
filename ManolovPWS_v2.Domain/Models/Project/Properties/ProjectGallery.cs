@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.Project.Properties
 {
@@ -8,6 +9,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
 
         public IReadOnlyCollection<ProjectPicture> Pictures => _pictures;
 
+        [JsonConstructor]
         private ProjectGallery(IEnumerable<ProjectPicture> pictures)
         {
             _pictures = [.. pictures];

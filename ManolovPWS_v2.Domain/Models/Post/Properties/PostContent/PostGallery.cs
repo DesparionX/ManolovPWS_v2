@@ -1,4 +1,6 @@
-﻿namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
+﻿using System.Text.Json.Serialization;
+
+namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
 {
     public sealed class PostGallery : IEquatable<PostGallery>
     {
@@ -6,6 +8,7 @@
 
         public IReadOnlyCollection<PostPicture> Pictures => _pictures;
 
+        [JsonConstructor]
         private PostGallery(IEnumerable<PostPicture> pictures)
         {
             _pictures = [.. pictures];

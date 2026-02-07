@@ -1,11 +1,14 @@
-﻿namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
+﻿using System.Text.Json.Serialization;
+
+namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
 {
     public sealed class PostContent : IEquatable<PostContent>
     {
         public PostContext Context { get; }
         public PostPicture? Thumb { get; }
         public PostGallery Gallery { get; }
-        
+
+        [JsonConstructor]
         private PostContent(PostContext context, PostPicture? thumb = default, PostGallery? gallery = default)
         {
             Context = context;
