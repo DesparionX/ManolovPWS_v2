@@ -1,7 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
 using ManolovPWS_v2.Domain.Models.Post.Properties.PostContent;
 
-namespace ManolovPWS_v2.Infrastructure.Data.Entities
+namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
 {
     public sealed class Post : IEntity<Guid>
     {

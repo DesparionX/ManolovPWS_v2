@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ManolovPWS_v2.Infrastructure.Data.Entities
+namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
 {
     public sealed class Project : IEntity<Guid>
     {

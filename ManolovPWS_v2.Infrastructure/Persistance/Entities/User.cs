@@ -5,7 +5,7 @@ using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
 using Microsoft.AspNetCore.Identity;
 
-namespace ManolovPWS_v2.Infrastructure.Data.Entities
+namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
 {
     public sealed class User : IdentityUser<Guid>, IEntity<Guid>
     {
