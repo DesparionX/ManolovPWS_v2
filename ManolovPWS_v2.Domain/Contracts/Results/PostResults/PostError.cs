@@ -2,5 +2,5 @@
 
 namespace ManolovPWS_v2.Domain.Contracts.Results.PostResults
 {
-    public sealed record PostRecord(string Message, string Code) : IError;
+    public sealed record PostError(string Message, string Code) : IError;
 }
