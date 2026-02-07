@@ -4,14 +4,10 @@
     {
         bool IsSuccess { get; }
         IError? Error { get; }
-
-        static abstract ITaskResult Success();
-        static abstract ITaskResult Failure(IError error);
     }
 
-    public interface ITaskResult<T> : ITaskResult
+    public interface ITaskResult<out T> : ITaskResult
     {
         T? Value { get; }
-        static abstract ITaskResult Success(T value);
     }
 }

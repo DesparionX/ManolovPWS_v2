@@ -1,15 +1,12 @@
-﻿using ManolovPWS_v2.Domain.Contracts.Results;
-using ManolovPWS_v2.Domain.Models.User;
+﻿using ManolovPWS_v2.Domain.Models.User;
 using ManolovPWS_v2.Domain.Models.User.Properties;
+using ManolovPWS_v2.Shared.Abstractions;
 
 namespace ManolovPWS_v2.Domain.Contracts.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User, UserId>
     {
-        Task<UserTaskResult> SaveUserAsync(User user);
-        Task<UserTaskResult> RemoveUserAsync(User user);
-        Task<UserTaskResult> FindUserById(UserId id);
-        Task<UserTaskResult> FindUserByUserName(UserName userName);
-        Task<UserTaskResult> FindUserByEmail(Email email);
+        Task<ITaskResult<User>> FindByUserName(UserName userName);
+        Task<ITaskResult<User>> FindByEmail(Email email);
     }
 }
