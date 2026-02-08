@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
 {
@@ -11,6 +12,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         public FieldOfStudy FieldOfStudy { get; }
         public StudyPeriod StudyPeriod { get; }
 
+        [JsonConstructor]
         private Education(
             School school,
             Degree degree,

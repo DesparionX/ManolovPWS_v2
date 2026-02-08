@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
 {
@@ -6,9 +7,16 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
     {
         public string Value { get; }
 
+        [JsonConstructor]
         private CertificationIssuer(string value)
         {
             Value = value;
+        }
+
+        public static CertificationIssuer Create(string value)
+        {
+            ValidateIssuer(value);
+            return new CertificationIssuer(value);
         }
 
         // Validations

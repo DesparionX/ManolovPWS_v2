@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
 {
@@ -12,6 +13,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         public JobDescription Description { get; }
         public JobPeriod Period { get; }
 
+        [JsonConstructor]
         private Job(JobTitle title, CompanyName company, JobDescription description, JobPeriod period)
         {
             Title = title;

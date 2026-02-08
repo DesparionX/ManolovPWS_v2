@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
 {
@@ -7,6 +8,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         public string CredentialId { get; }
         public Uri CredentialUrl { get; }
 
+        [JsonConstructor]
         private CertificationCredentials(string credentialId, Uri credentialUrl)
         {
             CredentialId = credentialId;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
 {
@@ -11,6 +12,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         public IssueDate Date { get; }
         public CertificationCredentials Credentials { get; }
 
+        [JsonConstructor]
         private Certificate(
             CertificationTitle title,
             CertificationIssuer issuer,

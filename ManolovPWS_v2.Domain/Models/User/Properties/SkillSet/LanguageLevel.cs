@@ -1,5 +1,6 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
 using System.Reflection.Emit;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
 {
@@ -9,6 +10,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         public CerfLevel Writing { get; }
         public CerfLevel Speaking { get; }
 
+        [JsonConstructor]
         private LanguageLevel(CerfLevel reding, CerfLevel writing, CerfLevel speaking)
         {
             Reading = reding;

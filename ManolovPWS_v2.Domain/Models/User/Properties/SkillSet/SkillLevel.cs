@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
 {
@@ -9,6 +10,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
     {
         public int Value { get; }
 
+        [JsonConstructor]
         private SkillLevel(int value)
         {
             Value = value;

@@ -1,4 +1,6 @@
-﻿namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
+﻿using System.Text.Json.Serialization;
+
+namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
 {
     public sealed class LanguageSkill : IEquatable<LanguageSkill>
     {
@@ -6,6 +8,7 @@
         public LanguageLevel? Level { get; }
         public bool IsNative => Level is null;
 
+        [JsonConstructor]
         private LanguageSkill(LanguageName language, LanguageLevel? level)
         {
             Language = language;

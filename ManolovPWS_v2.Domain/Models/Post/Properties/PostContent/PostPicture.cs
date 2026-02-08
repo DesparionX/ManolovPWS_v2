@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.Post.Exceptions;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
 {
@@ -6,6 +7,7 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
     {
         public Uri Value { get; }
 
+        [JsonConstructor]
         private PostPicture(Uri value)
         {
             Value = value;

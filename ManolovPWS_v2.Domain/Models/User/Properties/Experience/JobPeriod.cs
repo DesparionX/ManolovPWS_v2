@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
 {
@@ -10,6 +11,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         public DateOnly StartDate { get; }
         public DateOnly? EndDate { get; }
 
+        [JsonConstructor]
         private JobPeriod(DateOnly startDate, DateOnly? endDate)
         {
             StartDate = startDate;

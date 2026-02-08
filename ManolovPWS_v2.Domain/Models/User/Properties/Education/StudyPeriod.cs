@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
 {
@@ -7,6 +8,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         public DateOnly StartDate { get; }
         public DateOnly? EndDate { get; }
 
+        [JsonConstructor]
         private StudyPeriod(DateOnly startDate, DateOnly? endDate)
         {
             StartDate = startDate;

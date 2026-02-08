@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
 {
     public sealed class JobTitle : IEquatable<JobTitle>
     {
         public string Value { get; }
+
+        [JsonConstructor]
         private JobTitle(string value)
         {
             Value = value;
