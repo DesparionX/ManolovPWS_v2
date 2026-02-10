@@ -11,7 +11,10 @@ namespace ManolovPWS_v2.Domain.Contracts.Results.UserResults
         public static ITaskResult<User> Success(User user)
             => new UserTaskResult(value: user);
 
-        public static ITaskResult Failure(UserError error)
-            => new UserTaskResult(error: error);
+        public static ITaskResult<User> Success(IReadOnlyList<User> users)
+            => new UserTaskResult(collection: users);
+
+        public static ITaskResult Failure(IReadOnlyList<UserError> errors)
+            => new UserTaskResult(errors: errors);
     }
 }

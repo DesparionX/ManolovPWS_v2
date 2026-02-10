@@ -12,8 +12,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
             Value = value;
         }
 
-        public static UserPhoneNumber Create(string rawNumber, string region = "BG")
+        public static UserPhoneNumber? CreateOrNull(string? rawNumber, string region = "BG")
         {
+            if (string.IsNullOrEmpty(rawNumber)) return null;
+
             var normalized = ValidateNumber(rawNumber, region);
 
             return new(normalized);

@@ -11,7 +11,10 @@ namespace ManolovPWS_v2.Domain.Contracts.Results.ProjectResults
         public static ITaskResult<Project> Success(Project project)
             => new ProjectTaskResult(value: project);
 
-        public static ITaskResult Failure(ProjectError error)
-            => new ProjectTaskResult(error: error);
+        public static ITaskResult<Project> Success(IReadOnlyList<Project> projects)
+            => new ProjectTaskResult(collection: projects);
+
+        public static ITaskResult Failure(IReadOnlyList<ProjectError> errors)
+            => new ProjectTaskResult(errors: errors);
     }
 }

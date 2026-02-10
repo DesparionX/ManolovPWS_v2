@@ -14,8 +14,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
             Url = url;
         }
 
-        public static ProfilePicture Create(string url)
+        public static ProfilePicture? CreateOrNull(string? url)
         {
+            if (string.IsNullOrEmpty(url)) return null;
+
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
                 throw new InvalidUriException("Entered URL is invalid.");
 

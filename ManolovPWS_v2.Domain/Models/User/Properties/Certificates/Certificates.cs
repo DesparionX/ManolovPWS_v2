@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
 {
@@ -20,6 +16,9 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
 
         public static Certificates Create(IEnumerable<Certificate> certificates)
             => new(certificates);
+
+        public static Certificates? From(IEnumerable<Certificate>? certificates)
+            => certificates is not null ? new(certificates) : null;
 
         // Manipulations
         public static Certificates Empty() => new([]);

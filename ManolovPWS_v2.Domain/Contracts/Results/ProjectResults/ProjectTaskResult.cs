@@ -3,12 +3,14 @@ using ManolovPWS_v2.Shared.Abstractions;
 
 namespace ManolovPWS_v2.Domain.Contracts.Results.ProjectResults
 {
-    public sealed class ProjectTaskResult(Project? value = default, IError? error = default) : ITaskResult<Project>
+    public sealed class ProjectTaskResult(Project? value = default, IReadOnlyList<Project>? collection = default, IReadOnlyList<IError>? errors = default) : ITaskResult<Project>
     {
         public Project? Value { get; } = value;
 
-        public IError? Error { get; } = error;
+        public IReadOnlyList<Project>? Collection { get; } = collection;
 
-        public bool IsSuccess => Error is null;
+        public IReadOnlyList<IError>? Errors { get; } = errors;
+
+        public bool IsSuccess => Errors is null;
     }
 }

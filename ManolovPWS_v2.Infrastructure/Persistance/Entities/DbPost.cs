@@ -3,7 +3,7 @@ using ManolovPWS_v2.Domain.Models.Post.Properties.PostContent;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
 {
-    public sealed class Post : IEntity<Guid>
+    public sealed class DbPost : IEntity<Guid>
     {
         public Guid Id { get; set; }
         public Guid AuthorId { get; set; }

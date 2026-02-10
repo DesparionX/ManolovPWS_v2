@@ -20,11 +20,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         }
 
         public static Experience Create(IEnumerable<Job> jobs)
-        {
-            ValidateExperience(jobs);
+            => new(jobs);
 
-            return new Experience(jobs);
-        }
+        public static Experience? From(IEnumerable<Job>? jobs)
+            => jobs is not null ? new(jobs) : null;
 
         // Manipulations
         public static Experience Empty() => new([]);
@@ -37,13 +36,6 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
 
         internal Experience UpdateJob(Job oldJob, Job newJob)
             => new(_jobs.Select(j => j.Equals(oldJob) ? newJob : j));
-
-        // Validations
-        private static void ValidateExperience(IEnumerable<Job> jobs)
-        {
-            if (jobs is null)
-                throw new InvalidExperienceException("Jobs collection is null.");
-        }
 
         // Equality
         public bool Equals(Experience? other) =>

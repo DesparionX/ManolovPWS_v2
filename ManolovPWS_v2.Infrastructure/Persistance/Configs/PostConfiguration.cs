@@ -3,16 +3,13 @@ using ManolovPWS_v2.Infrastructure.Persistance.Entities;
 using ManolovPWS_v2.Infrastructure.Persistance.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
 {
-    public sealed class PostConfiguration : IEntityTypeConfiguration<Post>
+    public sealed class PostConfiguration : IEntityTypeConfiguration<DbPost>
     {
-        public void Configure(EntityTypeBuilder<Post> post)
+        public void Configure(EntityTypeBuilder<DbPost> post)
         {
             // Table name
             post.ToTable("Posts");
@@ -22,7 +19,7 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .ValueGeneratedNever();
 
             // Relationships
-            post.HasOne<User>()
+            post.HasOne<DbUser>()
                 .WithMany()
                 .HasForeignKey(p => p.AuthorId)
                 .OnDelete(DeleteBehavior.Cascade);

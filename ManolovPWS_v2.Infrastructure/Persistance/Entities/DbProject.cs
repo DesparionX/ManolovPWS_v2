@@ -1,12 +1,9 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
 using ManolovPWS_v2.Domain.Models.Project.Properties;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
 {
-    public sealed class Project : IEntity<Guid>
+    public sealed class DbProject : IEntity<Guid>
     {
         public Guid Id { get; set; }
         public Guid OwnerId { get; set; }

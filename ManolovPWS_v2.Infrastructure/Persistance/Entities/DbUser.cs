@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
 {
-    public sealed class User : IdentityUser<Guid>, IEntity<Guid>
+    public sealed class DbUser : IdentityUser<Guid>, IEntity<Guid>
     {
         public required string FirstName { get; set; } = string.Empty;
         public string? MiddleName { get; set; }

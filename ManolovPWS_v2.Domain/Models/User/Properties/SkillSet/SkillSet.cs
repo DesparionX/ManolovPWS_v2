@@ -22,6 +22,14 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         public static SkillSet Create(IEnumerable<Skill> skills, IEnumerable<LanguageSkill> languages)
             => new(skills, languages);
 
+        public static SkillSet? From(IEnumerable<Skill>? skills, IEnumerable<LanguageSkill>? languages)
+        {
+            if (skills is null && languages is null)
+                return null;
+
+            return new(skills ?? [], languages ?? []);
+        }
+
         // Skills manipulations
         internal SkillSet ClearSkills()
             => new([], _languages);

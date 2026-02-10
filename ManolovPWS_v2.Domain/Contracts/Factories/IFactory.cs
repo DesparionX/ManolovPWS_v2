@@ -7,6 +7,6 @@ namespace ManolovPWS_v2.Domain.Contracts.Factories
         where TEntity : IEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        Task<ITaskResult<TEntity>> CreateAsync(TEntity entity);
+        Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
     }
 }

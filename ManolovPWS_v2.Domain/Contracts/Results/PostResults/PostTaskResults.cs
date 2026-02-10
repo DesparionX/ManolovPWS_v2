@@ -11,7 +11,10 @@ namespace ManolovPWS_v2.Domain.Contracts.Results.PostResults
         public static ITaskResult<Post> Success(Post post)
             => new PostTaskResult(value: post);
 
-        public static ITaskResult Failure(PostError error)
-            => new PostTaskResult(error: error);
+        public static ITaskResult<Post> Success(IReadOnlyList<Post> post)
+            => new PostTaskResult(collection: post);
+
+        public static ITaskResult Failure(IReadOnlyList<PostError> errors)
+            => new PostTaskResult(errors: errors);
     }
 }

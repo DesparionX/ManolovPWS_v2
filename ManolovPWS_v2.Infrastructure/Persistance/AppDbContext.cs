@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance
 {
-    public class AppDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
+    public class AppDbContext : IdentityDbContext<DbUser, IdentityRole<Guid>, Guid>
     {
-        public override DbSet<User> Users { get; set; } = default!;
-        public DbSet<Project> Projects { get; set; } = default!;
-        public DbSet<Post> Posts { get; set; } = default!;
+        public override DbSet<DbUser> Users { get; set; } = default!;
+        public DbSet<DbProject> Projects { get; set; } = default!;
+        public DbSet<DbPost> Posts { get; set; } = default!;
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

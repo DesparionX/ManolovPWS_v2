@@ -3,12 +3,14 @@ using ManolovPWS_v2.Shared.Abstractions;
 
 namespace ManolovPWS_v2.Domain.Contracts.Results.PostResults
 {
-    public sealed class PostTaskResult(Post? value = default, IError? error = default) : ITaskResult<Post>
+    public sealed class PostTaskResult(Post? value = default, IReadOnlyList<Post>? collection = default, IReadOnlyList<IError>? errors = default) : ITaskResult<Post>
     {
         public Post? Value { get; } = value;
 
-        public IError? Error { get; } = error;
+        public IReadOnlyList<Post>? Collection { get; } = collection;
 
-        public bool IsSuccess => Error is null;
+        public IReadOnlyList<IError>? Errors { get; } = errors;
+
+        public bool IsSuccess => Errors is null;
     }
 }

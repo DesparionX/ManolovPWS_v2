@@ -7,9 +7,9 @@ using System.Text.Json;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
 {
-    public sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
+    public sealed class ProjectConfiguration : IEntityTypeConfiguration<DbProject>
     {
-        public void Configure(EntityTypeBuilder<Project> project)
+        public void Configure(EntityTypeBuilder<DbProject> project)
         {
             // Table name
             project.ToTable("Projects");
@@ -19,7 +19,7 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .ValueGeneratedNever();
 
             // Relationships
-            project.HasOne<User>()
+            project.HasOne<DbUser>()
                 .WithMany()
                 .HasForeignKey(p => p.OwnerId)
                 .OnDelete(DeleteBehavior.Cascade);

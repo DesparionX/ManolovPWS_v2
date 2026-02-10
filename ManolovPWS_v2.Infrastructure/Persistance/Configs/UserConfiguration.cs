@@ -10,9 +10,9 @@ using System.Text.Json;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
 {
-    public sealed class UserConfiguration : IEntityTypeConfiguration<User>
+    public sealed class UserConfiguration : IEntityTypeConfiguration<DbUser>
     {
-        public void Configure(EntityTypeBuilder<User> user)
+        public void Configure(EntityTypeBuilder<DbUser> user)
         {
             // Table name
             user.ToTable("Users");
@@ -29,6 +29,10 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .IsUnique();
 
             // Basic properties
+            user.Property(u => u.UserName)
+                .IsRequired()
+                .HasMaxLength(20);
+
             user.Property(u => u.FirstName)
                 .IsRequired()
                 .HasMaxLength(20);

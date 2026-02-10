@@ -17,11 +17,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         }
 
         public static EducationHistory Create(IEnumerable<Education> educationEntries)
-        {
-            ValidateEducationHistory(educationEntries);
+         => new(educationEntries);
 
-            return new EducationHistory(educationEntries);
-        }
+        public static EducationHistory? From(IEnumerable<Education>? educationEntries)
+         => educationEntries is not null ? new(educationEntries) : null;
 
         // Manipulations
         public static EducationHistory Empty() => new([]);
@@ -34,13 +33,6 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
 
         internal EducationHistory UpdateEducationEntry(Education oldEntry, Education newEntry) =>
             new(_educationEntries.Select(e => e.Equals(oldEntry) ? newEntry : e));
-
-        // Validations
-        private static void ValidateEducationHistory(IEnumerable<Education> educationEntries)
-        {
-            if (educationEntries is null)
-                throw new InvalidEducationException("Education entries collection is null.");
-        }
 
         // Equality
         public bool Equals(EducationHistory? other) =>

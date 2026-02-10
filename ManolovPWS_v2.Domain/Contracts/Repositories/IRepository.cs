@@ -7,9 +7,9 @@ namespace ManolovPWS_v2.Domain.Contracts.Repositories
         where TEntity : IEntity<TKey> 
         where TKey : IEquatable<TKey>
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<ITaskResult<TEntity>> GetByIdAsync(TKey id);
-        Task<ITaskResult> SaveAsync(TEntity entity);
-        Task<ITaskResult> RemoveAsync(TKey id);
+        Task<IReadOnlyList<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<TEntity> FindByIdAsync(TKey id, CancellationToken cancellationToken = default);
+        Task<ITaskResult> SaveAsync(TEntity entity, CancellationToken cancellationToken = default);
+        Task<ITaskResult> RemoveAsync(TKey id, CancellationToken cancellationToken = default);
     }
 }

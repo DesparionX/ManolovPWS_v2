@@ -3,11 +3,12 @@
     public interface ITaskResult
     {
         bool IsSuccess { get; }
-        IError? Error { get; }
+        IReadOnlyList<IError>? Errors { get; }
     }
 
     public interface ITaskResult<out T> : ITaskResult
     {
         T? Value { get; }
+        IReadOnlyList<T>? Collection { get; }
     }
 }
