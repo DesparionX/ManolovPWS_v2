@@ -19,5 +19,6 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
         public Experience? Experience { get; set; }
         public EducationHistory? EducationHistory { get; set; }
         public Certificates? Certificates { get; set; }
+
     }
 }

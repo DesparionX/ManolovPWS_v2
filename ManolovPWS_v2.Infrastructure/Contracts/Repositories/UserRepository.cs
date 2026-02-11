@@ -22,7 +22,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
             return users.ToDomainList();
         }
 
-        public async Task<User> FindByEmail(Email email, CancellationToken cancellationToken = default)
+        public async Task<User> FindByEmailAsync(Email email, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -32,7 +32,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
             return user.ToDomain();
         }
 
-        public async Task<User> FindByUserName(UserName userName, CancellationToken cancellationToken = default)
+        public async Task<User> FindByUserNameAsync(UserName userName, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -71,6 +71,20 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
             var result = await _userManager.UpdateAsync(entity.ToDbEntity());
 
             return result.ToInfraTaskResult();
+        }
+
+        public async Task<bool> EmailExistsAsync(Email email, CancellationToken cancellationToken = default)
+        {
+            var user = await _userManager.FindByEmailAsync(email.Value);
+
+            return user is not null;
+        }
+        
+        public async Task<bool> UserNameExistsAsync(UserName userName, CancellationToken cancellationToken = default)
+        {
+            var user = await _userManager.FindByNameAsync(userName.Value);
+
+            return user is not null;
         }
     }
 }

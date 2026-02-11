@@ -1,5 +1,4 @@
 ﻿using ManolovPWS_v2.Shared.Abstractions;
-using Microsoft.AspNetCore.Identity;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Results
 {
