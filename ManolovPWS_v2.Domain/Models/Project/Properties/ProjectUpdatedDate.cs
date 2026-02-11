@@ -21,6 +21,11 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
             return new(value);
         }
 
+        public static ProjectUpdatedDate? CreateOrNull(DateOnly? value)
+            => value is null || !value.HasValue
+                ? null
+                : Create(value.Value);
+
         // Validations
         private static void ValidateUpdatedDate(DateOnly value)
         {

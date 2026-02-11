@@ -15,6 +15,6 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
         public DateOnly UploadedDate { get; set; }
         public DateOnly? UpdatedDate { get; set; }
         public ProjectGallery? Gallery { get; set; }
-        public string? Thumb { get; set; }
+        public string Thumb { get; set; } = string.Empty;
     }
 }

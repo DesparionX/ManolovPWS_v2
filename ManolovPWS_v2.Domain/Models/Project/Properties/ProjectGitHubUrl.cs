@@ -15,13 +15,13 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         }
 
         public static ProjectGitHubUrl Create(string url)
-        {
-            var uri = ValidateGitHubUrl(url);
-            return new(uri);
-        }
+            => new(ValidatedGitHubUrl(url));
+
+        public static ProjectGitHubUrl? CreateOrNull(string? url)
+            => string.IsNullOrWhiteSpace(url) ? null : Create(url);
 
         // Validations
-        private static Uri ValidateGitHubUrl(string url)
+        private static Uri ValidatedGitHubUrl(string url)
         {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
                 throw new InvalidProjectGitHubUrlException("Entered URL is invalid.");

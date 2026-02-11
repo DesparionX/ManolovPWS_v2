@@ -13,13 +13,13 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         }
 
         public static ProjectLiveUrl Create(string url)
-        {
-            var uri = ValidateLiveUrl(url);
-            return new(uri);
-        }
+            => new(ValidatedLiveUrl(url));
+
+        public static ProjectLiveUrl? CreateOrNull(string? url)
+            => string.IsNullOrWhiteSpace(url) ? null : Create(url);
 
         // Validations
-        private static Uri ValidateLiveUrl(string url)
+        private static Uri ValidatedLiveUrl(string url)
         {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
                 throw new InvalidProjectLiveUrlException("Entered URL is invalid.");

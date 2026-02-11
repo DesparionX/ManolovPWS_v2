@@ -1,5 +1,4 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
-using System.IO.IsolatedStorage;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties
 {
@@ -18,32 +17,25 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         public static Gender Female => new(GenderType.Female);
 
         public static Gender FromString(string value)
-        {
-            string normalized = Normalized(value);
-
-            ValidateGender(normalized);
-
-            return normalized.Equals("male") ? Male : Female;
-        }
+            => new(Parsed(value));
 
         // Validations
-        private static string Normalized(string value)
+        private static GenderType Parsed(string value)
         {
             if (string.IsNullOrEmpty(value))
                 throw new InvalidGenderException("Gender cannot be null or empty.");
 
-            return value.Trim().ToLowerInvariant();
-        }
-        private static void ValidateGender(string gender)
-        {
-            if (gender is not "male" and not "female")
+            if (!Enum.TryParse<GenderType>(value, ignoreCase: true, out var parsed)
+                || !Enum.IsDefined(parsed))
                 throw new InvalidGenderException("Invalid gender.");
+
+            return parsed;
         }
 
         // Equality
-
-        public bool Equals(Gender? other)
-            => other is not null && Value == other.Value;
+        public bool Equals(Gender? other) => 
+            other is not null 
+            && Enum.Equals(Value, other.Value);
 
         public override bool Equals(object? obj) => Equals(obj as Gender);
 

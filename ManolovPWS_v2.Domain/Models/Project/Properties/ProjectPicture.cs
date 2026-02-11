@@ -1,7 +1,4 @@
 ﻿using ManolovPWS_v2.Domain.Models.Project.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ManolovPWS_v2.Domain.Models.Project.Properties
 {
@@ -15,13 +12,13 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         }
 
         public static ProjectPicture Create(string url)
-        {
-            var uri = ValidatePictureUrl(url);
-            return new(uri);
-        }
+            => new(ValidatedPictureUrl(url));
+
+        public static ProjectPicture? CreateOrNull(string? url)
+            => string.IsNullOrWhiteSpace(url) ? null : Create(url);
 
         // Validations
-        private static Uri ValidatePictureUrl(string url)
+        private static Uri ValidatedPictureUrl(string url)
         {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
                 throw new InvalidProjectGalleryException("Entered URL is invalid.", "InvalidProjectPicture");

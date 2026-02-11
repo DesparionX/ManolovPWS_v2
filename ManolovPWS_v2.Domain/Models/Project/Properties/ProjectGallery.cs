@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.Project.Properties
 {
@@ -17,7 +16,15 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
 
         public static ProjectGallery Empty() => new([]);
 
-        public static ProjectGallery Create(IEnumerable<ProjectPicture> pictures) => new(pictures);
+        public static ProjectGallery Create(IEnumerable<ProjectPicture>? pictures)
+        {
+            if (pictures is null || !pictures.Any()) return Empty();
+
+            return new(pictures);
+        }
+
+        public static ProjectGallery? From(ProjectGallery? gallery)
+            => gallery is not null ? new(gallery.Pictures) : null;
 
         // Gallery manipulations
         internal ProjectGallery AddPicture(ProjectPicture picture)
