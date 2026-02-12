@@ -24,5 +24,12 @@
 
         public static InfrastructureException EmptyProjectListForUser(Guid userId) =>
             new($"No projects found for user with ID {userId}", "EmptyProjectListForUser");
+
+        // Post-related exceptions
+        public static InfrastructureException PostNotFound(Guid postId) =>
+            new($"Post with ID {postId} not found", "PostNotFound");
+
+        public static InfrastructureException PostNotFoundByAuthorId(Guid authorId) =>
+            new($"No posts found for author with ID {authorId}", "PostNotFoundByAuthorId");
     }
 }

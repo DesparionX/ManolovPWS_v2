@@ -1,5 +1,6 @@
 ﻿using ManolovPWS_v2.Domain.Models.Project;
 using ManolovPWS_v2.Domain.Models.Project.Properties;
+using ManolovPWS_v2.Infrastructure.Exceptions;
 using ManolovPWS_v2.Infrastructure.Persistance.Entities;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
@@ -8,6 +9,9 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
     {
         public static Project ToDomain(this DbProject dbProject)
         {
+            if (dbProject is null)
+                throw new InfrastructureException("DbProject cannot be null.", "NullDbProjectException");
+
             return Project.Create(
                 ProjectId.From(dbProject.Id.ToString()),
                 dbProject.OwnerId,
@@ -25,7 +29,10 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
 
         public static DbProject ToDbEntity(this Project project)
         {
-            var dbProject = new DbProject
+            if (project is null)
+                throw new InfrastructureException("Project cannot be null.", "NullProjectException");
+
+            return new DbProject
             {
                 Id = project.Id.Value,
                 OwnerId = project.OwnerId,
@@ -39,8 +46,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
                 Gallery = project.Gallery,
                 Thumb = project.Thumb.Value.ToString()
             };
-
-            return dbProject;
         }
 
         public static IReadOnlyList<Project> ToDomainList(this IReadOnlyList<DbProject> projects)

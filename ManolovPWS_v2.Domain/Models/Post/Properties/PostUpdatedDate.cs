@@ -18,6 +18,9 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties
             return new(value);
         }
 
+        public static PostUpdatedDate? CreateOrNull(DateOnly? value)
+            => value is null || !value.HasValue ? null : Create(value.Value);
+
         // Validations
         private static void ValidateUpdatedDate(DateOnly value)
         {
