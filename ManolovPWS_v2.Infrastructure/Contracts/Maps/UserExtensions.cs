@@ -1,6 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Models.User;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
+using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
 using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
@@ -23,6 +24,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
                 Email.Create(dbUser.Email!),
                 BirthDate.Create(dbUser.BirthDate),
                 Gender.FromString(dbUser.Gender),
+                Contacts.From(dbUser.Contacts?.ContactList),
                 UserPhoneNumber.CreateOrNull(dbUser.PhoneNumber),
                 ProfilePicture.CreateOrNull(dbUser.ProfilePictureUrl),
                 SkillSet.From(dbUser.Skills?.Skills, dbUser.Skills?.Languages),
@@ -46,6 +48,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
                 ProfilePictureUrl = user.ProfilePicture?.Url.ToString(),
                 BirthDate = user.BirthDate.Value,
                 Gender = user.Gender.Value.ToString(),
+                Contacts = user.Contacts,
                 Email = user.Email.Value,
                 PhoneNumber = user.PhoneNumber?.Value,
                 Skills = user.Skills,

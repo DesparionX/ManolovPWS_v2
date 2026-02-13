@@ -5,7 +5,7 @@ using ManolovPWS_v2.Infrastructure.Contracts.Maps;
 using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Exceptions;
 using ManolovPWS_v2.Infrastructure.Persistance.Entities;
-using ManolovPWS_v2.Shared.Abstractions;
+using ManolovPWS_v2.Shared.Abstractions.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

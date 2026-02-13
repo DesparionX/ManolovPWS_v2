@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace ManolovPWS_v2.Shared.Abstractions
+namespace ManolovPWS_v2.Shared.Abstractions.Errors
 {
     public interface IError
     {

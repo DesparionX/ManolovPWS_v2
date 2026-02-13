@@ -1,7 +1,5 @@
-﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ManolovPWS_v2.Domain.Models.Post.Exceptions;
+using ManolovPWS_v2.Domain.Models.User.Exceptions;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties
 {
@@ -14,14 +12,19 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
             Url = url;
         }
 
-        public static ProfilePicture? CreateOrNull(string? url)
-        {
-            if (string.IsNullOrEmpty(url)) return null;
+        public static ProfilePicture Create(string url)
+            => new(ValidatedPictureUrl(url));
 
+        public static ProfilePicture? CreateOrNull(string? url)
+            => string.IsNullOrWhiteSpace(url) ? null : Create(url);
+
+        // Validations
+        private static Uri ValidatedPictureUrl(string url)
+        {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
                 throw new InvalidUriException("Entered URL is invalid.");
 
-            return new ProfilePicture(uri);
+            return uri;
         }
 
         // Equality

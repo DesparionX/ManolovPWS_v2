@@ -6,7 +6,7 @@ using ManolovPWS_v2.Infrastructure.Contracts.Maps;
 using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Exceptions;
 using ManolovPWS_v2.Infrastructure.Persistance;
-using ManolovPWS_v2.Shared.Abstractions;
+using ManolovPWS_v2.Shared.Abstractions.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories

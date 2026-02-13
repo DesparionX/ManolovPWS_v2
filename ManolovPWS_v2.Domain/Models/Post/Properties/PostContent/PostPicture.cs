@@ -14,13 +14,10 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
         }
 
         public static PostPicture Create(string url)
-        {
-            var uri = ValidatePictureUrl(url);
-            return new(uri);
-        }
+            => new(ValidatedPictureUrl(url));
 
         // Validations
-        private static Uri ValidatePictureUrl(string url)
+        private static Uri ValidatedPictureUrl(string url)
         {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
                 throw new InvalidPostContentException("Entered URL is invalid.", "InvalidPostPicture");

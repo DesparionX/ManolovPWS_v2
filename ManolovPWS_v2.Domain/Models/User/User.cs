@@ -1,6 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
+using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
 using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
@@ -17,6 +18,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         public ProfilePicture? ProfilePicture { get; }
         public BirthDate BirthDate { get; }
         public Gender Gender { get; }
+        public Contacts Contacts { get; }
         public SkillSet Skills { get; }
         public Experience Experience { get; }
         public EducationHistory EducationHistory { get; }
@@ -31,6 +33,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             UserPhoneNumber? phoneNumber,
             BirthDate birthDate,
             Gender gender,
+            Contacts contacts,
             ProfilePicture? profilePicture,
             SkillSet skills,
             Experience experience,
@@ -45,6 +48,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             BirthDate = birthDate;
             ProfilePicture = profilePicture;
             Gender = gender;
+            Contacts = contacts;
             Skills = skills;
             Experience = experience;
             EducationHistory = educationHistory;
@@ -59,6 +63,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             BirthDate? birthDate = default,
             ProfilePicture? picture = default,
             Gender? gender = default,
+            Contacts? contacts = default,
             SkillSet? skills = default,
             Experience? experience = default,
             EducationHistory? educationHistory = default,
@@ -72,6 +77,7 @@ namespace ManolovPWS_v2.Domain.Models.User
                 phoneNumber ?? PhoneNumber,
                 birthDate ?? BirthDate,
                 gender ?? Gender,
+                contacts ?? Contacts,
                 picture ?? ProfilePicture,
                 skills ?? Skills,
                 experience ?? Experience,
@@ -86,6 +92,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             Email email,
             BirthDate birthDate,
             Gender gender,
+            Contacts? contacts,
             UserPhoneNumber? phoneNumber = default,
             ProfilePicture? profilePicture = default,
             SkillSet? skills = default,
@@ -101,6 +108,7 @@ namespace ManolovPWS_v2.Domain.Models.User
                 phoneNumber,
                 birthDate,
                 gender,
+                contacts ?? Contacts.Empty(),
                 profilePicture,
                 skills ?? SkillSet.Empty(),
                 experience ?? Experience.Empty(),
@@ -194,6 +202,42 @@ namespace ManolovPWS_v2.Domain.Models.User
             if (Skills.Equals(updatedSkills)) return this;
 
             return With(skills: updatedSkills);
+        }
+
+        // Contacts
+        public User ClearContacts()
+            => With(contacts: Contacts.Empty());
+        public User AddContact(Contact contact)
+        {
+            var updatedContacts = Contacts.Add(contact);
+
+            if (Contacts.Equals(updatedContacts)) return this;
+
+            return With(contacts: updatedContacts);
+        }
+        public User UpdateContact(Contact oldContact, Contact newContact)
+        {
+            var updatedContacts = Contacts.Update(oldContact, newContact);
+
+            if (Contacts.Equals(updatedContacts)) return this;
+
+            return With(contacts: updatedContacts);
+        }
+        public User RemoveContact(Contact contactToRemove)
+        {
+            var updatedContacts = Contacts.Remove(contactToRemove);
+
+            if (Contacts.Equals(updatedContacts)) return this;
+
+            return With(contacts: updatedContacts);
+        }
+        public User ReplaceContacts(IEnumerable<Contact> newContacts)
+        {
+            var updatedContacts = Contacts.Create(newContacts);
+
+            if (Contacts.Equals(updatedContacts)) return this;
+
+            return With(contacts: updatedContacts);
         }
 
         // SkillSet - Languages

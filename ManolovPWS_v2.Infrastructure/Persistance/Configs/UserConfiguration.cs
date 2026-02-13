@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
+using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
 using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
@@ -52,6 +53,12 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .HasColumnType("date");
 
             // JSON value objects
+            user.Property(u => u.Contacts)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, JsonOptions.Default),
+                    v => JsonSerializer.Deserialize<Contacts>(v, JsonOptions.Default))
+                .HasColumnType("jsonb");
+
             user.Property(u => u.Skills)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, JsonOptions.Default),

@@ -1,4 +1,4 @@
-﻿using ManolovPWS_v2.Shared.Abstractions;
+﻿using ManolovPWS_v2.Shared.Abstractions.Errors;
 using System;
 using System.Collections.Generic;
 using System.Text;
