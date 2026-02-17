@@ -1,7 +1,4 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience

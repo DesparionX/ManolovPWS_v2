@@ -1,6 +1,15 @@
 ﻿namespace ManolovPWS_v2.Shared.Abstractions.CQRS
 {
-    public interface ICommand
+    public interface ICommand : IBaseCommand
     {
     }
+
+    public interface ICommand<TResponse> : IBaseCommand
+    {
+    }
+
+    public interface IBaseCommand
+    {
+    }
+
 }

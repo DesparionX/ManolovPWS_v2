@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="User\" />
+    <ProjectReference Include="..\ManolovPWS_v2.Domain\ManolovPWS_v2.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="User\Contracts\" />
+    <Folder Include="User\Features\Shared\DTOs\" />
   </ItemGroup>
 
 </Project>
