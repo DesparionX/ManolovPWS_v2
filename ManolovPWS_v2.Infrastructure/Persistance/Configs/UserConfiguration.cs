@@ -1,4 +1,5 @@
-﻿using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
+﻿using ManolovPWS_v2.Domain.Models.User.Properties;
+using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
 using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
 using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
@@ -42,6 +43,13 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .IsRequired()
                 .HasMaxLength(20);
 
+            user.Property(u => u.Profession)
+                .IsRequired()
+                .HasMaxLength(30);
+
+            user.Property(u => u.Summary)
+                .HasMaxLength(5000);
+
             // Gender as a string
             user.Property(u => u.Gender)
                 .HasConversion<string>()
@@ -53,6 +61,12 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .HasColumnType("date");
 
             // JSON value objects
+            user.Property(u => u.Address)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, JsonOptions.Default),
+                    v => JsonSerializer.Deserialize<Address>(v, JsonOptions.Default))
+                .HasColumnType("jsonb");
+
             user.Property(u => u.Contacts)
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, JsonOptions.Default),

@@ -9,6 +9,8 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.Shared.ReadModels
         string FirstName,
         string? MiddleName,
         string LastName,
+        string Country,
+        string City,
         string? ProfilePictureUrl,
         DateOnly BirthDate,
         string Gender,

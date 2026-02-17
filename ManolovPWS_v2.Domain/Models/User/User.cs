@@ -14,7 +14,10 @@ namespace ManolovPWS_v2.Domain.Models.User
         public UserName UserName { get; }
         public Name Name { get; }
         public Email Email { get; }
+        public Profession Profession { get; }
+        public Summary? Summary { get; }
         public UserPhoneNumber? PhoneNumber { get; }
+        public Address? Address { get; }
         public ProfilePicture? ProfilePicture { get; }
         public BirthDate BirthDate { get; }
         public Gender Gender { get; }
@@ -30,7 +33,10 @@ namespace ManolovPWS_v2.Domain.Models.User
             UserName userName,
             Name name,
             Email email,
+            Profession profession,
+            Summary? summary,
             UserPhoneNumber? phoneNumber,
+            Address? address,
             BirthDate birthDate,
             Gender gender,
             Contacts contacts,
@@ -44,7 +50,10 @@ namespace ManolovPWS_v2.Domain.Models.User
             UserName = userName;
             Name = name;
             Email = email;
+            Profession = profession;
+            Summary = summary;
             PhoneNumber = phoneNumber;
+            Address = address;
             BirthDate = birthDate;
             ProfilePicture = profilePicture;
             Gender = gender;
@@ -59,7 +68,10 @@ namespace ManolovPWS_v2.Domain.Models.User
             UserName? userName = default,
             Name? name = default,
             Email? email = default,
+            Profession? profession = default,
+            Summary? summary = default,
             UserPhoneNumber? phoneNumber = default,
+            Address? address = default,
             BirthDate? birthDate = default,
             ProfilePicture? picture = default,
             Gender? gender = default,
@@ -70,30 +82,36 @@ namespace ManolovPWS_v2.Domain.Models.User
             Certificates? certificates = default
             )
             => new(
-                Id,
-                userName ?? UserName,
-                name ?? Name,
-                email ?? Email,
-                phoneNumber ?? PhoneNumber,
-                birthDate ?? BirthDate,
-                gender ?? Gender,
-                contacts ?? Contacts,
-                picture ?? ProfilePicture,
-                skills ?? Skills,
-                experience ?? Experience,
-                educationHistory ?? EducationHistory,
-                certificates ?? Certificates
+                id: Id,
+                userName: userName ?? UserName,
+                name: name ?? Name,
+                email: email ?? Email,
+                profession: profession ?? Profession,
+                summary: summary ?? Summary,
+                phoneNumber: phoneNumber ?? PhoneNumber,
+                address: address ?? Address,
+                birthDate: birthDate ?? BirthDate,
+                gender: gender ?? Gender,
+                contacts: contacts ?? Contacts,
+                profilePicture: picture ?? ProfilePicture,
+                skills: skills ?? Skills,
+                experience: experience ?? Experience,
+                educationHistory: educationHistory ?? EducationHistory,
+                certificates: certificates ?? Certificates
                 );
 
         public static User Create(
             UserId id,
             UserName userName,
             Name name,
+            Profession profession,
             Email email,
             BirthDate birthDate,
             Gender gender,
             Contacts? contacts,
+            Summary? summary = default,
             UserPhoneNumber? phoneNumber = default,
+            Address? address = default,
             ProfilePicture? profilePicture = default,
             SkillSet? skills = default,
             Experience? experience = default,
@@ -101,19 +119,22 @@ namespace ManolovPWS_v2.Domain.Models.User
             Certificates? certificates = default
             )
             => new(
-                id,
-                userName,
-                name,
-                email,
-                phoneNumber,
-                birthDate,
-                gender,
-                contacts ?? Contacts.Empty(),
-                profilePicture,
-                skills ?? SkillSet.Empty(),
-                experience ?? Experience.Empty(),
-                educationHistory ?? EducationHistory.Empty(),
-                certificates ?? Certificates.Empty()
+                id: id,
+                userName: userName,
+                name: name,
+                profession: profession,
+                summary: summary,
+                email: email,
+                phoneNumber: phoneNumber,
+                address: address,
+                birthDate: birthDate,
+                gender: gender,
+                contacts: contacts ?? Contacts.Empty(),
+                profilePicture: profilePicture,
+                skills: skills ?? SkillSet.Empty(),
+                experience: experience ?? Experience.Empty(),
+                educationHistory: educationHistory ?? EducationHistory.Empty(),
+                certificates: certificates ?? Certificates.Empty()
                 );
 
         // User manipulations
@@ -135,12 +156,32 @@ namespace ManolovPWS_v2.Domain.Models.User
 
             return With(email: newEmail);
         }
+        public User UpdateProfession(Profession newProfession)
+        {
+            if (Profession.Equals(newProfession)) return this;
+
+            return With(profession: newProfession);
+        }
+        public User UpdateSummary(Summary newSummary)
+        {
+            if (Summary is not null && Summary.Equals(newSummary))
+                return this;
+
+            return With(summary: newSummary);
+        }
         public User UpdatePhoneNumber(UserPhoneNumber newPhoneNumber)
         {
             if (PhoneNumber is not null && PhoneNumber.Equals(newPhoneNumber))
                 return this;
 
             return With(phoneNumber: newPhoneNumber);
+        }
+        public User UpdateAddress(Address newAddress)
+        {
+            if (Address is not null && Address.Equals(newAddress))
+                return this;
+
+            return With(address: newAddress);
         }
         public User UpdateBirthDate(BirthDate newBirthDate)
         {
@@ -181,7 +222,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User AddSkill(Skill skill)
         {
-            var updatedSkills = Skills.AddSkill(skill);
+            var updatedSkills = Skills.AddSkill(skill: skill);
 
             if (Skills.Equals(updatedSkills)) return this;
 
@@ -189,7 +230,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User UpdateSkill(Skill oldSkill, Skill newSkill)
         {
-            var updatedSkills = Skills.UpdateSkill(oldSkill, newSkill);
+            var updatedSkills = Skills.UpdateSkill(oldSkill: oldSkill, newSkill: newSkill);
 
             if (Skills.Equals(updatedSkills)) return this;
 
@@ -209,7 +250,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             => With(contacts: Contacts.Empty());
         public User AddContact(Contact contact)
         {
-            var updatedContacts = Contacts.Add(contact);
+            var updatedContacts = Contacts.Add(contact: contact);
 
             if (Contacts.Equals(updatedContacts)) return this;
 
@@ -217,7 +258,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User UpdateContact(Contact oldContact, Contact newContact)
         {
-            var updatedContacts = Contacts.Update(oldContact, newContact);
+            var updatedContacts = Contacts.Update(oldContact: oldContact, newContact: newContact);
 
             if (Contacts.Equals(updatedContacts)) return this;
 
@@ -259,7 +300,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User AddLanguage(LanguageSkill language)
         {
-            var updatedSkills = Skills.AddLanguage(language);
+            var updatedSkills = Skills.AddLanguage(language: language);
 
             if (Skills.Equals(updatedSkills)) return this;
 
@@ -267,7 +308,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User UpdateLanguage(LanguageSkill oldLanguage, LanguageSkill newLanguage)
         {
-            var updatedSkills = Skills.UpdateLanguage(oldLanguage, newLanguage);
+            var updatedSkills = Skills.UpdateLanguage(oldLanguage: oldLanguage, newLanguage: newLanguage);
 
             if (Skills.Equals(updatedSkills)) return this;
 
@@ -294,7 +335,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User AddJob(Job job)
         {
-            var updatedExperience = Experience.AddJob(job);
+            var updatedExperience = Experience.AddJob(job: job);
 
             if (Experience.Equals(updatedExperience)) return this;
 
@@ -302,7 +343,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User UpdateJob(Job oldJob, Job newJob)
         {
-            var updatedExperience = Experience.UpdateJob(oldJob, newJob);
+            var updatedExperience = Experience.UpdateJob(oldJob: oldJob, newJob: newJob);
 
             if (Experience.Equals(updatedExperience)) return this;
 
@@ -364,7 +405,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User AddCertificate(Certificate certificate)
         {
-            var updatedCertificates = Certificates.AddCertificate(certificate);
+            var updatedCertificates = Certificates.AddCertificate(certificate: certificate);
 
             if (Certificates.Equals(updatedCertificates)) return this;
 
@@ -372,7 +413,7 @@ namespace ManolovPWS_v2.Domain.Models.User
         }
         public User UpdateCertificate(Certificate oldCertificate, Certificate newCertificate)
         {
-            var updatedCertificates = Certificates.UpdateCertificate(oldCertificate, newCertificate);
+            var updatedCertificates = Certificates.UpdateCertificate(oldCertificate: oldCertificate, newCertificate: newCertificate);
 
             if (Certificates.Equals(updatedCertificates)) return this;
 

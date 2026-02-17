@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
+using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
 using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
 using ManolovPWS_v2.Domain.Models.User.Properties.Education;
@@ -13,6 +14,9 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
         public required string FirstName { get; set; } = string.Empty;
         public string? MiddleName { get; set; }
         public required string LastName { get; set; } = string.Empty;
+        public Address? Address { get; set; }
+        public required string Profession { get; set; }
+        public string? Summary { get; set; }
         public string? ProfilePictureUrl { get; set; }
         public DateOnly BirthDate { get; set; }
         public string Gender { get; set; } = string.Empty;

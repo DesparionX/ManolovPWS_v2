@@ -18,19 +18,22 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
                 throw new InfrastructureException("DbUser cannot be null", "InvalidDbUser");
 
             return User.Create(
-                UserId.From(dbUser.Id.ToString()),
-                UserName.Create(dbUser.UserName!),
-                Name.Create(dbUser.FirstName, dbUser.MiddleName, dbUser.LastName),
-                Email.Create(dbUser.Email!),
-                BirthDate.Create(dbUser.BirthDate),
-                Gender.FromString(dbUser.Gender),
-                Contacts.From(dbUser.Contacts?.ContactList),
-                UserPhoneNumber.CreateOrNull(dbUser.PhoneNumber),
-                ProfilePicture.CreateOrNull(dbUser.ProfilePictureUrl),
-                SkillSet.From(dbUser.Skills?.Skills, dbUser.Skills?.Languages),
-                Experience.From(dbUser.Experience?.Jobs),
-                EducationHistory.From(dbUser.EducationHistory?.EducationEntries),
-                Certificates.From(dbUser.Certificates?.CertificatesList));
+                id: UserId.From(dbUser.Id.ToString()),
+                userName: UserName.Create(dbUser.UserName!),
+                name: Name.Create(dbUser.FirstName, dbUser.MiddleName, dbUser.LastName),
+                profession: Profession.Create(dbUser.Profession),
+                summary: Summary.CreateOrNull(dbUser.Summary),
+                email: Email.Create(dbUser.Email!),
+                birthDate: BirthDate.Create(dbUser.BirthDate),
+                gender: Gender.FromString(dbUser.Gender),
+                contacts: Contacts.From(dbUser.Contacts?.ContactList),
+                phoneNumber: UserPhoneNumber.CreateOrNull(dbUser.PhoneNumber),
+                address: Address.CreateOrNull(dbUser.Address),
+                profilePicture: ProfilePicture.CreateOrNull(dbUser.ProfilePictureUrl),
+                skills: SkillSet.From(dbUser.Skills?.Skills, dbUser.Skills?.Languages),
+                experience: Experience.From(dbUser.Experience?.Jobs),
+                educationHistory: EducationHistory.From(dbUser.EducationHistory?.EducationEntries),
+                certificates: Certificates.From(dbUser.Certificates?.CertificatesList));
         }
 
         public static DbUser ToDbEntity(this User user)
@@ -45,12 +48,15 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
                 FirstName = user.Name.FirstName,
                 MiddleName = user.Name.MiddleName,
                 LastName = user.Name.LastName,
+                Profession = user.Profession.Value,
+                Summary = user.Summary?.Value,
                 ProfilePictureUrl = user.ProfilePicture?.Url.ToString(),
                 BirthDate = user.BirthDate.Value,
                 Gender = user.Gender.Value.ToString(),
                 Contacts = user.Contacts,
                 Email = user.Email.Value,
                 PhoneNumber = user.PhoneNumber?.Value,
+                Address = user.Address,
                 Skills = user.Skills,
                 Experience = user.Experience,
                 EducationHistory = user.EducationHistory,
