@@ -9,19 +9,19 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.GetUser
 {
-    public sealed record GetUserPublicProfileQuery(string UserId) : IQuery<PublicUserReadModel>;
+    public sealed record GetUserPrivateProfileQuery(string UserId) : IQuery<PrivateUserReadModel>;
 
-    public sealed class GetUserPublicProfileQueryHandler(IUserRepository userRepository) 
-        : IQueryHandler<GetUserPublicProfileQuery, PublicUserReadModel>
+    public sealed class GetUserPrivateProfileQueryHandler(IUserRepository userRepository)
+        : IQueryHandler<GetUserPrivateProfileQuery, PrivateUserReadModel>
     {
         private readonly IUserRepository _userRepository = userRepository;
 
-        public async Task<ITaskResult<PublicUserReadModel>> HandleAsync(GetUserPublicProfileQuery query, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<PrivateUserReadModel>> HandleAsync(GetUserPrivateProfileQuery query, CancellationToken cancellationToken = default)
         {
             var user = await _userRepository.FindByIdAsync(UserId.From(query.UserId), cancellationToken)
-                ?? throw new IdentityAppException("User cannot be null.", "InvalidUser");
+                ?? throw new IdentityAppException("User is null.", "InvalidUser");
 
-            return IdentityAppResults.Success(user.ToPublicUserRm());
+            return IdentityAppResults.Success(user.ToPrivateUserRm());
         }
     }
 }

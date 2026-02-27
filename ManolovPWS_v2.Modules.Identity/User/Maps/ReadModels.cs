@@ -1,5 +1,5 @@
-﻿using ManolovPWS_v2.Modules.Identity.User.Features.Shared.ReadModels;
-using ManolovPWS_v2.Modules.Identity.User.Features.Shared.SharedProperties;
+﻿using ManolovPWS_v2.Modules.Identity.User.Shared.ReadModels;
+using ManolovPWS_v2.Modules.Identity.User.Shared.SharedProperties;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Maps
 {
@@ -15,6 +15,34 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 LastName: user.Name.LastName,
                 Country: user.Address?.Country,
                 City: user.Address?.City,
+                Summary: user.Summary?.Value,
+                Profession: user.Profession.Value,
+                ProfilePictureUrl: user.ProfilePicture?.Url.ToString(),
+                BirthDate: user.BirthDate.Value,
+                Gender: user.Gender.ToString(),
+                Contacts: MapContacts(user),
+                Skills: MapSkills(user),
+                Languages: MapLanguages(user),
+                Experience: MapExperience(user),
+                EducationHistory: MapEducation(user),
+                Certificates: MapCertificates(user)
+                );
+
+        public static PrivateUserReadModel ToPrivateUserRm(this Domain.Models.User.User user)
+            => new(
+                Id: user.Id.Value,
+                UserName: user.UserName.Value,
+                Email: user.Email.Value,
+                FirstName: user.Name.FirstName,
+                MiddleName: user.Name.MiddleName,
+                LastName: user.Name.LastName,
+                Country: user.Address?.Country,
+                Region: user.Address?.Region,
+                Municipality: user.Address?.Municipality,
+                City: user.Address?.City,
+                Street: user.Address?.Street,
+                PostalCode: user.Address?.PostalCode,
+                PhoneNumber: user.PhoneNumber?.Value,
                 Summary: user.Summary?.Value,
                 Profession: user.Profession.Value,
                 ProfilePictureUrl: user.ProfilePicture?.Url.ToString(),

@@ -1,6 +1,6 @@
-﻿using ManolovPWS_v2.Modules.Identity.User.Features.Shared.SharedProperties;
+﻿using ManolovPWS_v2.Modules.Identity.User.Shared.SharedProperties;
 
-namespace ManolovPWS_v2.Modules.Identity.User.Features.Shared.ReadModels
+namespace ManolovPWS_v2.Modules.Identity.User.Shared.ReadModels
 {
     public sealed record PublicUserReadModel(
         Guid Id,

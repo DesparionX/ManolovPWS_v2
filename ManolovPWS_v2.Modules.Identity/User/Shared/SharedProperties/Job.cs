@@ -1,4 +1,4 @@
-﻿namespace ManolovPWS_v2.Modules.Identity.User.Features.Shared.SharedProperties
+﻿namespace ManolovPWS_v2.Modules.Identity.User.Shared.SharedProperties
 {
     public sealed record Job(
         string Title,

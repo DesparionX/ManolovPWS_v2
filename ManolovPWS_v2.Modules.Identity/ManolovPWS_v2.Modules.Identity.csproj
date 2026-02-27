@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="User\Features\Shared\DTOs\" />
+    <Folder Include="User\Auth\Authentication\" />
+    <Folder Include="User\Auth\Authorization\" />
+    <Folder Include="User\Shared\DTOs\" />
   </ItemGroup>
 
 </Project>
