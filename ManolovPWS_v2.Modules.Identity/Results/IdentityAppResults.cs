@@ -14,7 +14,7 @@ namespace ManolovPWS_v2.Modules.Identity.Results
         public static ITaskResult<TResponse> Success<TResponse>(TResponse value)
             => new IdentityAppResult<TResponse>(value: value);
 
-        public static ITaskResult Failure(IReadOnlyList<IdentityAppError> errors)
+        public static ITaskResult Failure(IReadOnlyList<IError> errors)
             => new IdentityAppResult(errors: errors);
     }
 }

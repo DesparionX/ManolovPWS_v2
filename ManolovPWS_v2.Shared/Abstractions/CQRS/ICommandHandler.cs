@@ -14,6 +14,6 @@ namespace ManolovPWS_v2.Shared.Abstractions.CQRS
     public interface ICommandHandler<in TCommand, TResponse>
         where TCommand : ICommand<TResponse>
     {
-        Task<ITaskResult<TResponse>> HandleAsync(TCommand command, CancellationToken cancellationToken = default);
+        Task<TResponse> HandleAsync(TCommand command, CancellationToken cancellationToken = default);
     }
 }

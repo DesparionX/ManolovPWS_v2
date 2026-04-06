@@ -427,5 +427,41 @@ namespace ManolovPWS_v2.Domain.Models.User
 
             return With(certificates: updatedCertificates);
         }
+
+        // General update method for multiple properties at once
+        public User Update(
+            UserName? userName = default,
+            Name? name = default,
+            Email? email = default,
+            Profession? profession = default,
+            Summary? summary = default,
+            UserPhoneNumber? phoneNumber = default,
+            Address? address = default,
+            BirthDate? birthDate = default,
+            ProfilePicture? picture = default,
+            Gender? gender = default,
+            Contacts? contacts = default,
+            SkillSet? skills = default,
+            Experience? experience = default,
+            EducationHistory? educationHistory = default,
+            Certificates? certificates = default
+            )
+            => With(
+                userName: userName ?? UserName,
+                name: name ?? Name,
+                email: email ?? Email,
+                profession: profession ?? Profession,
+                summary: summary ?? Summary,
+                phoneNumber: phoneNumber ?? PhoneNumber,
+                address: address ?? Address,
+                birthDate: birthDate ?? BirthDate,
+                gender: gender ?? Gender,
+                contacts: contacts ?? Contacts,
+                picture: picture ?? ProfilePicture,
+                skills: skills ?? Skills,
+                experience: experience ?? Experience,
+                educationHistory: educationHistory ?? EducationHistory,
+                certificates: certificates ?? Certificates
+                );
     }
 }
