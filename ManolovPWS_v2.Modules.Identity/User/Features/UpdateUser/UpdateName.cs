@@ -22,7 +22,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
                 middleName: command.MiddleName,
                 lastName: command.LastName);
 
-            var user = await _userRepository.FindByIdAsync(UserId.From(_currentUser.Id.ToString()), cancellationToken);
+            var user = await _userRepository.FindByIdAsync(_currentUser.Id, cancellationToken);
 
             var updated = user.UpdateName(newName);
 
