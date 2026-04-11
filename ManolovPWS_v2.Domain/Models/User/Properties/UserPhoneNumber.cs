@@ -22,7 +22,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         }
 
         // Validations
-        public static string ValidateNumber(string rawNumber, string region)
+        private static string ValidateNumber(string rawNumber, string region)
         {
             var util = PhoneNumberUtil.GetInstance();
 
