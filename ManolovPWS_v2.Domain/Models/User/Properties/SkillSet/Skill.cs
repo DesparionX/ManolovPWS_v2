@@ -53,7 +53,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         // Equality
         public bool Equals(Skill? other) =>
             other is not null &&
-            StringComparer.OrdinalIgnoreCase.Equals(Name, other.Name);
+            StringComparer.OrdinalIgnoreCase.Equals(Name.Value, other.Name.Value);
 
         public override bool Equals(object? obj) => Equals(obj as Skill);
         public override int GetHashCode() => Name.GetHashCode();
