@@ -2,6 +2,7 @@
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
 using ManolovPWS_v2.Modules.Identity.Results;
+using ManolovPWS_v2.Modules.Identity.User.Maps;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
 
@@ -19,12 +20,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
         {
             var user = await _userRepository.FindByIdAsync(_currentUser.Id, cancellationToken);
 
-            var newSkills = command.Skills.Select(s => Skill.Create(
-                    SkillName.Create(s.Name),
-                    SkillTypeExtensions.FromString(s.Type),
-                    SkillCategory.Create(s.Category),
-                    SkillLevel.Create(s.Level)
-                ));
+            var newSkills = command.Skills.ToDomainSkills();
 
             var updated = user.ReplaceSkills(newSkills);
 
