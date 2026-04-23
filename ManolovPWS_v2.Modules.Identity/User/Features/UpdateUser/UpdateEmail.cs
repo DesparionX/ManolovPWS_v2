@@ -23,9 +23,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
             
             var result = await _userRepository.SaveAsync(updated, cancellationToken);
 
-            return (IdentityAppResult)(result.IsSuccess
-                ? IdentityAppResults.Success()
-                : IdentityAppResults.Failure(result.Errors!));
+            return IdentityAppResults.FromResult(result);
         }
     }
 }

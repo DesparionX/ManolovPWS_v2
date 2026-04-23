@@ -19,7 +19,13 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
         {
             var user = await _userRepository.FindByIdAsync(_currentUser.Id, cancellationToken);
 
-            var newContacts = Contacts.Create();
+            var newContacts = command.NewContacts.Select(c => Contact.Create(c.Network, c.ProfileName, c.FullUrl));
+
+            var updated = user.ReplaceContacts(newContacts);
+
+            var result = await _userRepository.SaveAsync(updated, cancellationToken);
+
+            return IdentityAppResults.FromResult(result);
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using ManolovPWS_v2.Shared.Abstractions.Errors;
 using ManolovPWS_v2.Shared.Abstractions.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ManolovPWS_v2.Modules.Identity.Results
 {
@@ -16,5 +13,9 @@ namespace ManolovPWS_v2.Modules.Identity.Results
 
         public static ITaskResult Failure(IReadOnlyList<IError> errors)
             => new IdentityAppResult(errors: errors);
+
+        public static IdentityAppResult FromResult(ITaskResult result)
+            => (IdentityAppResult)(result.IsSuccess ?
+                Success() : Failure(result.Errors ?? []));
     }
 }
