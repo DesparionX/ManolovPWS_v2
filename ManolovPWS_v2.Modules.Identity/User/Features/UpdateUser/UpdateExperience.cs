@@ -22,6 +22,10 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
             var newExperience = command.Experience.ToDomainExperience();
 
             var updated = user.ReplaceExperience(newExperience);
+
+            var result = await _userRepository.SaveAsync(updated, cancellationToken);
+
+            return IdentityAppResults.FromResult(result);
         }
     }
 }
