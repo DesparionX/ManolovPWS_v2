@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
+using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
 
@@ -36,6 +37,17 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 CompanyName.Create(e.Company),
                 JobDescription.Create(e.Description),
                 JobPeriod.Create(
+                    startDate: e.StartDate,
+                    endDate: e.EndDate
+                )
+            ));
+
+        public static IEnumerable<Education> ToDomainEducation(this IEnumerable<Shared.SharedProperties.Education> educationHistory)
+            => educationHistory.Select(e => Education.Create(
+                School.Create(e.SchoolName, e.SchoolType),
+                Degree.Create(e.Degree),
+                FieldOfStudy.Create(e.FieldOfStudy),
+                StudyPeriod.Create(
                     startDate: e.StartDate,
                     endDate: e.EndDate
                 )
