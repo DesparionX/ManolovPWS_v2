@@ -326,12 +326,12 @@ namespace ManolovPWS_v2.Domain.Models.User
         // Experience
         public User ClearExperience() 
             => With(experience: Experience.Empty());
-
-        public User ReplaceExperience(Experience newExperience)
+        public User ReplaceExperience(IEnumerable<Job> newExperience)
         {
-            if (Experience.Equals(newExperience)) return this;
+            var updatedExperience = Experience.Create(newExperience);
+            if (Experience.Equals(updatedExperience)) return this;
 
-            return With(experience: newExperience);
+            return With(experience: updatedExperience);
         }
         public User AddJob(Job job)
         {
@@ -361,12 +361,13 @@ namespace ManolovPWS_v2.Domain.Models.User
         // Education
         public User ClearEducation()
             => With(educationHistory: EducationHistory.Empty());
-
-        public User ReplaceEducation(EducationHistory newEducationHistory)
+        public User ReplaceEducation(IEnumerable<Education> newEducationHistory)
         {
-            if (EducationHistory.Equals(newEducationHistory)) return this;
+            var updatedEducationHistory = EducationHistory.Create(newEducationHistory);
 
-            return With(educationHistory: newEducationHistory);
+            if (EducationHistory.Equals(updatedEducationHistory)) return this;
+
+            return With(educationHistory: updatedEducationHistory);
         }
         public User AddEducation(Education education)
         {
@@ -396,12 +397,12 @@ namespace ManolovPWS_v2.Domain.Models.User
         // Certificates
         public User ClearCertificates()
             => With(certificates: Certificates.Empty());
-
-        public User ReplaceCertificates(Certificates newCertificates)
+        public User ReplaceCertificates(IEnumerable<Certificate> newCertificates)
         {
-            if (Certificates.Equals(newCertificates)) return this;
+            var updatedCertificates = Certificates.Create(newCertificates);
+            if (Certificates.Equals(updatedCertificates)) return this;
 
-            return With(certificates: newCertificates);
+            return With(certificates: updatedCertificates);
         }
         public User AddCertificate(Certificate certificate)
         {
