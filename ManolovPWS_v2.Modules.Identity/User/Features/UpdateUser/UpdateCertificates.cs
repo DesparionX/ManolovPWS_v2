@@ -4,24 +4,27 @@ using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Modules.Identity.User.Maps;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateEducationHistoryCommand(IEnumerable<Shared.SharedProperties.Education> NewEducationHistory) : ICommand<IdentityAppResult>;
+    public sealed record UpdateCertificatesCommand(IEnumerable<Shared.SharedProperties.Certificate> NewCertificates) : ICommand<IdentityAppResult>;
 
-    public sealed class UpdateEducationHistoryCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-                : ICommandHandler<UpdateEducationHistoryCommand, IdentityAppResult>
+    public sealed class UpdateCertificatesCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
+                : ICommandHandler<UpdateCertificatesCommand, IdentityAppResult>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
 
-        public async Task<IdentityAppResult> HandleAsync(UpdateEducationHistoryCommand command, CancellationToken cancellationToken = default)
+        public async Task<IdentityAppResult> HandleAsync(UpdateCertificatesCommand command, CancellationToken cancellationToken = default)
         {
             var user = await _userRepository.FindByIdAsync(_currentUser.Id, cancellationToken);
 
-            var newEducationHistory = command.NewEducationHistory.ToDomainEducation();
+            var newCertificates = command.NewCertificates.ToDomainCertificates();
 
-            var updated = user.ReplaceEducation(newEducationHistory);
+            var updated = user.ReplaceCertificates(newCertificates);
 
             var result = await _userRepository.SaveAsync(updated, cancellationToken);
 

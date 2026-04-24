@@ -1,4 +1,5 @@
-﻿using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
+﻿using ManolovPWS_v2.Domain.Models.User.Properties.Certificates;
+using ManolovPWS_v2.Domain.Models.User.Properties.Contacts;
 using ManolovPWS_v2.Domain.Models.User.Properties.Education;
 using ManolovPWS_v2.Domain.Models.User.Properties.Experience;
 using ManolovPWS_v2.Domain.Models.User.Properties.SkillSet;
@@ -51,6 +52,14 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                     startDate: e.StartDate,
                     endDate: e.EndDate
                 )
+            ));
+
+        public static IEnumerable<Certificate> ToDomainCertificates(this IEnumerable<Shared.SharedProperties.Certificate> certificates)
+            => certificates.Select(c => Certificate.Create(
+                CertificationTitle.Create(c.Title),
+                CertificationIssuer.Create(c.Issuer),
+                IssueDate.Create(c.DateObtained),
+                CertificationCredentials.Create(c.CredentialId, c.CredentialUrl)
             ));
     }
 }
