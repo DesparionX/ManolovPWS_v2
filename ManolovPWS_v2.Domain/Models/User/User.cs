@@ -108,7 +108,7 @@ namespace ManolovPWS_v2.Domain.Models.User
             Email email,
             BirthDate birthDate,
             Gender gender,
-            Contacts? contacts,
+            Contacts? contacts = default,
             Summary? summary = default,
             UserPhoneNumber? phoneNumber = default,
             Address? address = default,
