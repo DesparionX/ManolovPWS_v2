@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ManolovPWS_v2.Infrastructure.DependencyInjection
 {
-    public static class FactoryCollectionExtensions
+    public static class FactoryInjection
     {
         public static IServiceCollection AddFactories(this IServiceCollection services)
         {

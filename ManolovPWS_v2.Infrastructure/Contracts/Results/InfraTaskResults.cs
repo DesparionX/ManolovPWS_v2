@@ -15,5 +15,12 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Results
                 ? Success()
                 : Failure(result.Errors);
         }
+
+        public static InfraTaskResult ToInfraTaskResult(this SignInResult result, IEnumerable<IdentityError>? errors = default)
+        {
+            return result.Succeeded
+                ? Success()
+                : Failure(errors!);
+        }
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ManolovPWS_v2.Infrastructure.DependencyInjection
 {
-    public static class RepositoryCollectionExtensions
+    public static class RepositoryInjection
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {

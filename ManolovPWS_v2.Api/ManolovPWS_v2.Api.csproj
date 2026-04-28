@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DotNetEnv" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.7" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ManolovPWS_v2.Infrastructure\ManolovPWS_v2.Infrastructure.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Modules.Contact\ManolovPWS_v2.Modules.Contact.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Modules.Content\ManolovPWS_v2.Modules.Content.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Modules.Identity\ManolovPWS_v2.Modules.Identity.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Modules.Projects\ManolovPWS_v2.Modules.Projects.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.ServiceDefaults\ManolovPWS_v2.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Shared\ManolovPWS_v2.Shared.csproj" />
   </ItemGroup>
 
 </Project>

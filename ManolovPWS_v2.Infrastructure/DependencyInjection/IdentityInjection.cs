@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ManolovPWS_v2.Infrastructure.DependencyInjection
 {
-    public static class IdentityServiceCollectionExtensions
+    public static class IdentityInjection
     {
         public static IServiceCollection AddUserIdentity
             (

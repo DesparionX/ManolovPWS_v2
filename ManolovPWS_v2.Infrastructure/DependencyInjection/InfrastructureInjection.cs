@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ManolovPWS_v2.Infrastructure.DependencyInjection
 {
-    public static class InfrastructureServiceCollectionExtensions
+    public static class InfrastructureInjection
     {
         public static IServiceCollection AddInfrastructure
             (
@@ -12,6 +12,7 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
             string connectionString)
         {
             services.AddDatabase(configuration, connectionString);
+            services.AddJwt(configuration);
             services.AddUserIdentity();
             services.AddRepositories();
             services.AddFactories();
