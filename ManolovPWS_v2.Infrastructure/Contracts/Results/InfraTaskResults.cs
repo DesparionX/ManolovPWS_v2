@@ -6,21 +6,19 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Results
     {
         public static InfraTaskResult Success() => new();
 
+        public static InfraTaskResult<TResponse> Success<TResponse>(TResponse value) => new(value);
+
         public static InfraTaskResult Failure(IEnumerable<IdentityError> errors)
             => new(errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
+
+        public static InfraTaskResult<TResponse> Failure<TResponse>(IEnumerable<IdentityError> errors)
+            => new(errors: errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
 
         public static InfraTaskResult ToInfraTaskResult(this IdentityResult result)
         {
             return result.Succeeded
                 ? Success()
                 : Failure(result.Errors);
-        }
-
-        public static InfraTaskResult ToInfraTaskResult(this SignInResult result, IEnumerable<IdentityError>? errors = default)
-        {
-            return result.Succeeded
-                ? Success()
-                : Failure(errors!);
         }
     }
 }

@@ -10,7 +10,6 @@ namespace ManolovPWS_v2.Shared.Abstractions.Results
 
     public interface ITaskResult<out T> : ITaskResult
     {
-        T? Value { get; }
-        IReadOnlyList<T>? Collection { get; }
+        T Value { get; }
     }
 }

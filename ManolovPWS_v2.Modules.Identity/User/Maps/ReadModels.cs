@@ -56,6 +56,17 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 Certificates: MapCertificates(user)
                 );
 
+        public static AuthUserReadModel ToAuthUserRm(this Domain.Models.User.User user)
+            => new(
+                Id: user.Id.Value,
+                UserName: user.UserName.Value,
+                Email: user.Email.Value,
+                FirstName: user.Name.FirstName,
+                MiddleName: user.Name.MiddleName,
+                LastName: user.Name.LastName,
+                ProfilePictureUrl: user.ProfilePicture?.Url.ToString()
+                );
+
         private static List<Contact> MapContacts(Domain.Models.User.User user)
             => user.Contacts.ContactList.Select(c => new Contact(
                 Network: c.Network,
@@ -91,7 +102,8 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
 
         private static List<Education> MapEducation(Domain.Models.User.User user)
             => user.EducationHistory.EducationEntries.Select(e => new Education(
-                School: e.School.Name,
+                SchoolName: e.School.Name,
+                SchoolType: e.School.Type,
                 Degree: e.Degree.Value,
                 FieldOfStudy: e.FieldOfStudy.Value,
                 StartDate: e.StudyPeriod.StartDate,

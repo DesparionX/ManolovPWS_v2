@@ -12,7 +12,7 @@ namespace ManolovPWS_v2.Modules.Identity.Results
     public sealed class IdentityAppResult<TResponse>(
         TResponse? value = default,
         IReadOnlyList<TResponse>? collection = default,
-        IReadOnlyList<IdentityAppError>? errors = default)
+        IReadOnlyList<IError>? errors = default)
         
         : ITaskResult<TResponse>
     {

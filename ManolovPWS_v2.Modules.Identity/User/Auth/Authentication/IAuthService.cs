@@ -4,6 +4,6 @@ namespace ManolovPWS_v2.Modules.Identity.User.Auth.Authentication
 {
     public interface IAuthService
     {
-        public Task<ITaskResult> AuthenticateAsync(string emailOrUserName, string password, bool isPersistent = false, CancellationToken cancellationToken = default);
+        public Task<ITaskResult<Domain.Models.User.User>> AuthenticateAsync(string emailOrUserName, string password, CancellationToken cancellationToken = default);
     }
 }

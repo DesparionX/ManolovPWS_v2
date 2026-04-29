@@ -1,4 +1,6 @@
-﻿using ManolovPWS_v2.Infrastructure.Contracts.Results;
+﻿using ManolovPWS_v2.Domain.Models.User;
+using ManolovPWS_v2.Infrastructure.Contracts.Maps;
+using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Exceptions;
 using ManolovPWS_v2.Infrastructure.Persistance.Entities;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
@@ -11,7 +13,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Auth
     {
         private readonly SignInManager<DbUser> _signInManager = signInManager;
 
-        public async Task<ITaskResult> AuthenticateAsync(string emailOrUserName, string password, bool isPersistent = false, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<User>> AuthenticateAsync(string emailOrUserName, string password, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -21,7 +23,10 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Auth
 
             var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
 
-            return signInResult.ToInfraTaskResult([new IdentityError { Code = "InvalidCredentials", Description = "Password does not match the given user." }]);
+            if (signInResult.Succeeded)
+                return InfraTaskResults.Success(user.ToDomain());
+
+            return InfraTaskResults.Failure<User>([new IdentityError { Code = "InvalidCredentials", Description = "Password does not match the given user." }]);
         }
     }
 }

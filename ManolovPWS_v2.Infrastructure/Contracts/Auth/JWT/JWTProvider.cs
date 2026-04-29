@@ -15,7 +15,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Auth.JWT
         {
             var claims = new List<Claim>
             {
-                new (ClaimTypes.NameIdentifier, request.Id),
+                new (ClaimTypes.NameIdentifier, request.Id.ToString()),
                 new (ClaimTypes.Name, request.UserName),
                 new (ClaimTypes.Email, request.Email)
             };
