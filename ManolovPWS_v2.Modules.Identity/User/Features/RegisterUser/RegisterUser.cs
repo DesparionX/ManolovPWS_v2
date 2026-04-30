@@ -3,6 +3,7 @@ using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
+using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
 {
@@ -16,23 +17,23 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
         string LastName,
         string Gender,
         DateOnly BirthDate
-        ) : ICommand<IdentityAppResult>;
+        ) : ICommand<ITaskResult>;
     
     public sealed class RegisterUserCommandHandler(IUserRepository userRepository, IUserFactory userFactory)
-        : ICommandHandler<RegisterUserCommand, IdentityAppResult>
+        : ICommandHandler<RegisterUserCommand, ITaskResult>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IUserFactory _userFactory = userFactory;
 
-        public async Task<IdentityAppResult> HandleAsync(RegisterUserCommand command, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult> HandleAsync(RegisterUserCommand command, CancellationToken cancellationToken = default)
         {
             var email = Email.Create(command.Email);
             if (await _userRepository.EmailExistsAsync(email, cancellationToken))
-                return (IdentityAppResult)IdentityAppResults.Failure([new IdentityAppError("The provided email is already in use.", "EmailAlreadyInUse")]);
+                return Result.Failure([new IdentityAppError("The provided email is already in use.", "EmailAlreadyInUse")]);
             
             var userName = UserName.Create(command.UserName);
             if (await _userRepository.UserNameExistsAsync(userName, cancellationToken))
-                return (IdentityAppResult)IdentityAppResults.Failure([new IdentityAppError("The provided username is already in use.", "UserNameAlreadyInUse")]);
+                return Result.Failure([new IdentityAppError("The provided username is already in use.", "UserNameAlreadyInUse")]);
             
             var id = UserId.New();
             var name = Name.Create(firstName: command.FirstName, lastName: command.LastName, middleName: command.MiddleName);
@@ -52,10 +53,10 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
 
             var result = await _userFactory.CreateWithPasswordAsync(user, command.Password, cancellationToken);
 
-            if (result is not null)
-                return (IdentityAppResult)IdentityAppResults.Success();
+            if (!result.IsSuccess || result.Value is null)
+                return Result.Failure([new IdentityAppError("Failed to create user with the provided password.", "UserCreationFailed")]);
 
-            return (IdentityAppResult)IdentityAppResults.Failure([new IdentityAppError("Failed to create user with the provided password.", "UserCreationFailed")]);
+            return Result.Success();
         }
     }
 }

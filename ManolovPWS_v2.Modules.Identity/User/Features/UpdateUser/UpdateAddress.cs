@@ -1,11 +1,8 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Domain.Models.User.Properties;
-using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
@@ -16,31 +13,38 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
         string City,
         string Street,
         string PostalCode)
-        : ICommand<IdentityAppResult>;
+        : ICommand<ITaskResult>;
 
     public sealed class UpdateAddressCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdateAddressCommand, IdentityAppResult>
+        : ICommandHandler<UpdateAddressCommand, ITaskResult>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
 
-        public async Task<IdentityAppResult> HandleAsync(UpdateAddressCommand command, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult> HandleAsync(UpdateAddressCommand command, CancellationToken cancellationToken = default)
         {
-            var user = await _userRepository.FindByIdAsync(_currentUser.Id, cancellationToken);
-
             var newAddress = Address.Create(
-                command.Country, 
-                command.Region, 
-                command.Municipality, 
-                command.City, 
-                command.Street, 
+                command.Country,
+                command.Region,
+                command.Municipality,
+                command.City,
+                command.Street,
                 command.PostalCode);
+
+            var result = await _userRepository.FindByIdAsync(_currentUser.Id, cancellationToken);
+
+            if(!result.IsSuccess)
+                return Result.Failure(result.Errors!);
+
+            var user = result.Value;
 
             var updated = user.UpdateAddress(newAddress);
 
-            var result = await _userRepository.SaveAsync(updated, cancellationToken);
+            var saveResult = await _userRepository.SaveAsync(updated, cancellationToken);
 
-            return IdentityAppResults.FromResult(result);
+            return saveResult.IsSuccess
+                ? Result.Success()
+                : Result.Failure(saveResult.Errors!);
         }
     }
 }

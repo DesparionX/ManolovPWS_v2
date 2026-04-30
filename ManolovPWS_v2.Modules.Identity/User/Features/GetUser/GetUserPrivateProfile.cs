@@ -1,6 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Domain.Models.User.Properties;
-using ManolovPWS_v2.Modules.Identity.Exceptions;
 using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Modules.Identity.User.Maps;
 using ManolovPWS_v2.Modules.Identity.User.Shared.ReadModels;
@@ -18,10 +17,11 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.GetUser
 
         public async Task<ITaskResult<PrivateUserReadModel>> HandleAsync(GetUserPrivateProfileQuery query, CancellationToken cancellationToken = default)
         {
-            var user = await _userRepository.FindByIdAsync(UserId.From(query.UserId), cancellationToken)
-                ?? throw new IdentityAppException("User is null.", "InvalidUser");
+            var result = await _userRepository.FindByIdAsync(UserId.From(query.UserId), cancellationToken);
 
-            return IdentityAppResults.Success(user.ToPrivateUserRm());
+            return result.IsSuccess ?
+                Result<PrivateUserReadModel>.Success(result.Value.ToPrivateUserRm()) 
+                : Result<PrivateUserReadModel>.Failure([new IdentityAppError(Code: "InvalidUser", Message: "User not found.")]);
         }
     }
 }

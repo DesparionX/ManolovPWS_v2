@@ -33,7 +33,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         }
 
         // Utility
-        private static string NormalizeName(string? value) => value?.Trim();
+        private static string NormalizeName(string? value) => value?.Trim() ?? string.Empty;
 
         // Validations
         private static void ValidateName(string firstName,string middleName, string lastName)

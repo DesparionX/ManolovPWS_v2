@@ -19,14 +19,14 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Auth
 
             var user = await _signInManager.UserManager.FindByEmailAsync(emailOrUserName) 
                 ?? await _signInManager.UserManager.FindByNameAsync(emailOrUserName)
-                ?? throw new InfrastructureException("Could not find user with given email or username", "UserNotFound");
+                ?? throw new InfrastructureException("You have entered an invalid username or password.", "InvalidCredentials");
 
             var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, lockoutOnFailure: false);
 
             if (signInResult.Succeeded)
-                return InfraTaskResults.Success(user.ToDomain());
+                return Result<User>.Success(user.ToDomain());
 
-            return InfraTaskResults.Failure<User>([new IdentityError { Code = "InvalidCredentials", Description = "Password does not match the given user." }]);
+            return Result<User>.Failure([new InfraError(Code: "InvalidCredentials", Message: "You have entered an invalid username or password." )]);
         }
     }
 }
