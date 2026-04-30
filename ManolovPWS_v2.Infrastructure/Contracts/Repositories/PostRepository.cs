@@ -3,7 +3,6 @@ using ManolovPWS_v2.Domain.Models.Post;
 using ManolovPWS_v2.Domain.Models.Post.Properties;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Infrastructure.Contracts.Maps;
-using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Exceptions;
 using ManolovPWS_v2.Infrastructure.Persistance;
 using ManolovPWS_v2.Shared.Abstractions.Results;
@@ -15,27 +14,27 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<IReadOnlyList<Post>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<IReadOnlyList<Post>>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var posts = await _context.Posts.ToListAsync(cancellationToken);
 
-            return posts.ToDomainList();
+            return Result<IReadOnlyList<Post>>.Success(posts.ToDomainList());
         }
 
-        public async Task<Post> FindByIdAsync(PostId id, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<Post>> FindByIdAsync(PostId id, CancellationToken cancellationToken = default)
         {
             var post = await _context.Posts.FindAsync([id.Value], cancellationToken)
                 ?? throw DbExceptions.PostNotFound(id.Value);
 
-            return post.ToDomain();
+            return Result<Post>.Success(post.ToDomain());
         }
 
-        public async Task<IReadOnlyList<Post>> FindByAuthorId(UserId authorId, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<IReadOnlyList<Post>>> FindByAuthorId(UserId authorId, CancellationToken cancellationToken = default)
         {
             var post = await _context.Posts.Where(p => p.AuthorId.Equals(authorId.Value)).ToListAsync(cancellationToken)
                 ?? throw DbExceptions.PostNotFoundByAuthorId(authorId.Value);
 
-            return post.ToDomainList();
+            return Result<IReadOnlyList<Post>>.Success(post.ToDomainList());
         }
 
         public async Task<ITaskResult> RemoveAsync(PostId id, CancellationToken cancellationToken = default)
@@ -47,7 +46,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return InfraTaskResults.Success();
+            return Result.Success();
         }
 
         public async Task<ITaskResult> SaveAsync(Post entity, CancellationToken cancellationToken = default)
@@ -58,7 +57,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return InfraTaskResults.Success();
+            return Result.Success();
         }
     }
 }

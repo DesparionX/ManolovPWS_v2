@@ -1,10 +1,9 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Factories;
 using ManolovPWS_v2.Domain.Models.Post;
 using ManolovPWS_v2.Infrastructure.Contracts.Maps;
+using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Persistance;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Factories
 {
@@ -12,7 +11,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Factories
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<Post?> CreateAsync(Post entity, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<Post>> CreateAsync(Post entity, CancellationToken cancellationToken = default)
         {
             var dbEntity = entity.ToDbEntity();
 
@@ -20,7 +19,9 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Factories
 
             var result = await _context.SaveChangesAsync(cancellationToken);
 
-            return result > 0 ? dbEntity.ToDomain() : null;
+            return result > 0 ?
+                Result<Post>.Success(dbEntity.ToDomain()) 
+                : Result<Post>.Failure([new InfraError(Code: "PostCreationFailed", Message: "Failed to create the post.")]);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ManolovPWS_v2.Modules.Identity.Exceptions;
-using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
 using ManolovPWS_v2.Modules.Identity.User.Maps;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
@@ -21,7 +20,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.SignInUser
                 ?? throw new IdentityAppException("There is a problem with the authentication process.", "UnableToAuthenticate");
 
             if (!result.IsSuccess)
-                return IdentityAppResults.Failure<SignInResponse>(result.Errors!);
+                return Result<SignInResponse>.Failure(result.Errors!);
 
             var user = result.Value;
 
@@ -35,7 +34,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.SignInUser
 
             var response = new SignInResponse(token, user.ToAuthUserRm());
 
-            return IdentityAppResults.Success(response);
+            return Result<SignInResponse>.Success(response);
         }
     }
 }

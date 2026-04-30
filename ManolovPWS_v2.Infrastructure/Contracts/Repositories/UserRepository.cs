@@ -15,41 +15,41 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
     {
         private readonly UserManager<DbUser> _userManager = userManager;
 
-        public async Task<IReadOnlyList<User>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<IReadOnlyList<User>>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var users = await _userManager.Users.ToListAsync(cancellationToken);
 
-            return users.ToDomainList();
+            return Result<IReadOnlyList<User>>.Success(users.ToDomainList());
         }
 
-        public async Task<User> FindByEmailAsync(Email email, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<User>> FindByEmailAsync(Email email, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var user = await _userManager.FindByEmailAsync(email.Value) ??
                 throw DbExceptions.UserNotFound(email.Value);
 
-            return user.ToDomain();
+            return Result<User>.Success(user.ToDomain());
         }
 
-        public async Task<User> FindByUserNameAsync(UserName userName, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<User>> FindByUserNameAsync(UserName userName, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var user = await _userManager.FindByNameAsync(userName.Value) ??
                 throw DbExceptions.UserNotFound(userName.Value);
 
-            return user.ToDomain();
+            return Result<User>.Success(user.ToDomain());
         }
 
-        public async Task<User> FindByIdAsync(UserId id, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<User>> FindByIdAsync(UserId id, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             var user = await _userManager.FindByIdAsync(id.Value.ToString()) ??
                 throw DbExceptions.UserNotFound(id.Value.ToString());
 
-            return user.ToDomain();
+            return Result<User>.Success(user.ToDomain());
         }
 
         public async Task<ITaskResult> RemoveAsync(UserId id, CancellationToken cancellationToken = default)
@@ -75,6 +75,8 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
         public async Task<bool> EmailExistsAsync(Email email, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             var user = await _userManager.FindByEmailAsync(email.Value);
 
             return user is not null;
@@ -82,6 +84,8 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
         
         public async Task<bool> UserNameExistsAsync(UserName userName, CancellationToken cancellationToken = default)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             var user = await _userManager.FindByNameAsync(userName.Value);
 
             return user is not null;

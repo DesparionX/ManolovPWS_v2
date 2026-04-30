@@ -1,7 +1,9 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Factories;
 using ManolovPWS_v2.Domain.Models.Project;
 using ManolovPWS_v2.Infrastructure.Contracts.Maps;
+using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Persistance;
+using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Factories
 {
@@ -9,7 +11,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Factories
     {
         private readonly AppDbContext _context = context;
 
-        public async Task<Project?> CreateAsync(Project project, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<Project>> CreateAsync(Project project, CancellationToken cancellationToken = default)
         {
             var entity = project.ToDbEntity();
 
@@ -17,7 +19,9 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Factories
 
             var result = await _context.SaveChangesAsync(cancellationToken);
 
-            return result > 0 ? entity.ToDomain() : default;
+            return result > 0 ? 
+                Result<Project>.Success(entity.ToDomain()) 
+                : Result<Project>.Failure([new InfraError(Code: "ProjectCreationFailed", Message: "Failed to create the project.")]);
         }
     }
 }

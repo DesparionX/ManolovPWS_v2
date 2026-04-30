@@ -1,24 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using ManolovPWS_v2.Shared.Abstractions.Results;
+using Microsoft.AspNetCore.Identity;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Results
 {
     public static class InfraTaskResults
     {
-        public static InfraTaskResult Success() => new();
-
-        public static InfraTaskResult<TResponse> Success<TResponse>(TResponse value) => new(value);
-
-        public static InfraTaskResult Failure(IEnumerable<IdentityError> errors)
-            => new(errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
-
-        public static InfraTaskResult<TResponse> Failure<TResponse>(IEnumerable<IdentityError> errors)
-            => new(errors: errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
-
-        public static InfraTaskResult ToInfraTaskResult(this IdentityResult result)
+        public static Result ToInfraTaskResult(this IdentityResult result)
         {
             return result.Succeeded
-                ? Success()
-                : Failure(result.Errors);
+                ? Result.Success()
+                : Result.Failure(result.Errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
         }
     }
 }
