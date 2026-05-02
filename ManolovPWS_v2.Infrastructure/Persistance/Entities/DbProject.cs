@@ -1,5 +1,6 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
 using ManolovPWS_v2.Domain.Models.Project.Properties;
+using ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack;
 
 namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
 {
@@ -16,5 +17,6 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Entities
         public DateOnly? UpdatedDate { get; set; }
         public ProjectGallery? Gallery { get; set; }
         public string Thumb { get; set; } = string.Empty;
+        public ProjectStack Stack { get; set; } = default!;
     }
 }

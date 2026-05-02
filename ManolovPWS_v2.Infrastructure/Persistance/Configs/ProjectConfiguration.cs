@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.Project.Properties;
+using ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack;
 using ManolovPWS_v2.Infrastructure.Persistance.Entities;
 using ManolovPWS_v2.Infrastructure.Persistance.Serialization;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +53,13 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .HasConversion(
                     v => JsonSerializer.Serialize(v, JsonOptions.Default),
                     v => JsonSerializer.Deserialize<ProjectGallery>(v, JsonOptions.Default)!)
+                .HasColumnType("jsonb");
+
+            // JSON for stack
+            project.Property(p => p.Stack)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, JsonOptions.Default),
+                    v => JsonSerializer.Deserialize<ProjectStack>(v, JsonOptions.Default)!)
                 .HasColumnType("jsonb");
         }
     }
