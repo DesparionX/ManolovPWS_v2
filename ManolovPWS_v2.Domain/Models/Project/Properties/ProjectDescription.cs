@@ -1,7 +1,4 @@
 ﻿using ManolovPWS_v2.Domain.Models.Project.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ManolovPWS_v2.Domain.Models.Project.Properties
 {

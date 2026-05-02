@@ -1,6 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Abstractions;
 using ManolovPWS_v2.Domain.Models.Project.Exceptions;
 using ManolovPWS_v2.Domain.Models.Project.Properties;
+using ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack;
 
 namespace ManolovPWS_v2.Domain.Models.Project
 {
@@ -17,6 +18,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
         public ProjectUpdatedDate? UpdatedDate { get; }
         public ProjectGallery Gallery { get; }
         public ProjectPicture Thumb { get; }
+        public ProjectStack ProjectStack { get; }
 
 #pragma warning disable S107 // Constructor has too many parameters
         private Project(
@@ -28,6 +30,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
             ProjectState state,
 
             ProjectPicture thumb,
+            ProjectStack stack,
             ProjectUploadedDate uploadedDate,
             ProjectUpdatedDate? updatedDate = default,
 
@@ -47,6 +50,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
             UpdatedDate = updatedDate;
             Gallery = gallery ?? ProjectGallery.Empty();
             Thumb = thumb;
+            ProjectStack = stack;
         }
 
         private Project With(
@@ -58,7 +62,8 @@ namespace ManolovPWS_v2.Domain.Models.Project
             ProjectGitHubUrl? gitHubUrl = default,
 
             ProjectPicture? thumb = default,
-            ProjectGallery? gallery = default
+            ProjectGallery? gallery = default,
+            ProjectStack? stack = default
             )
         {
             var updateDate = ProjectUpdatedDate.Create(DateOnly.FromDateTime(DateTime.UtcNow));
@@ -66,17 +71,18 @@ namespace ManolovPWS_v2.Domain.Models.Project
             ValidateUpdateDate(UploadedDate, updateDate);
 
             return new(
-                Id,
-                OwnerId,
-                name ?? Name,
-                description ?? Description,
-                state ?? State,
-                thumb ?? Thumb,
-                UploadedDate,
-                updateDate,
-                liveUrl ?? LiveUrl,
-                gitHubUrl ?? GitHubUrl,
-                gallery ?? Gallery
+                id: Id,
+                ownerId: OwnerId,
+                name: name ?? Name,
+                description: description ?? Description,
+                state: state ?? State,
+                thumb: thumb ?? Thumb,
+                uploadedDate: UploadedDate,
+                updatedDate: updateDate,
+                liveUrl: liveUrl ?? LiveUrl,
+                gitHubUrl:gitHubUrl ?? GitHubUrl,
+                gallery: gallery ?? Gallery,
+                stack: stack ?? ProjectStack
                 );
         }
 
@@ -89,6 +95,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
             ProjectState state,
 
             ProjectPicture thumb,
+            ProjectStack stack,
             ProjectUploadedDate uploadedDate,
             ProjectUpdatedDate? updatedDate = default,
 
@@ -100,17 +107,18 @@ namespace ManolovPWS_v2.Domain.Models.Project
             ValidateUpdateDate(uploadedDate, updatedDate);
 
             return new(
-                id,
-                ownerId,
-                name,
-                description,
-                state,
-                thumb,
-                uploadedDate,
-                updatedDate,
-                liveUrl,
-                gitHubUrl,
-                gallery
+                id: id,
+                ownerId: ownerId,
+                name: name,
+                description: description,
+                state: state,
+                thumb: thumb,
+                uploadedDate: uploadedDate,
+                updatedDate: updatedDate,
+                liveUrl: liveUrl,
+                gitHubUrl: gitHubUrl,
+                gallery: gallery,
+                stack: stack
                 );
         }
         
@@ -156,11 +164,12 @@ namespace ManolovPWS_v2.Domain.Models.Project
         public Project ClearGallery()
             => With(gallery: ProjectGallery.Empty());
 
-        public Project ReplaceGallery(ProjectGallery newGallery)
+        public Project ReplaceGallery(IEnumerable<ProjectPicture> newGallery)
         {
-            if (Gallery.Equals(newGallery)) return this;
+            var updated = ProjectGallery.Create(newGallery);
+            if (Gallery.Equals(updated)) return this;
             
-            return With(gallery: newGallery);
+            return With(gallery: updated);
         }
         public Project AddToGallery(ProjectPicture newPicture)
         {
@@ -194,6 +203,44 @@ namespace ManolovPWS_v2.Domain.Models.Project
 
             return With(gallery: updated);
         }
+
+        // Stack manipulations
+        public Project UpdateStack(ProjectStack newStack)
+        {
+            if (ProjectStack.Equals(newStack)) return this;
+            return With(stack: newStack);
+        }
+        public Project ReplaceStack(IEnumerable<StackTag> newStack)
+        {
+            var updated = ProjectStack.Create(newStack);
+            if (ProjectStack.Equals(updated)) return this;
+            return With(stack: updated);
+        }
+        public Project AddToStack(StackTag newTag)
+        {
+            var updated = ProjectStack.AddTag(newTag);
+            if (ProjectStack.Equals(updated)) return this;
+            return With(stack: updated);
+        }
+        public Project AddToStack(IEnumerable<StackTag> newTags)
+        {
+            var updated = ProjectStack.AddTags(newTags);
+            if (ProjectStack.Equals(updated)) return this;
+            return With(stack: updated);
+        }
+        public Project RemoveFromStack(StackTag tagToRemove)
+        {
+            var updated = this.ProjectStack.RemoveTag(tagToRemove);
+            if (ProjectStack.Equals(updated)) return this;
+            return With(stack: updated);
+        }
+        public Project RemoveFromStack(IEnumerable<StackTag> tagsToRemove)
+        {
+            var updated = this.ProjectStack.RemoveTags(tagsToRemove);
+            if (ProjectStack.Equals(updated)) return this;
+            return With(stack: updated);
+        }
+
 
         // Validations
         private static void ValidateUpdateDate(ProjectUploadedDate uploaded, ProjectUpdatedDate? updated)
