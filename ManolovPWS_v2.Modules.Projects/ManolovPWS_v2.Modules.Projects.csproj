@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Project\Features\" />
-    <Folder Include="Project\Maps\" />
-    <Folder Include="Project\Shared\" />
+    <Folder Include="Project\Shared\SharedProperties\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ManolovPWS_v2.Domain\ManolovPWS_v2.Domain.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.Shared\ManolovPWS_v2.Shared.csproj" />
   </ItemGroup>
 
