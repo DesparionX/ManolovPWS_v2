@@ -8,6 +8,13 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
+    <Folder Include="CV\" />
+    <Folder Include="Post\Features\GetPosts\" />
+    <Folder Include="Results\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ManolovPWS_v2.Domain\ManolovPWS_v2.Domain.csproj" />
   </ItemGroup>
 
 </Project>

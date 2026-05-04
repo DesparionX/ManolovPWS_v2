@@ -105,13 +105,14 @@ namespace ManolovPWS_v2.Domain.Models.Post
         }
 
         // Content - Gallery manipulations
-        public Post ReplaceGallery(PostGallery newGallery)
+        public Post ReplaceGallery(IEnumerable<PostPicture> newGallery)
         {
-            var withNewGallery = Content.ReplaceGallery(newGallery);
+            var updated = PostGallery.Create(newGallery);
+            var updatedGallery = Content.ReplaceGallery(updated);
 
-            if (Content.Equals(withNewGallery)) return this;
+            if (Content.Equals(updatedGallery)) return this;
             
-            return With(content: withNewGallery);
+            return With(content: updatedGallery);
         }
         public Post AddToGallery(PostPicture newPicture)
         {
