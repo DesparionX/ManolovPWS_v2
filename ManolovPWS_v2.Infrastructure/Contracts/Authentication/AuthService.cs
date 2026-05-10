@@ -7,7 +7,7 @@ using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
 using ManolovPWS_v2.Shared.Abstractions.Results;
 using Microsoft.AspNetCore.Identity;
 
-namespace ManolovPWS_v2.Infrastructure.Contracts.Auth
+namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication
 {
     public sealed class AuthService(SignInManager<DbUser> signInManager) : IAuthService
     {

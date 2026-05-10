@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ManolovPWS_v2.Infrastructure.Contracts.Auth.JWT
+﻿namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication.JWT
 {
     public sealed class JwtSettings
     {

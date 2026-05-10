@@ -1,11 +1,12 @@
 ﻿using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
+using ManolovPWS_v2.Shared.Authorization;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace ManolovPWS_v2.Infrastructure.Contracts.Auth.JWT
+namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication.JWT
 {
     public sealed class JwtProvider(IOptions<JwtSettings> options) : ITokenProvider
     {
@@ -23,6 +24,10 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Auth.JWT
             // Roles
             if (request.Roles is not null)
                 claims.AddRange(request.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+            // Permissions
+            if (request.Permissions is not null)
+                claims.AddRange(request.Permissions.Select(permission => new Claim(CustomClaimTypes.Permission, permission)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 

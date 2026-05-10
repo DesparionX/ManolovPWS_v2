@@ -1,8 +1,6 @@
 using DotNetEnv;
-using ManolovPWS_v2.Infrastructure.Contracts.Auth.JWT;
+using ManolovPWS_v2.Api.DependencyInjection;
 using ManolovPWS_v2.Infrastructure.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,25 +23,8 @@ builder.AddServiceDefaults();
 builder.Services.AddInfrastructure(builder.Configuration, connectionString);
 
 // Auth
-builder.Services
-    .AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
-    {
-        var jwt = builder.Configuration.GetSection("Jwt").Get<JwtSettings>();
-
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-
-            ValidIssuer = jwt!.Issuer,
-            ValidAudience = jwt.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt!.Key))
-        };
-    });
-
+builder.Services.AddAuthenticationDI(builder.Configuration);
+builder.Services.AddAuthorizationDI();
 
 builder.Services.AddControllers();
 
@@ -62,6 +43,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

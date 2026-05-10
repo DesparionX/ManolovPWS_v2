@@ -1,4 +1,4 @@
-﻿using ManolovPWS_v2.Infrastructure.Contracts.Auth;
+﻿using ManolovPWS_v2.Infrastructure.Contracts.Authentication;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 

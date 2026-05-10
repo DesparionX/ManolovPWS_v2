@@ -1,0 +1,12 @@
+﻿using ManolovPWS_v2.Shared.Abstractions.Results;
+
+namespace ManolovPWS_v2.Modules.Identity.User.Auth.Authorization
+{
+    public interface IAuthorizationService
+    {
+        public Task<ITaskResult<IEnumerable<Domain.Models.User.User>>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken = default);
+        public Task<IEnumerable<string>?> GetUserRolesAsync(string userId, CancellationToken cancellationToken = default);
+        public Task<IEnumerable<string>?> GetUserPermissionsAsync(string userId, CancellationToken cancellationToken = default);
+        public Task<ITaskResult<bool>> UserHasPermissionAsync(string userId,string permissionName, CancellationToken cancellationToken = default);
+    }
+}
