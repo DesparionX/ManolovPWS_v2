@@ -1,17 +1,19 @@
 ﻿using ManolovPWS_v2.Domain.Models.User;
+using ManolovPWS_v2.Infrastructure.Contracts.Maps;
 using ManolovPWS_v2.Infrastructure.Contracts.Results;
+using ManolovPWS_v2.Infrastructure.Persistance.Entities;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authorization;
 using ManolovPWS_v2.Shared.Abstractions.Results;
 using ManolovPWS_v2.Shared.Authorization;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
 {
-    public sealed class AuthorizationService(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+    public sealed class AuthorizationService(UserManager<DbUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
         : IAuthorizationService
     {
-        private readonly UserManager<User> _userManager = userManager;
-        private readonly RoleManager<IdentityRole<Guid>> _roleManager = roleManager;
+        private readonly UserManager<DbUser> _userManager = userManager;
 
         public async Task<ITaskResult<IEnumerable<User>>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken = default)
         {
@@ -19,9 +21,8 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
 
             var usersInRole = await _userManager.GetUsersInRoleAsync(roleName);
 
-            return Result<IEnumerable<User>>.Success(usersInRole);
+            return Result<IEnumerable<User>>.Success(usersInRole.ToList().ToDomainList());
         }
-
         public async Task<IEnumerable<string>?> GetUserRolesAsync(string userId, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -35,7 +36,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
 
             return roles;
         }
-
         public async Task<IEnumerable<string>?> GetUserPermissionsAsync(string userId, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -54,7 +54,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
 
             return permissions;
         }
-
         public async Task<ITaskResult<bool>> UserHasPermissionAsync(string userId, string permissionName, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -76,6 +75,64 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
                 }, cancellationToken);
 
             return Result<bool>.Success(hasPermission);
+        }
+        public async Task<ITaskResult> GiveUserPermission(string userId, string permissionName, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user is null)
+                return Result.Failure([new InfraError(Code: "UserNotFound", Message: $"User with ID '{userId}' not found.")]);
+
+            if (!PermissionExists(permissionName))
+                return Result.Failure([new InfraError(Code: "PermissionNotFound", Message: $"Permission '{permissionName}' does not exist.")]);
+
+            if (await HasPermissionAsync(user, permissionName))
+                return Result.Failure([new InfraError(Code: "PermissionAlreadyAssigned", Message: $"User already has the '{permissionName}' permission.")]);
+
+            var claim = new Claim(CustomClaimTypes.Permission, permissionName);
+
+            var result = await _userManager.AddClaimAsync(user, claim);
+
+            return result.Succeeded
+                ? Result.Success()
+                : Result.Failure(result.Errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
+        }
+        public async Task<ITaskResult> RevokeUserPermission(string userId, string permissionName, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user is null)
+                return Result.Failure([new InfraError(Code: "UserNotFound", Message: $"User with ID '{userId}' not found.")]);
+
+            if (!PermissionExists(permissionName))
+                return Result.Failure([new InfraError(Code: "PermissionNotFound", Message: $"Permission '{permissionName}' does not exist.")]);
+
+            if (!await HasPermissionAsync(user, permissionName))
+                return Result.Failure([new InfraError(Code: "PermissionNotAssigned", Message: $"User does not have the '{permissionName}' permission.")]);
+
+            var claim = new Claim(CustomClaimTypes.Permission, permissionName);
+
+            var result = await _userManager.RemoveClaimAsync(user, claim);
+
+            return result.Succeeded
+                ? Result.Success()
+                : Result.Failure(result.Errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
+        }
+
+        // Helper methods
+        private static bool PermissionExists(string permissionName)
+            => Permissions.AllPermissions.Any(p => p.Equals(permissionName, StringComparison.OrdinalIgnoreCase));
+        private async Task<bool> HasPermissionAsync(DbUser user, string permissionName)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            if (claims is null) return false;
+            
+            return claims.Any(c => c.Type.Equals(CustomClaimTypes.Permission) && c.Value.Equals(permissionName));
         }
     }
 }
