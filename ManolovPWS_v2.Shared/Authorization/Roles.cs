@@ -2,8 +2,17 @@
 {
     public static class Roles
     {
-        public const string Admin = "Admin";
-        public const string Moderator = "Moderator";
-        public const string User = "User";
+        public const string Owner = "owner";
+        public const string Admin = "admin";
+        public const string Moderator = "moderator";
+        public const string User = "user";
+
+        public static IReadOnlyCollection<string> AllRoles { get; } =
+            [
+                Owner,
+                Admin,
+                Moderator,
+                User
+            ];
     }
 }

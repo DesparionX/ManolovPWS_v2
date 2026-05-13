@@ -48,12 +48,12 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 ProfilePictureUrl: user.ProfilePicture?.Url.ToString(),
                 BirthDate: user.BirthDate.Value,
                 Gender: user.Gender.ToString(),
-                Contacts: MapContacts(user),
-                Skills: MapSkills(user),
-                Languages: MapLanguages(user),
-                Experience: MapExperience(user),
-                EducationHistory: MapEducation(user),
-                Certificates: MapCertificates(user)
+                Contacts: user.MapContacts(),
+                Skills: user.MapSkills(),
+                Languages: user.MapLanguages(),
+                Experience: user.MapExperience(),
+                EducationHistory: user.MapEducation(),
+                Certificates: user.MapCertificates()
                 );
 
         public static AuthUserReadModel ToAuthUserRm(this Domain.Models.User.User user)
@@ -67,14 +67,14 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 ProfilePictureUrl: user.ProfilePicture?.Url.ToString()
                 );
 
-        private static List<Contact> MapContacts(Domain.Models.User.User user)
+        public static List<Contact> MapContacts(this Domain.Models.User.User user)
             => user.Contacts.ContactList.Select(c => new Contact(
                 Network: c.Network,
                 ProfileName: c.ProfileName,
                 FullUrl: c.FullUrl.ToString()
                 )).ToList();
 
-        private static List<Skill> MapSkills(Domain.Models.User.User user)
+        public static List<Skill> MapSkills(this Domain.Models.User.User user)
             => user.Skills.Skills.Select(s => new Skill(
                 Name: s.Name.Value,
                 Level: s.Level.Value,
@@ -82,7 +82,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 Category: s.Category.Name
                 )).ToList();
 
-        private static List<Language> MapLanguages(Domain.Models.User.User user)
+        public static List<Language> MapLanguages(this Domain.Models.User.User user)
             => user.Skills.Languages.Select(l => new Language(
                 LanguageName: l.Language.Value,
                 ReadingLevel: l.Level?.Reading.ToString(),
@@ -91,7 +91,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 IsNative: l.IsNative
                 )).ToList();
 
-        private static List<Job> MapExperience(Domain.Models.User.User user)
+        public static List<Job> MapExperience(this Domain.Models.User.User user)
             => user.Experience.Jobs.Select(j => new Job(
                 Title: j.Title.Value,
                 Company: j.Company.Value,
@@ -100,7 +100,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 EndDate: j.Period.EndDate
                 )).ToList();
 
-        private static List<Education> MapEducation(Domain.Models.User.User user)
+        public static List<Education> MapEducation(this Domain.Models.User.User user)
             => user.EducationHistory.EducationEntries.Select(e => new Education(
                 SchoolName: e.School.Name,
                 SchoolType: e.School.Type,
@@ -110,7 +110,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 EndDate: e.StudyPeriod.EndDate
                 )).ToList();
 
-        private static List<Certificate> MapCertificates(Domain.Models.User.User user)
+        public static List<Certificate> MapCertificates(this Domain.Models.User.User user)
             => user.Certificates.CertificatesList.Select(c => new Certificate(
                 Title: c.Title.Value,
                 Issuer: c.Issuer.Value,

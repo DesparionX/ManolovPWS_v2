@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="CV\Shared\Properties\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Results\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ManolovPWS_v2.Domain\ManolovPWS_v2.Domain.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Modules.Identity\ManolovPWS_v2.Modules.Identity.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.Modules.Projects\ManolovPWS_v2.Modules.Projects.csproj" />
   </ItemGroup>
 
 </Project>

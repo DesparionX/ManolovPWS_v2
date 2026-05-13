@@ -15,6 +15,21 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
     {
         private readonly UserManager<DbUser> _userManager = userManager;
 
+        public async Task<ITaskResult<User>> GetOwnerAsync(string ownerRole, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (!RoleExists(ownerRole))
+                return Result<User>.Failure([new InfraError(Code: "RoleNotFound", Message: $"Role '{ownerRole}' does not exist.")]);
+
+            var usersInRole = await _userManager.GetUsersInRoleAsync(ownerRole);
+
+            var owner = usersInRole.FirstOrDefault();
+            if (owner is null)
+                return Result<User>.Failure([new InfraError(Code: "OwnerNotFound", Message: $"No user found in the '{ownerRole}' role.")]);
+
+            return Result<User>.Success(owner.ToDomain());
+        }
         public async Task<ITaskResult<IEnumerable<User>>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -134,5 +149,8 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
             
             return claims.Any(c => c.Type.Equals(CustomClaimTypes.Permission) && c.Value.Equals(permissionName));
         }
+        private static bool RoleExists(string roleName)
+            => Roles.AllRoles.Any(r => r.Equals(roleName, StringComparison.OrdinalIgnoreCase));
+
     }
 }

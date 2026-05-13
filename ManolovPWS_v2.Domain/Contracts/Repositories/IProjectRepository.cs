@@ -7,6 +7,6 @@ namespace ManolovPWS_v2.Domain.Contracts.Repositories
 {
     public interface IProjectRepository : IRepository<Project, ProjectId>
     {
-        Task<ITaskResult<IReadOnlyList<Project>>> FindByOwner(UserId ownerId, CancellationToken cancellationToken = default);
+        Task<ITaskResult<IReadOnlyList<Project>>> FindByOwnerIdAsync(UserId ownerId, CancellationToken cancellationToken = default);
     }
 }

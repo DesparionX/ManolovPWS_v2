@@ -29,7 +29,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
             return Result<Project>.Success(project.ToDomain());
         }
 
-        public async Task<ITaskResult<IReadOnlyList<Project>>> FindByOwner(UserId ownerId, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<IReadOnlyList<Project>>> FindByOwnerIdAsync(UserId ownerId, CancellationToken cancellationToken = default)
         {
             var userProjects = await _context.Projects.Where(p => p.OwnerId.Equals(ownerId.Value)).ToListAsync(cancellationToken)
                 ?? throw DbExceptions.EmptyProjectListForUser(ownerId.Value);

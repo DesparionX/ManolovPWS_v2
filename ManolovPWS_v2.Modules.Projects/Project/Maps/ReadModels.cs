@@ -24,5 +24,15 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Maps
 
         public static IReadOnlyList<ProjectReadModel> ToReadModelList(this IReadOnlyList<Domain.Models.Project.Project> projects)
             => projects.Select(p => p.ToReadModel()).ToList();
+
+        public static CVProjectReadModel ToCVReadModel(this Domain.Models.Project.Project project)
+            => new(
+                Name: project.Name.Value,
+                Description: project.Description.Value,
+                State: project.State.ToString(),
+                LiveUrl: project.LiveUrl?.Value.ToString(),
+                GitHubUrl: project.GitHubUrl?.Value.ToString(),
+                Stack: project.ProjectStack.StackList.Select(t => t.Tag).ToList()
+            );
     }
 }
