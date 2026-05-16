@@ -1,5 +1,6 @@
 using DotNetEnv;
 using ManolovPWS_v2.Api.DependencyInjection;
+using ManolovPWS_v2.Api.Extensions;
 using ManolovPWS_v2.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,10 @@ builder.AddServiceDefaults();
 
 
 // Add services to the container.
+builder.Services.AddApiServices();
 builder.Services.AddInfrastructure(builder.Configuration, connectionString);
+builder.Services.AddApplication();
+
 
 // Auth
 builder.Services.AddAuthenticationDI(builder.Configuration);
@@ -30,6 +34,7 @@ builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddApiCors(builder.Configuration);
 
 var app = builder.Build();
 
@@ -43,6 +48,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 

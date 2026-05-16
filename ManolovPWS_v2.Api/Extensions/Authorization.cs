@@ -1,6 +1,6 @@
 ﻿using ManolovPWS_v2.Shared.Authorization;
 
-namespace ManolovPWS_v2.Api.DependencyInjection
+namespace ManolovPWS_v2.Api.Extensions
 {
     public static class Authorization
     {

@@ -1,5 +1,7 @@
 ﻿using ManolovPWS_v2.Infrastructure.Contracts.Authentication;
+using ManolovPWS_v2.Infrastructure.Contracts.Authorization;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
+using ManolovPWS_v2.Modules.Identity.User.Auth.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ManolovPWS_v2.Infrastructure.DependencyInjection
@@ -12,6 +14,7 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
         {
             // Custom services registration goes here
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
 
             return services;
         }

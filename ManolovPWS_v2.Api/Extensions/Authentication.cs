@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace ManolovPWS_v2.Api.DependencyInjection
+namespace ManolovPWS_v2.Api.Extensions
 {
     public static class Authentication
     {

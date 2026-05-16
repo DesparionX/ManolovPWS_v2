@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="DotNetEnv" Version="3.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +20,10 @@
     <ProjectReference Include="..\ManolovPWS_v2.Modules.Projects\ManolovPWS_v2.Modules.Projects.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.ServiceDefaults\ManolovPWS_v2.ServiceDefaults.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.Shared\ManolovPWS_v2.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\User\" />
   </ItemGroup>
 
 </Project>
