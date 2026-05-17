@@ -2,6 +2,7 @@
 using ManolovPWS_v2.Domain.Models.Project.Properties;
 using ManolovPWS_v2.Modules.Projects.Project.Maps;
 using ManolovPWS_v2.Modules.Projects.Project.Shared.ReadModels;
+using ManolovPWS_v2.Modules.Projects.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Results;
 
@@ -21,7 +22,7 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.GetProjects
 
             return result.IsSuccess
                 ? Result<ProjectReadModel>.Success(result.Value.ToReadModel())
-                : Result<ProjectReadModel>.Failure(result.Errors);
+                : Result<ProjectReadModel>.Failure([ProjectAppErrors.ProjectNotFound]);
         }
     }
 }

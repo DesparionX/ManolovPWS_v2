@@ -1,5 +1,6 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Domain.Models.Project.Properties;
+using ManolovPWS_v2.Modules.Projects.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Results;
 
@@ -21,7 +22,7 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
             var result = await _repository.FindByIdAsync(projectId, cancellationToken);
 
             if (!result.IsSuccess)
-                return Result.Failure(result.Errors);
+                return Result.Failure([ProjectAppErrors.ProjectNotFound]);
 
             var project = result.Value;
 
@@ -31,7 +32,7 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 
             return saveResult.IsSuccess
                 ? Result.Success()
-                : Result.Failure(saveResult.Errors);
+                : Result.Failure([ProjectAppErrors.ProjectUpdateFailed]);
         }
     }
 }

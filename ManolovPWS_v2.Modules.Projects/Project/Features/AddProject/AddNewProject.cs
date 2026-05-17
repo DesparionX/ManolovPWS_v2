@@ -3,6 +3,7 @@ using ManolovPWS_v2.Domain.Models.Project.Properties;
 using ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Modules.Projects.Project.Maps;
+using ManolovPWS_v2.Modules.Projects.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
 using ManolovPWS_v2.Shared.Abstractions.Results;
@@ -57,7 +58,7 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.AddProject
 
             return result.IsSuccess ?
                 Result.Success()
-                : Result.Failure(result.Errors);
+                : Result.Failure([ProjectAppErrors.ProjectCreationFailed]);
         }
     }
 }
