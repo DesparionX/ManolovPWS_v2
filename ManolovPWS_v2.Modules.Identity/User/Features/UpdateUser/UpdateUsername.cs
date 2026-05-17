@@ -1,5 +1,6 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Domain.Models.User.Properties;
+using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
 using ManolovPWS_v2.Shared.Abstractions.Results;
@@ -20,7 +21,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
             var result = await _userRepository.FindByIdAsync(UserId.From(_currentUser.Id.ToString()), cancellationToken);
 
             if (!result.IsSuccess)
-                return Result.Failure(result.Errors);
+                return Result.Failure([IdentityAppErrors.UserNotFound]);
 
             var user = result.Value;
 
@@ -30,7 +31,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 
             return saveResult.IsSuccess
                 ? Result.Success()
-                : Result.Failure(saveResult.Errors);
+                : Result.Failure([IdentityAppErrors.UserUpdateFailed]);
         }
     }
 }

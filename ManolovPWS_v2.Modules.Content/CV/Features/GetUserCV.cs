@@ -1,6 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Modules.Content.CV.Services;
 using ManolovPWS_v2.Modules.Content.CV.Shared.ReadModels;
+using ManolovPWS_v2.Modules.Content.Results;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authorization;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Results;
@@ -24,13 +25,13 @@ namespace ManolovPWS_v2.Modules.Content.CV.Features
         {
             var result = await _authorizationService.GetOwnerAsync(Roles.Owner, cancellationToken);
             if (!result.IsSuccess)
-                return Result<PublicCVReadModel>.Failure(result.Errors);
+                return Result<PublicCVReadModel>.Failure([ContentAppErrors.OwnerNotFound]);
 
             var owner = result.Value;
 
             var projectsRes = await _projectRepository.FindByOwnerIdAsync(owner.Id, cancellationToken);
             if (!projectsRes.IsSuccess)
-                return Result<PublicCVReadModel>.Failure(projectsRes.Errors);
+                return Result<PublicCVReadModel>.Failure([ContentAppErrors.EmptyProjectCollection]);
 
             var cv = _cvBuilder.Build(user: owner, projects: projectsRes.Value);
 

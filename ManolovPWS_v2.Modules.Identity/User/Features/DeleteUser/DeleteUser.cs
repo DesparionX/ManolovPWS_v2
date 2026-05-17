@@ -1,5 +1,6 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Domain.Models.User.Properties;
+using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Results;
 
@@ -19,7 +20,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.DeleteUser
 
             return result.IsSuccess ?
                 Result.Success()
-                : Result.Failure(result.Errors);
+                : Result.Failure([IdentityAppErrors.DeletionFailed]);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using ManolovPWS_v2.Modules.Identity.Exceptions;
+﻿using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authorization;
 using ManolovPWS_v2.Modules.Identity.User.Maps;
@@ -18,11 +18,13 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.SignInUser
 
         public async Task<ITaskResult<SignInResponse>> HandleAsync(SignInUserQuery request, CancellationToken cancellationToken = default)
         {
-            var result = (await _authService.AuthenticateAsync(request.UserNameOrEmail, request.Password, cancellationToken))
-                ?? throw new IdentityAppException("There is a problem with the authentication process.", "UnableToAuthenticate");
+            var result = await _authService.AuthenticateAsync(request.UserNameOrEmail, request.Password, cancellationToken);
+
+            if (result is null)
+                return Result<SignInResponse>.Failure([IdentityAppErrors.UnableToAuthenticate]);
 
             if (!result.IsSuccess)
-                return Result<SignInResponse>.Failure(result.Errors!);
+                return Result<SignInResponse>.Failure([IdentityAppErrors.InvalidCredentials]);
 
             var user = result.Value;
             var userRoles = await _authorizationService.GetUserRolesAsync(user.Id.Value.ToString(), cancellationToken);

@@ -21,7 +21,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.GetUser
 
             return result.IsSuccess
                 ? Result<PublicUserReadModel>.Success(result.Value.ToPublicUserRm())
-                : Result<PublicUserReadModel>.Failure([new IdentityAppError(Code: "InvalidUser", Message: "User not found.")]);
+                : Result<PublicUserReadModel>.Failure([IdentityAppErrors.UserNotFound]);
         }
     }
 }

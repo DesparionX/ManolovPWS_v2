@@ -22,8 +22,4 @@
     <ProjectReference Include="..\ManolovPWS_v2.Shared\ManolovPWS_v2.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\User\" />
-  </ItemGroup>
-
 </Project>

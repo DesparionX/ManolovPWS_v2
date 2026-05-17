@@ -29,12 +29,12 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
         {
             var email = Email.Create(command.Email);
             if (await _userRepository.EmailExistsAsync(email, cancellationToken))
-                return Result.Failure([new IdentityAppError("The provided email is already in use.", "EmailAlreadyInUse")]);
+                return Result.Failure([IdentityAppErrors.EmailAlreadyInUse]);
             
             var userName = UserName.Create(command.UserName);
             if (await _userRepository.UserNameExistsAsync(userName, cancellationToken))
-                return Result.Failure([new IdentityAppError("The provided username is already in use.", "UserNameAlreadyInUse")]);
-            
+                return Result.Failure([IdentityAppErrors.UserNameAlreadyInUse]);
+
             var id = UserId.New();
             var name = Name.Create(firstName: command.FirstName, lastName: command.LastName, middleName: command.MiddleName);
             var profession = Profession.Create(command.Profession);
@@ -54,7 +54,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
             var result = await _userFactory.CreateWithPasswordAsync(user, command.Password, cancellationToken);
 
             if (!result.IsSuccess || result.Value is null)
-                return Result.Failure([new IdentityAppError("Failed to create user with the provided password.", "UserCreationFailed")]);
+                return Result.Failure([IdentityAppErrors.UserCreationFailed]);
 
             return Result.Success();
         }
