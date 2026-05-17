@@ -3,6 +3,7 @@ using ManolovPWS_v2.Domain.Models.Post.Properties;
 using ManolovPWS_v2.Domain.Models.Post.Properties.PostContent;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Modules.Content.Post.Maps;
+using ManolovPWS_v2.Modules.Content.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
 using ManolovPWS_v2.Shared.Abstractions.Results;
@@ -50,7 +51,7 @@ namespace ManolovPWS_v2.Modules.Content.Post.Features.AddPost
 
             return result.IsSuccess
                 ? Result.Success()
-                : Result.Failure(result.Errors);
+                : Result.Failure([ContentAppErrors.PostCreationFailed]);
         }
     }
 }

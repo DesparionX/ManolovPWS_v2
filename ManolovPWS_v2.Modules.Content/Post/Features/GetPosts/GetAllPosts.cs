@@ -1,6 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Modules.Content.Post.Maps;
 using ManolovPWS_v2.Modules.Content.Post.Shared.ReadModels;
+using ManolovPWS_v2.Modules.Content.Results;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Results;
 
@@ -17,7 +18,7 @@ namespace ManolovPWS_v2.Modules.Content.Post.Features.GetPosts
             var result = await _postRepository.GetAllAsync(cancellationToken);
 
             if (!result.IsSuccess)
-                return Result<IEnumerable<PostReadModel>>.Failure(result.Errors);
+                return Result<IEnumerable<PostReadModel>>.Failure([ContentAppErrors.NoPostsFound]);
 
             var posts = result.Value.Select(p => p.ToReadModel());
 
