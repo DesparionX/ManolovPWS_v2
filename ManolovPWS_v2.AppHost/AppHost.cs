@@ -1,7 +1,8 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var postgres = builder.AddPostgres("postgres")
-    .WithImage("postgres:16");
+    .WithImage("postgres:16")
+    .WithDataVolume();
 
 var db = postgres.AddDatabase("manolovdb");
 

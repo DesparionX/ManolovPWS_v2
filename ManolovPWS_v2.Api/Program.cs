@@ -3,18 +3,19 @@ using ManolovPWS_v2.Api.DependencyInjection;
 using ManolovPWS_v2.Api.Extensions;
 using ManolovPWS_v2.Infrastructure.DependencyInjection;
 
-var builder = WebApplication.CreateBuilder(args);
+// Load environment variables from .env file
+Env.Load();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var builder = WebApplication.CreateBuilder(args);
 
 // Add configuration from appsettings.json and environment variables
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-// Load environment variables from .env file
-Env.Load();
+// Get the connection string from configuration
+var connectionString = builder.Configuration.GetConnectionString("manolovdb_local")
+        ?? throw new InvalidOperationException("Connection string 'manolovdb_local' not found.");
 
 // Add service defaults from the hosting environment
 builder.AddServiceDefaults();
@@ -24,7 +25,6 @@ builder.AddServiceDefaults();
 builder.Services.AddApiServices();
 builder.Services.AddInfrastructure(builder.Configuration, connectionString);
 builder.Services.AddApplication();
-
 
 // Auth
 builder.Services.AddAuthenticationDI(builder.Configuration);
@@ -38,6 +38,9 @@ builder.Services.AddApiCors(builder.Configuration);
 
 var app = builder.Build();
 
+// Seed initial data
+await app.SeedDataAsync();
+
 app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
@@ -47,7 +50,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();

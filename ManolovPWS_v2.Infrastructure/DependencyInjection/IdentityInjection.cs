@@ -12,7 +12,7 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
             this IServiceCollection services
             )
         {
-            services.AddIdentityCore<DbUser>(options =>
+            services.AddIdentity<DbUser, IdentityRole<Guid>>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@";
@@ -25,7 +25,6 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
                 options.Password.RequiredLength = 6;
             })
                 .AddEntityFrameworkStores<AppDbContext>()
-                .AddRoles<IdentityRole<Guid>>()
                 .AddDefaultTokenProviders();
 
             return services;

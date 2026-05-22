@@ -1,7 +1,7 @@
 ﻿using ManolovPWS_v2.Api.Contracts.Identity;
+using ManolovPWS_v2.Api.Maps;
 using ManolovPWS_v2.Api.Services;
 using ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ManolovPWS_v2.Api.Controllers
@@ -29,9 +29,7 @@ namespace ManolovPWS_v2.Api.Controllers
 
             var result = await _dispatcher.SendAsync(command);
 
-            return result.IsSuccess 
-                ? Ok() 
-                : BadRequest(result.Errors);
+            return result.ToActionResult();
         }
     }
 }

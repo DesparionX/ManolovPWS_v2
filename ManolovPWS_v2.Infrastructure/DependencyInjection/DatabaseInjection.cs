@@ -10,13 +10,12 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
         public static IServiceCollection AddDatabase
             (
             this IServiceCollection services,
-            IConfiguration configuration,
             string connectionString
             )
         {
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseNpgsql(configuration.GetConnectionString(connectionString));
+                options.UseNpgsql(connectionString);
 
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });

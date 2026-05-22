@@ -20,6 +20,9 @@ namespace ManolovPWS_v2.Infrastructure.Persistance
 
             // Manually renaming the Identity tables
             builder.Entity<IdentityRole<Guid>>()
+                .ToTable("Roles");
+
+            builder.Entity<IdentityUserRole<Guid>>()
                 .ToTable("UserRoles");
 
             builder.Entity<IdentityUserClaim<Guid>>()
@@ -33,9 +36,6 @@ namespace ManolovPWS_v2.Infrastructure.Persistance
 
             builder.Entity<IdentityUserToken<Guid>>()
                 .ToTable("UserTokens");
-
-            builder.Entity<IdentityUserPasskey<Guid>>()
-                .ToTable("UserPasskeys");
 
             // Load entity configurations
             builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);

@@ -11,13 +11,12 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
             IConfiguration configuration,
             string connectionString)
         {
-            services.AddDatabase(configuration, connectionString);
+            services.AddDatabase(connectionString);
             services.AddCustomServices();
             services.AddJwt(configuration);
             services.AddUserIdentity();
             services.AddRepositories();
             services.AddFactories();
-            
             return services;
         }
     }
