@@ -68,7 +68,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 );
 
         public static List<Contact> MapContacts(this Domain.Models.User.User user)
-            => user.Contacts.ContactList.Select(c => new Contact(
+            => user.Contacts.Items.Select(c => new Contact(
                 Network: c.Network,
                 ProfileName: c.ProfileName,
                 FullUrl: c.FullUrl.ToString()
@@ -111,7 +111,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 )).ToList();
 
         public static List<Certificate> MapCertificates(this Domain.Models.User.User user)
-            => user.Certificates.CertificatesList.Select(c => new Certificate(
+            => user.Certificates.Items.Select(c => new Certificate(
                 Title: c.Title.Value,
                 Issuer: c.Issuer.Value,
                 DateObtained: c.Date.Value,

@@ -6,12 +6,12 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
     {
         private readonly List<Certificate> _certificates;
 
-        public IReadOnlyList<Certificate> CertificatesList => _certificates;
+        public IReadOnlyList<Certificate> Items => _certificates;
 
         [JsonConstructor]
-        private Certificates(IEnumerable<Certificate> certificates)
+        private Certificates(IEnumerable<Certificate> items)
         {
-            _certificates = [.. certificates];
+            _certificates = [.. items];
         }
 
         public static Certificates Create(IEnumerable<Certificate> certificates)
@@ -27,7 +27,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
             => new(_certificates.Append(certificate));
 
         internal Certificates RemoveCertificate(Certificate certificate)
-            => new(_certificates.Where(c => c.Equals(certificate)));
+            => new(_certificates.Where(c => !c.Equals(certificate)));
 
         internal Certificates UpdateCertificate(Certificate oldCertificate, Certificate newCertificate)
             => new(_certificates.Select(c => c.Equals(oldCertificate) ? newCertificate : c));
@@ -36,8 +36,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         public bool Equals(Certificates? other) =>
             other is not null
             && _certificates.OrderBy(c => c.Title)
-            .SequenceEqual(other._certificates.OrderBy(c => c.Title))
-            && _certificates.Except(other._certificates).Any();
+            .SequenceEqual(other._certificates.OrderBy(c => c.Title));
 
         public override bool Equals(object? obj) => Equals(obj as Certificates);
 

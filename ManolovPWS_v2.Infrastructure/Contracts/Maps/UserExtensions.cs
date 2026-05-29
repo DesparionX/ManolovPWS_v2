@@ -26,14 +26,14 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
                 email: Email.Create(dbUser.Email!),
                 birthDate: BirthDate.Create(dbUser.BirthDate),
                 gender: Gender.FromString(dbUser.Gender),
-                contacts: Contacts.From(dbUser.Contacts?.ContactList),
+                contacts: Contacts.From(dbUser.Contacts?.Items),
                 phoneNumber: UserPhoneNumber.CreateOrNull(dbUser.PhoneNumber),
                 address: Address.CreateOrNull(dbUser.Address),
                 profilePicture: ProfilePicture.CreateOrNull(dbUser.ProfilePictureUrl),
                 skills: SkillSet.From(dbUser.Skills?.Skills, dbUser.Skills?.Languages),
                 experience: Experience.From(dbUser.Experience?.Jobs),
                 educationHistory: EducationHistory.From(dbUser.EducationHistory?.EducationEntries),
-                certificates: Certificates.From(dbUser.Certificates?.CertificatesList));
+                certificates: Certificates.From(dbUser.Certificates?.Items));
         }
 
         public static DbUser ToDbEntity(this User user)

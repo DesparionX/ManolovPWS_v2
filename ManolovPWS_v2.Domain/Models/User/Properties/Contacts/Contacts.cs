@@ -6,12 +6,12 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Contacts
     {
         private readonly List<Contact> _contacts;
 
-        public IReadOnlyList<Contact> ContactList => _contacts;
+        public IReadOnlyList<Contact> Items => _contacts;
 
         [JsonConstructor]
-        private Contacts(IEnumerable<Contact> contacts)
+        private Contacts(IEnumerable<Contact> items)
         {
-            _contacts = [.. contacts];
+            _contacts = [.. items];
         }
 
         public static Contacts Empty() => new([]);
