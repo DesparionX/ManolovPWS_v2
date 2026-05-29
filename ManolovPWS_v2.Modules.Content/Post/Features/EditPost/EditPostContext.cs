@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Content.Post.Features.EditPost
 {
-    public sealed record EditPostContextCommand(string PostId, string NewContext) : ICommand<ITaskResult>;
+    public sealed record EditPostContextCommand(string PostId, string NewContext) : ICommand;
 
     public sealed class EditPostContextCommandHandler(IPostRepository postRepository)
-        : ICommandHandler<EditPostContextCommand, ITaskResult>
+        : ICommandHandler<EditPostContextCommand>
     {
         private readonly IPostRepository _postRepository = postRepository;
         public async Task<ITaskResult> HandleAsync(EditPostContextCommand command, CancellationToken cancellationToken = default)

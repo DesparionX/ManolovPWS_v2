@@ -14,10 +14,10 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
         string City,
         string Street,
         string PostalCode)
-        : ICommand<ITaskResult>;
+        : ICommand;
 
     public sealed class UpdateAddressCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdateAddressCommand, ITaskResult>
+        : ICommandHandler<UpdateAddressCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

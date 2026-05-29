@@ -19,12 +19,12 @@ namespace ManolovPWS_v2.Api.Services
 
         public async Task<ITaskResult> SendAsync(ICommand command, CancellationToken cancellationToken = default)
         {
-            var handlerType = typeof(ICommandHandler<,>)
-                .MakeGenericType(command.GetType(), typeof(object));
+            var handlerType = typeof(ICommandHandler<>)
+                .MakeGenericType(command.GetType());
 
             dynamic handler = _serviceProvider.GetRequiredService(handlerType);
 
-            return await handler.HandleAsync(command, cancellationToken);
+            return await handler.HandleAsync((dynamic)command, cancellationToken);
         }
 
         public async Task<ITaskResult<TResponse>> QueryAsync<TResponse>(IQuery<TResponse> query, CancellationToken cancellationToken = default)

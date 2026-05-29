@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Content.Post.Features.EditPost
 {
-    public sealed record EditPostGalleryCommand(string PostId, IEnumerable<string> NewGallery) : ICommand<ITaskResult>;
+    public sealed record EditPostGalleryCommand(string PostId, IEnumerable<string> NewGallery) : ICommand;
 
     public sealed class EditPostGalleryCommandHandler(IPostRepository postRepository)
-        : ICommandHandler<EditPostGalleryCommand, ITaskResult>
+        : ICommandHandler<EditPostGalleryCommand>
     {
         private readonly IPostRepository _postRepository = postRepository;
         public async Task<ITaskResult> HandleAsync(EditPostGalleryCommand command, CancellationToken cancellationToken = default)

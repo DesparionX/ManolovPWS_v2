@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateGenderCommand(string NewGender) : ICommand<ITaskResult>;
+    public sealed record UpdateGenderCommand(string NewGender) : ICommand;
 
     public sealed class UpdateGenderCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdateGenderCommand, ITaskResult>
+        : ICommandHandler<UpdateGenderCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

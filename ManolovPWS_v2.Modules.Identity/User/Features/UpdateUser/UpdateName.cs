@@ -8,10 +8,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
     public sealed record UpdateNameCommand(string FirstName, string LastName, string? MiddleName = default)
-        : ICommand<ITaskResult>;
+        : ICommand;
 
     public sealed class UpdateUserNameCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdateNameCommand, ITaskResult>
+        : ICommandHandler<UpdateNameCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

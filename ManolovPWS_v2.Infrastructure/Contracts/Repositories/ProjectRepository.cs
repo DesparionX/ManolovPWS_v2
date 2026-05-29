@@ -20,7 +20,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
             return Result<IReadOnlyList<Project>>.Success(projects.ToDomainList());
         }
-
         public async Task<ITaskResult<Project>> FindByIdAsync(ProjectId id, CancellationToken cancellationToken = default)
         {
             var project = await _context.Projects.FindAsync([id.Value], cancellationToken: cancellationToken) 
@@ -28,7 +27,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
             return Result<Project>.Success(project.ToDomain());
         }
-
         public async Task<ITaskResult<IReadOnlyList<Project>>> FindByOwnerIdAsync(UserId ownerId, CancellationToken cancellationToken = default)
         {
             var userProjects = await _context.Projects.Where(p => p.OwnerId.Equals(ownerId.Value)).ToListAsync(cancellationToken)
@@ -36,7 +34,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
             return Result<IReadOnlyList<Project>>.Success(userProjects.ToDomainList());
         }
-
         public async Task<ITaskResult> RemoveAsync(ProjectId id, CancellationToken cancellationToken = default)
         {
             var project = await _context.Projects.FindAsync([id.Value], cancellationToken: cancellationToken) 
@@ -48,7 +45,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
             return Result.Success();
         }
-
         public async Task<ITaskResult> SaveAsync(Project entity, CancellationToken cancellationToken = default)
         {
             var projectEntity = entity.ToDbEntity();
@@ -58,6 +54,10 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
             await _context.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
+        }
+        public async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
+        {
+            return await _context.Projects.AnyAsync(cancellationToken);
         }
     }
 }

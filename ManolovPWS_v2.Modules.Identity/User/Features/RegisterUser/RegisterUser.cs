@@ -17,16 +17,23 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
         string LastName,
         string Gender,
         DateOnly BirthDate
-        ) : ICommand<ITaskResult>;
+        ) : ICommand;
     
     public sealed class RegisterUserCommandHandler(IUserRepository userRepository, IUserFactory userFactory)
-        : ICommandHandler<RegisterUserCommand, ITaskResult>
+        : ICommandHandler<RegisterUserCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IUserFactory _userFactory = userFactory;
 
         public async Task<ITaskResult> HandleAsync(RegisterUserCommand command, CancellationToken cancellationToken = default)
         {
+            // For the application purpose, there can be only one user (the app owner).
+            // This is a business rule that can be changed in the future if needed.
+            var res = await _userRepository.GetAllAsync(cancellationToken);
+            if(res.IsSuccess && res.Value.Count > 1)
+                return Result.Failure([IdentityAppErrors.UserLimitReached]);
+
+
             var email = Email.Create(command.Email);
             if (await _userRepository.EmailExistsAsync(email, cancellationToken))
                 return Result.Failure([IdentityAppErrors.EmailAlreadyInUse]);
@@ -54,7 +61,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
             var result = await _userFactory.CreateWithPasswordAsync(user, command.Password, cancellationToken);
 
             if (!result.IsSuccess || result.Value is null)
-                return Result.Failure([IdentityAppErrors.UserCreationFailed]);
+                return Result.Failure([IdentityAppErrors.UserCreationFailed, ..result.Errors]);
 
             return Result.Success();
         }

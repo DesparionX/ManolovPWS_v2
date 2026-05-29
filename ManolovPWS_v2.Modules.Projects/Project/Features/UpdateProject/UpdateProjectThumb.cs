@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 {
-    public sealed record UpdateProjectThumbCommand(string ProjectId, string NewThumb) : ICommand<ITaskResult>;
+    public sealed record UpdateProjectThumbCommand(string ProjectId, string NewThumb) : ICommand;
 
     public sealed class UpdateProjectThumbCommandHandler(IProjectRepository projectRepository)
-        : ICommandHandler<UpdateProjectThumbCommand, ITaskResult>
+        : ICommandHandler<UpdateProjectThumbCommand>
     {
         private readonly IProjectRepository _repository = projectRepository;
 

@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Content.Post.Features.EditPost
 {
-    public sealed record EditPostThumbCommand(string PostId, string NewThumb) : ICommand<ITaskResult>;
+    public sealed record EditPostThumbCommand(string PostId, string NewThumb) : ICommand;
 
     public sealed class EditPostThumbCommandHandler(IPostRepository postRepository)
-        : ICommandHandler<EditPostThumbCommand, ITaskResult>
+        : ICommandHandler<EditPostThumbCommand>
     {
         private readonly IPostRepository _postRepository = postRepository;
         public async Task<ITaskResult> HandleAsync(EditPostThumbCommand command, CancellationToken cancellationToken = default)

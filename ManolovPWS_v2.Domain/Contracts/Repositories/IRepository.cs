@@ -11,5 +11,6 @@ namespace ManolovPWS_v2.Domain.Contracts.Repositories
         Task<ITaskResult<TEntity>> FindByIdAsync(TKey id, CancellationToken cancellationToken = default);
         Task<ITaskResult> SaveAsync(TEntity entity, CancellationToken cancellationToken = default);
         Task<ITaskResult> RemoveAsync(TKey id, CancellationToken cancellationToken = default);
+        Task<bool> AnyAsync(CancellationToken cancellationToken = default);
     }
 }

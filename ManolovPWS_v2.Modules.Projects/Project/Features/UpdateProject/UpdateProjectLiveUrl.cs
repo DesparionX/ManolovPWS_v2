@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 {
-    public sealed record UpdateProjectLiveUrlCommand(string ProjectId, string NewLiveUrl) : ICommand<ITaskResult>;
+    public sealed record UpdateProjectLiveUrlCommand(string ProjectId, string NewLiveUrl) : ICommand;
 
     public sealed class UpdateProjectLiveUrlCommandHandler(IProjectRepository projectRepository)
-        : ICommandHandler<UpdateProjectLiveUrlCommand, ITaskResult>
+        : ICommandHandler<UpdateProjectLiveUrlCommand>
     {
         private readonly IProjectRepository _repository = projectRepository;
         public async Task<ITaskResult> HandleAsync(UpdateProjectLiveUrlCommand command, CancellationToken cancellationToken = default)

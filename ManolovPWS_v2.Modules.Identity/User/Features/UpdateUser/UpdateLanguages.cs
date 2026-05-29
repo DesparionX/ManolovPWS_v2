@@ -8,10 +8,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateLanguageCommand(IEnumerable<Shared.SharedProperties.Language> NewLanguages) : ICommand<ITaskResult>;
+    public sealed record UpdateLanguageCommand(IEnumerable<Shared.SharedProperties.Language> NewLanguages) : ICommand;
 
     public sealed class UpdateLanguageCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-            : ICommandHandler<UpdateLanguageCommand, ITaskResult>
+            : ICommandHandler<UpdateLanguageCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

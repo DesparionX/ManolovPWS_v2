@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateBirthDateCommand(DateOnly NewBirthDate) : ICommand<ITaskResult>;
+    public sealed record UpdateBirthDateCommand(DateOnly NewBirthDate) : ICommand;
 
     public sealed class UpdateBirthDateCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdateBirthDateCommand, ITaskResult>
+        : ICommandHandler<UpdateBirthDateCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

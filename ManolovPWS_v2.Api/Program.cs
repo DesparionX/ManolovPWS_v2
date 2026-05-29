@@ -2,6 +2,7 @@ using DotNetEnv;
 using ManolovPWS_v2.Api.DependencyInjection;
 using ManolovPWS_v2.Api.Extensions;
 using ManolovPWS_v2.Infrastructure.DependencyInjection;
+using Scalar.AspNetCore;
 
 // Load environment variables from .env file
 Env.Load();
@@ -47,6 +48,7 @@ app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();

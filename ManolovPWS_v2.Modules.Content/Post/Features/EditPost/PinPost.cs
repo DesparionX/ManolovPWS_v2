@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Content.Post.Features.EditPost
 {
-    public sealed record PinPostCommand(string PostId) : ICommand<ITaskResult>;
+    public sealed record PinPostCommand(string PostId) : ICommand;
 
     public sealed class PinPostCommandHandler(IPostRepository postRepository)
-        : ICommandHandler<PinPostCommand, ITaskResult>
+        : ICommandHandler<PinPostCommand>
     {
         private readonly IPostRepository _postRepository = postRepository;
 

@@ -11,6 +11,7 @@ namespace ManolovPWS_v2.Modules.Identity.Results
         public static IdentityAppError UserNotFound => new("User not found.", ErrorCodes.NotFound);
         public static IdentityAppError UserUpdateFailed => new("Failed to update the user.", ErrorCodes.ActionFailed);
         public static IdentityAppError DeletionFailed => new("Failed to delete the user.", ErrorCodes.ActionFailed);
+        public static IdentityAppError UserLimitReached => new("User limit reached. Cannot create more users.", ErrorCodes.Forbidden);
 
 
         // Duplication errors

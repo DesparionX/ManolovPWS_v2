@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.DeleteProject
 {
-    public sealed record RemoveProjectCommand(string ProjectId) : ICommand<ITaskResult>;
+    public sealed record RemoveProjectCommand(string ProjectId) : ICommand;
 
     public sealed class RemoveProjectCommandHandler(IProjectRepository projectRepository)
-        : ICommandHandler<RemoveProjectCommand, ITaskResult>
+        : ICommandHandler<RemoveProjectCommand>
     {
         private readonly IProjectRepository _projectRepository = projectRepository;
 

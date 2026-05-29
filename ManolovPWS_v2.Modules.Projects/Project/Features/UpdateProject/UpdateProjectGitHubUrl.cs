@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 {
-    public sealed record UpdateProjectGitHubUrl(string ProjectId, string NewGitHubUrl) : ICommand<ITaskResult>;
+    public sealed record UpdateProjectGitHubUrl(string ProjectId, string NewGitHubUrl) : ICommand;
 
     public sealed class UpdateProjectGitHubUrlCommandHandler(IProjectRepository projectRepository)
-        : ICommandHandler<UpdateProjectGitHubUrl, ITaskResult>
+        : ICommandHandler<UpdateProjectGitHubUrl>
     {
         private readonly IProjectRepository _repository = projectRepository;
 

@@ -1,7 +1,4 @@
 ﻿using ManolovPWS_v2.Shared.Abstractions.Results;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ManolovPWS_v2.Shared.Abstractions.CQRS
 {
@@ -14,6 +11,6 @@ namespace ManolovPWS_v2.Shared.Abstractions.CQRS
     public interface ICommandHandler<in TCommand, TResponse>
         where TCommand : ICommand<TResponse>
     {
-        Task<TResponse> HandleAsync(TCommand command, CancellationToken cancellationToken = default);
+        Task<ITaskResult<TResponse>> HandleAsync(TCommand command, CancellationToken cancellationToken = default);
     }
 }

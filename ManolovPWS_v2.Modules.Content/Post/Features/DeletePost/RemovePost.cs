@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Content.Post.Features.DeletePost
 {
-    public sealed record RemovePostCommand(string PostId) : ICommand<ITaskResult>;
+    public sealed record RemovePostCommand(string PostId) : ICommand;
 
     public sealed class RemovePostCommandHandler(IPostRepository postRepository)
-        : ICommandHandler<RemovePostCommand, ITaskResult>
+        : ICommandHandler<RemovePostCommand>
     {
         private readonly IPostRepository _postRepository = postRepository;
 

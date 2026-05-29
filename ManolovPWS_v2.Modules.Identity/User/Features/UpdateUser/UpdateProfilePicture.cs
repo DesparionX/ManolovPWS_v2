@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateProfilePictureCommand(string NewUrl) : ICommand<ITaskResult>;
+    public sealed record UpdateProfilePictureCommand(string NewUrl) : ICommand;
 
     public sealed class UpdateProfilePictureCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdateProfilePictureCommand, ITaskResult>
+        : ICommandHandler<UpdateProfilePictureCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

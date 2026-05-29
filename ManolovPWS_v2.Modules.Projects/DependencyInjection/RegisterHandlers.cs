@@ -1,24 +1,31 @@
 ﻿using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ManolovPWS_v2.Modules.Projects.DependencyInjection
 {
+    public static class ProjectsModuleAssembly { }
     public static class RegisterHandlers
     {
         public static IServiceCollection AddHandlers(this IServiceCollection services)
         {
+            var assembly = typeof(ProjectsModuleAssembly).Assembly;
+
             services.Scan(scan => scan
-                .FromAssemblies(typeof(ICommandHandler<,>).Assembly)
+                .FromAssemblies(assembly)
+                .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
+                .AsImplementedInterfaces()
+                .WithScopedLifetime()
+            );
+
+            services.Scan(scan => scan
+                .FromAssemblies(assembly)
                 .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<,>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()
             );
 
             services.Scan(scan => scan
-                .FromAssemblies(typeof(IQueryHandler<,>).Assembly)
+                .FromAssemblies(assembly)
                 .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
                 .AsImplementedInterfaces()
                 .WithScopedLifetime()

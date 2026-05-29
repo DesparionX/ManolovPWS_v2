@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.DeleteUser
 {
-    public sealed record DeleteUserCommand(string UserId) : ICommand<ITaskResult>;
+    public sealed record DeleteUserCommand(string UserId) : ICommand;
 
     public sealed class DeleteUserCommandHandler(IUserRepository userRepository) 
-        : ICommandHandler<DeleteUserCommand, ITaskResult>
+        : ICommandHandler<DeleteUserCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         public async Task<ITaskResult> HandleAsync(DeleteUserCommand command, CancellationToken cancellationToken = default)

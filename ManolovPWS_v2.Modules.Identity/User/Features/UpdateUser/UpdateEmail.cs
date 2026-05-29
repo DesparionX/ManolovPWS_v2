@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateEmailCommand(string NewEmail) : ICommand<ITaskResult>;
+    public sealed record UpdateEmailCommand(string NewEmail) : ICommand;
 
     public sealed class UpdateEmailCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdateEmailCommand, ITaskResult>
+        : ICommandHandler<UpdateEmailCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

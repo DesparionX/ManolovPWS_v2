@@ -90,5 +90,9 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
 
             return user is not null;
         }
+        public async Task<bool> AnyAsync(CancellationToken cancellationToken = default)
+        {
+            return await _userManager.Users.AnyAsync(cancellationToken);
+        }
     }
 }

@@ -17,10 +17,10 @@ namespace ManolovPWS_v2.Modules.Content.Post.Features.AddPost
         IEnumerable<string>? Gallery,
         bool IsPinned
         )
-        : ICommand<ITaskResult>;
+        : ICommand;
 
     public sealed class AddNewPostCommandHandler(IPostFactory postFactory, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<AddNewPostCommand, ITaskResult>
+        : ICommandHandler<AddNewPostCommand>
     {
         private readonly IPostFactory _postFactory = postFactory;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;

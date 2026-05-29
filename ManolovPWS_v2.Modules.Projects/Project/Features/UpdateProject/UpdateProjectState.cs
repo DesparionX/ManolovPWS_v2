@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 {
-    public sealed record UpdateProjectState(string ProjectId, string NewState) : ICommand<ITaskResult>;
+    public sealed record UpdateProjectState(string ProjectId, string NewState) : ICommand;
 
     public sealed class UpdateProjectStateCommandHandler(IProjectRepository projectRepository)
-        : ICommandHandler<UpdateProjectState, ITaskResult>
+        : ICommandHandler<UpdateProjectState>
     {
         private readonly IProjectRepository _repository = projectRepository;
 

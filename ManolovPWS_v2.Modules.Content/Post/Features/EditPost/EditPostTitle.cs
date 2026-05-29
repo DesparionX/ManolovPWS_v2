@@ -6,10 +6,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Content.Post.Features.EditPost
 {
-    public sealed record EditPostTitleCommand(string PostId, string NewTitle) : ICommand<ITaskResult>;
+    public sealed record EditPostTitleCommand(string PostId, string NewTitle) : ICommand;
 
     public sealed class EditPostTitleCommandHandler(IPostRepository postRepository)
-        : ICommandHandler<EditPostTitleCommand, ITaskResult>
+        : ICommandHandler<EditPostTitleCommand>
     {
         private readonly IPostRepository _postRepository = postRepository;
 

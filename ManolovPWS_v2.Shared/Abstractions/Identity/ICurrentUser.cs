@@ -6,5 +6,10 @@
         public string UserName { get; }
         public string Email { get; }
         public bool IsAuthenticated { get; }
+        public bool IsInRole(string role);
+        public bool HasPermission(string permission);
+        public IReadOnlyCollection<string> GetRoles();
+        public IReadOnlyCollection<string> GetPermissions();
+        
     }
 }

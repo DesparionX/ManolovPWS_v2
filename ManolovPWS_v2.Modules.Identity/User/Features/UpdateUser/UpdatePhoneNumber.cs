@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdatePhoneNumberCommand(string NewPhoneNumber) : ICommand<ITaskResult>;
+    public sealed record UpdatePhoneNumberCommand(string NewPhoneNumber) : ICommand;
 
     public sealed class UpdatePhoneNumberCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<UpdatePhoneNumberCommand, ITaskResult>
+        : ICommandHandler<UpdatePhoneNumberCommand>
     {
 
         private readonly IUserRepository _userRepository = userRepository;

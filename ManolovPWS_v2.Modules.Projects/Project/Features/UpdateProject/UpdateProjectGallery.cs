@@ -7,10 +7,10 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 {
-    public sealed record UpdateProjectGalleryCommand(string ProjectId, IEnumerable<string> NewGallery) : ICommand<ITaskResult>;
+    public sealed record UpdateProjectGalleryCommand(string ProjectId, IEnumerable<string> NewGallery) : ICommand;
 
     public sealed class UpdateProjectGalleryCommandHandler(IProjectRepository projectRepository)
-        : ICommandHandler<UpdateProjectGalleryCommand, ITaskResult>
+        : ICommandHandler<UpdateProjectGalleryCommand>
     {
         private readonly IProjectRepository _repository = projectRepository;
 

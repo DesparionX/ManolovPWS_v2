@@ -19,10 +19,10 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.AddProject
         IEnumerable<string>? GalleryPictures,
         IEnumerable<string> ProjectStack,
         string ThumbUrl
-    ) : ICommand<ITaskResult>;
+    ) : ICommand;
 
     public sealed class AddNewProjectCommandHandler(IProjectFactory projectFactory, ICurrentUser<UserId> currentUser)
-        : ICommandHandler<AddNewProjectCommand, ITaskResult>
+        : ICommandHandler<AddNewProjectCommand>
     {
         private readonly IProjectFactory _projectFactory = projectFactory;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
