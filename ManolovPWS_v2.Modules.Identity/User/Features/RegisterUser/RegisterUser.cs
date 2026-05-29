@@ -29,8 +29,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser
         {
             // For the application purpose, there can be only one user (the app owner).
             // This is a business rule that can be changed in the future if needed.
-            var res = await _userRepository.GetAllAsync(cancellationToken);
-            if(res.IsSuccess && res.Value.Count > 1)
+            if(await _userRepository.AnyAsync(cancellationToken))
                 return Result.Failure([IdentityAppErrors.UserLimitReached]);
 
 
