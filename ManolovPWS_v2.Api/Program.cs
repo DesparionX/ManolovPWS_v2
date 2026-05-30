@@ -34,7 +34,7 @@ builder.Services.AddAuthorizationDI();
 builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddConfiguredOpenApi();
 builder.Services.AddApiCors(builder.Configuration);
 
 var app = builder.Build();
@@ -48,7 +48,15 @@ app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.MapScalarApiReference(options =>
+    {
+        options
+            .AddPreferredSecuritySchemes("Bearer")
+            .AddHttpAuthentication("Bearer", auth =>
+            {
+                auth.Token = string.Empty;
+            });
+    });
 }
 
 app.UseHttpsRedirection();

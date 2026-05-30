@@ -7,16 +7,16 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.SignInUser
 {
-    public sealed record SignInUserQuery(string UserNameOrEmail, string Password) : IQuery<SignInResponse>;
+    public sealed record SignInUserCommand(string UserNameOrEmail, string Password) : ICommand<SignInResponse>;
 
-    public sealed class SignInUserQueryHandler(IAuthService authService, IAuthorizationService authorizationService, ITokenProvider tokenProvider) 
-        : IQueryHandler<SignInUserQuery, SignInResponse>
+    public sealed class SignInUserCommandHandler(IAuthService authService, IAuthorizationService authorizationService, ITokenProvider tokenProvider) 
+        : ICommandHandler<SignInUserCommand, SignInResponse>
     {
         private readonly IAuthService _authService = authService;
         private readonly IAuthorizationService _authorizationService = authorizationService;
         private readonly ITokenProvider _tokenProvider = tokenProvider;
 
-        public async Task<ITaskResult<SignInResponse>> HandleAsync(SignInUserQuery request, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<SignInResponse>> HandleAsync(SignInUserCommand request, CancellationToken cancellationToken = default)
         {
             var result = await _authService.AuthenticateAsync(request.UserNameOrEmail, request.Password, cancellationToken);
 
