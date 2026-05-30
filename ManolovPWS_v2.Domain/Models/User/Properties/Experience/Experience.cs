@@ -6,37 +6,36 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
     {
         private readonly List<Job> _jobs;
 
-        public IReadOnlyCollection<Job> Jobs => _jobs;
+        public IReadOnlyList<Job> Jobs => _jobs;
 
         [JsonConstructor]
-        private Experience(IEnumerable<Job> jobs)
+        private Experience(IReadOnlyList<Job> jobs)
         {
             _jobs = [.. jobs];
         }
 
         public static Experience Create(IEnumerable<Job> jobs)
-            => new(jobs);
+            => new(jobs.ToList());
 
         public static Experience? From(IEnumerable<Job>? jobs)
-            => jobs is not null ? new(jobs) : null;
+            => jobs is not null ? new(jobs.ToList()) : null;
 
         // Manipulations
         public static Experience Empty() => new([]);
 
         internal Experience AddJob(Job job)
-            => new(_jobs.Append(job));
+            => new(_jobs.Append(job).ToList());
 
         internal Experience RemoveJob(Job job)
-            => new(_jobs.Where(j => !j.Equals(job)));
+            => new(_jobs.Where(j => !j.Equals(job)).ToList());
 
         internal Experience UpdateJob(Job oldJob, Job newJob)
-            => new(_jobs.Select(j => j.Equals(oldJob) ? newJob : j));
+            => new(_jobs.Select(j => j.Equals(oldJob) ? newJob : j).ToList());
 
         // Equality
         public bool Equals(Experience? other) =>
             other is not null
             && _jobs.Count == other._jobs.Count
-            && !_jobs.Except(other._jobs).Any()
             && _jobs.OrderBy(j => j.Title).SequenceEqual(other._jobs.OrderBy(j => j.Title));
 
         public override bool Equals(object? obj) => Equals(obj as Experience);

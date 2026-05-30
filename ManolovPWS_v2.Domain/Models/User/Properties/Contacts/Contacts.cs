@@ -9,7 +9,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Contacts
         public IReadOnlyList<Contact> Items => _contacts;
 
         [JsonConstructor]
-        private Contacts(IEnumerable<Contact> items)
+        private Contacts(IReadOnlyList<Contact> items)
         {
             _contacts = [.. items];
         }
@@ -17,22 +17,22 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Contacts
         public static Contacts Empty() => new([]);
 
         public static Contacts Create(IEnumerable<Contact> contacts)
-            => new(contacts);
+            => new(contacts.ToList());
 
         public static Contacts? From(IEnumerable<Contact>? contacts)
-            => contacts is null || !contacts.Any() ? null : new(contacts);
+            => contacts is null || !contacts.Any() ? null : new(contacts.ToList());
 
         // Contacts manipulations
         internal Contacts Clear() => Empty();
 
         internal Contacts Add(Contact contact)
-            => new(_contacts.Append(contact));
+            => new(_contacts.Append(contact).ToList());
 
         internal Contacts Update(Contact oldContact, Contact newContact)
-            => new(_contacts.Select(c => c.Equals(oldContact) ? newContact : c));
+            => new(_contacts.Select(c => c.Equals(oldContact) ? newContact : c).ToList());
 
         internal Contacts Remove(Contact contact)
-            => new(_contacts.Where(c => !c.Equals(contact)));
+            => new(_contacts.Where(c => !c.Equals(contact)).ToList());
 
         // Equality
         public bool Equals(Contacts? other) =>

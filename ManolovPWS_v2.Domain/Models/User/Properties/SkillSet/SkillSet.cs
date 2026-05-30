@@ -7,11 +7,11 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         private readonly List<Skill> _skills;
         private readonly List<LanguageSkill> _languages;
 
-        public IReadOnlyCollection<Skill> Skills => _skills;
-        public IReadOnlyCollection<LanguageSkill> Languages => _languages;
+        public IReadOnlyList<Skill> Skills => _skills;
+        public IReadOnlyList<LanguageSkill> Languages => _languages;
 
         [JsonConstructor]
-        private SkillSet(IEnumerable<Skill> skills,IEnumerable<LanguageSkill> languages)
+        private SkillSet(IReadOnlyList<Skill> skills,IReadOnlyList<LanguageSkill> languages)
         {
             _skills = [.. skills];
             _languages = [.. languages];
@@ -20,14 +20,14 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         public static SkillSet Empty() => new([], []);
 
         public static SkillSet Create(IEnumerable<Skill> skills, IEnumerable<LanguageSkill> languages)
-            => new(skills, languages);
+            => new(skills.ToList(), languages.ToList());
 
         public static SkillSet? From(IEnumerable<Skill>? skills, IEnumerable<LanguageSkill>? languages)
         {
             if (skills is null && languages is null)
                 return null;
 
-            return new(skills ?? [], languages ?? []);
+            return new(skills?.ToList() ?? [], languages?.ToList() ?? []);
         }
 
         // Skills manipulations
@@ -35,32 +35,32 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
             => new([], _languages);
 
         internal SkillSet AddSkill(Skill skill)
-            => new(_skills.Append(skill), _languages);
+            => new(_skills.Append(skill).ToList(), _languages);
 
         internal SkillSet RemoveSkill(Skill skill)
-            => new(_skills.Where(s => !s.Equals(skill)), _languages);
+            => new(_skills.Where(s => !s.Equals(skill)).ToList(), _languages);
 
         internal SkillSet UpdateSkill(Skill oldSkill, Skill newSkill)
-            => new(_skills.Select(s => s.Equals(oldSkill) ? newSkill : s), _languages);
+            => new(_skills.Select(s => s.Equals(oldSkill) ? newSkill : s).ToList(), _languages);
 
         internal SkillSet ReplaceSkills(IEnumerable<Skill> skills)
-            => new(skills, _languages);
+            => new(skills.ToList(), _languages);
 
         // Languages manipulations
         internal SkillSet ClearLanguages()
             => new(_skills, []);
 
         internal SkillSet AddLanguage(LanguageSkill language)
-            => new(_skills, _languages.Append(language));
+            => new(_skills, _languages.Append(language).ToList());
 
         internal SkillSet RemoveLanguage(LanguageSkill language)
-            => new(_skills, _languages.Where(l => !l.Equals(language)));
+            => new(_skills, _languages.Where(l => !l.Equals(language)).ToList());
 
         internal SkillSet UpdateLanguage(LanguageSkill oldLanguage, LanguageSkill newLanguage)
-            => new(_skills, _languages.Select(l => l.Equals(oldLanguage) ? newLanguage : l));
+            => new(_skills, _languages.Select(l => l.Equals(oldLanguage) ? newLanguage : l).ToList());
 
         internal SkillSet ReplaceLanguages(IEnumerable<LanguageSkill> languages)
-            => new(_skills, languages);
+            => new(_skills, languages.ToList());
 
         // Equality
         public bool Equals(SkillSet? other) =>
