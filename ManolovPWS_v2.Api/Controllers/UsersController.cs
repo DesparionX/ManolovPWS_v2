@@ -15,9 +15,9 @@ namespace ManolovPWS_v2.Api.Controllers
 
         // This is a temporary endpoint for testing purposes. It will be removed in the future.
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken = default)
         {
-            var result = await _userRepository.GetAllAsync();
+            var result = await _userRepository.GetAllAsync(cancellationToken);
             return result.ToActionResult<IEnumerable<User>>();
         }
     }

@@ -6,40 +6,39 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
     {
         private readonly List<PostPicture> _pictures;
 
-        public IReadOnlyCollection<PostPicture> Pictures => _pictures;
+        public IReadOnlyList<PostPicture> Pictures => _pictures;
 
         [JsonConstructor]
-        private PostGallery(IEnumerable<PostPicture> pictures)
+        private PostGallery(IReadOnlyList<PostPicture> pictures)
         {
             _pictures = [.. pictures];
         }
 
         public static PostGallery Empty() => new([]);
 
-        public static PostGallery Create(IEnumerable<PostPicture> pictures) => new(pictures);
+        public static PostGallery Create(IEnumerable<PostPicture> pictures) => new(pictures.ToList());
 
         // Gallery manipulations
         internal PostGallery AddPicture(PostPicture picture)
-            => new(_pictures.Append(picture));
+            => new(_pictures.Append(picture).ToList());
 
         internal PostGallery AddPictures(IEnumerable<PostPicture> pictures)
-            => new(_pictures.Concat(pictures));
+            => new(_pictures.Concat(pictures).ToList());
 
         internal PostGallery UpdatePicture(PostPicture oldPicture, PostPicture newPicture)
-            => new(_pictures.Select(p => p.Equals(oldPicture) ? newPicture : p));
+            => new(_pictures.Select(p => p.Equals(oldPicture) ? newPicture : p).ToList());
 
         internal PostGallery RemovePicture(PostPicture picture)
-            => new(_pictures.Where(p => !p.Equals(picture)));
+            => new(_pictures.Where(p => !p.Equals(picture)).ToList());
 
         internal PostGallery RemovePictures(IEnumerable<PostPicture> pictures)
-            => new(_pictures.Except(pictures));
+            => new(_pictures.Except(pictures).ToList());
 
         // Equality
         public bool Equals(PostGallery? other) =>
             other is not null
             && _pictures.Count == other._pictures.Count
-            && _pictures.OrderBy(s => s.Value).SequenceEqual(other._pictures.OrderBy(s => s.Value))
-            && !_pictures.Except(other._pictures).Any();
+            && _pictures.OrderBy(s => s.Value).SequenceEqual(other._pictures.OrderBy(s => s.Value));
 
         public override bool Equals(object? obj) => Equals(obj as PostGallery);
 

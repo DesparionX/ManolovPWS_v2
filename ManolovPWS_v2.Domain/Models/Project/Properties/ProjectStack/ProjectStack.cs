@@ -6,10 +6,10 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack
     {
         private readonly List<StackTag> _stackList;
 
-        public IReadOnlyCollection<StackTag> StackList => _stackList;
+        public IReadOnlyList<StackTag> StackList => _stackList;
 
         [JsonConstructor]
-        private ProjectStack(IEnumerable<StackTag> stackList)
+        private ProjectStack(IReadOnlyList<StackTag> stackList)
         {
             _stackList = [.. stackList.Distinct()];
         }
@@ -20,7 +20,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack
         {
             if (stackList is null || !stackList.Any()) return Empty();
 
-            return new(stackList);
+            return new(stackList.ToList());
         }
 
         public static ProjectStack? From(ProjectStack? stack)
@@ -28,23 +28,22 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack
 
         // Stack manipulations
         internal ProjectStack AddTag(StackTag tag)
-            => new(_stackList.Append(tag));
+            => new(_stackList.Append(tag).ToList());
 
         internal ProjectStack AddTags(IEnumerable<StackTag> tags)
-            => new(_stackList.Concat(tags));
+            => new(_stackList.Concat(tags).ToList());
 
         internal ProjectStack RemoveTag(StackTag tag)
-            => new(_stackList.Where(t => !t.Equals(tag)));
+            => new(_stackList.Where(t => !t.Equals(tag)).ToList());
 
         internal ProjectStack RemoveTags(IEnumerable<StackTag> tags)
-            => new(_stackList.Except(tags));
+            => new(_stackList.Except(tags).ToList());
 
         // Equality
         public bool Equals(ProjectStack? other) =>
             other is not null
             && _stackList.Count == other._stackList.Count
-            && _stackList.OrderBy(s => s.Tag).SequenceEqual(other._stackList.OrderBy(s => s.Tag))
-            && !_stackList.Except(other._stackList).Any();
+            && _stackList.OrderBy(s => s.Tag).SequenceEqual(other._stackList.OrderBy(s => s.Tag));
 
         public override bool Equals(object? obj) => Equals(obj as ProjectStack);
 
