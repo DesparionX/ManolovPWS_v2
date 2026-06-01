@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.User;
+using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Infrastructure.Contracts.Maps;
 using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Exceptions;
@@ -17,7 +18,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var user = await _signInManager.UserManager.FindByEmailAsync(emailOrUserName) 
+            var user = await _signInManager.UserManager.FindByEmailAsync(emailOrUserName)
                 ?? await _signInManager.UserManager.FindByNameAsync(emailOrUserName)
                 ?? throw new InfrastructureException("You have entered an invalid username or password.", "InvalidCredentials");
 
@@ -26,7 +27,17 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication
             if (signInResult.Succeeded)
                 return Result<User>.Success(user.ToDomain());
 
-            return Result<User>.Failure([new InfraError(Code: "InvalidCredentials", Message: "You have entered an invalid username or password." )]);
+            return Result<User>.Failure([new InfraError(Code: "InvalidCredentials", Message: "You have entered an invalid username or password.")]);
+        }
+
+        public async Task SignOutAsync(UserId userId, CancellationToken cancellationToken = default)
+        {
+            // I can later add logic to invalidate the user's session or tokens.
+            // For now, this method simply signs the user out of the current session.
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await _signInManager.SignOutAsync();
         }
     }
 }
