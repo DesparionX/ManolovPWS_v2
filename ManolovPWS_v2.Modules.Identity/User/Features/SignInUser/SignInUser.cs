@@ -2,6 +2,7 @@
 using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authorization;
+using ManolovPWS_v2.Modules.Identity.User.Auth.Token;
 using ManolovPWS_v2.Modules.Identity.User.Maps;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
@@ -15,13 +16,15 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.SignInUser
         IAuthService authService,
         IAuthorizationService authorizationService,
         ICurrentUser<UserId> currentUser,
-        ITokenProvider tokenProvider) 
+        ITokenProvider tokenProvider,
+        IRefreshTokensService refreshTokensService) 
         : ICommandHandler<SignInUserCommand, SignInResponse>
     {
         private readonly IAuthService _authService = authService;
         private readonly IAuthorizationService _authorizationService = authorizationService;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
         private readonly ITokenProvider _tokenProvider = tokenProvider;
+        private readonly IRefreshTokensService _refreshTokensService = refreshTokensService;
 
         public async Task<ITaskResult<SignInResponse>> HandleAsync(SignInUserCommand request, CancellationToken cancellationToken = default)
         {
@@ -48,9 +51,13 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.SignInUser
                 Permissions: userPermissions
                 );
 
-            var token = _tokenProvider.GenerateAccessToken(tokenRequest);
+            var accessToken = _tokenProvider.GenerateAccessToken(tokenRequest);
 
-            var response = new SignInResponse(token, user.ToAuthUserRm());
+            var refreshTokenResult = await _refreshTokensService.CreateTokenAsync(user.Id,cancellationToken);
+            if(!refreshTokenResult.IsSuccess)
+                return Result<SignInResponse>.Failure([IdentityAppErrors.UnableToAuthenticate, .. refreshTokenResult.Errors]);
+
+            var response = new SignInResponse(accessToken, refreshTokenResult.Value, user.ToAuthUserRm());
 
             return Result<SignInResponse>.Success(response);
         }

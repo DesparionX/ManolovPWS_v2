@@ -1,4 +1,4 @@
-﻿namespace ManolovPWS_v2.Modules.Identity.User.Auth.Authentication
+﻿namespace ManolovPWS_v2.Modules.Identity.User.Auth.Token
 {
     public sealed record TokenRequest(
         Guid Id,
