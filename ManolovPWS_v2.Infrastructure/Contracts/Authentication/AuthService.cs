@@ -32,7 +32,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication
 
         public async Task SignOutAsync(UserId userId, CancellationToken cancellationToken = default)
         {
-            // I can later add logic to invalidate the user's session or tokens.
+            // I'll let this on just in case later we add ASP.NET Identity cookie authentication.
             // For now, this method simply signs the user out of the current session.
 
             cancellationToken.ThrowIfCancellationRequested();

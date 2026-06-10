@@ -29,5 +29,6 @@ namespace ManolovPWS_v2.Modules.Identity.Results
         public static IdentityAppError RefreshTokenInvalid => new("The provided refresh token is invalid.", ErrorCodes.Unauthorized);
         public static IdentityAppError FailedToCreateNewRefreshToken => new("Failed to create a new refresh token.", ErrorCodes.ActionFailed);
         public static IdentityAppError FailedToRevokeRefreshToken => new("Failed to revoke the refresh token.", ErrorCodes.ActionFailed);
+        public static IdentityAppError UserMissmatching => new("The user associated with the refresh token does not match the current user.", ErrorCodes.Unauthorized);
     }
 }
