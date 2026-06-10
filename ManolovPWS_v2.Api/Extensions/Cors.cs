@@ -20,7 +20,8 @@ namespace ManolovPWS_v2.Api.Extensions
                 {
                     policy.WithOrigins(corsSettings.ClientUrl, corsSettings.LocalUrl)
                           .AllowAnyHeader()
-                          .AllowAnyMethod();
+                          .AllowAnyMethod()
+                          .AllowCredentials();
                 });
             });
 

@@ -46,7 +46,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.ManageTokens
 
             var newAccessToken = _tokenProvider.GenerateAccessToken(tokenRequest);
 
-            var revokeResult = await _refreshTokensService.RevokeTokenAsync(request.RefreshToken, cancellationToken);
+            var revokeResult = await _refreshTokensService.RevokeTokenAsync(validationResult.Value.TokenHash, cancellationToken);
             if (!revokeResult.IsSuccess)
                 return Result<TokenPairResponse>.Failure([IdentityAppErrors.FailedToRevokeRefreshToken]);
 

@@ -2,6 +2,7 @@
 using ManolovPWS_v2.Api.Maps;
 using ManolovPWS_v2.Api.Services;
 using ManolovPWS_v2.Domain.Models.User.Properties;
+using ManolovPWS_v2.Modules.Identity.User.Features.ManageTokens;
 using ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser;
 using ManolovPWS_v2.Modules.Identity.User.Features.SignInUser;
 using ManolovPWS_v2.Modules.Identity.User.Features.SignOutUser;
@@ -47,8 +48,29 @@ namespace ManolovPWS_v2.Api.Controllers
                 );
 
             var result = await _dispatcher.SendAsync(query);
+            if (!result.IsSuccess)
+                return result.ToActionResult();
 
-            return result.ToActionResult();
+            Response.Cookies.Append(
+                "refreshToken",
+                result.Value.RefreshToken.Token,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = result.Value.RefreshToken.ExpiresAtUtc,
+                    Path = "/Identity"
+                }
+             );
+
+            var response = new
+            {
+                result.Value.AccessToken,
+                AuthUser = result.Value.User
+            };
+
+            return Ok(response);
         }
 
         [Authorize]
@@ -61,13 +83,69 @@ namespace ManolovPWS_v2.Api.Controllers
             return Unauthorized();
         }
 
+        [Authorize]
         [HttpPost("sign-out")]
-        public async Task<IActionResult> SignOutUser()
+        public async Task<IActionResult> SignOutUser(CancellationToken cancellationToken = default)
         {
-            var cmd = new SignOutCommand();
-            var result = await _dispatcher.SendAsync(cmd);
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                return Unauthorized();
 
-            return result.ToActionResult();
+            var cmd = new SignOutCommand(refreshToken);
+
+            var result = await _dispatcher.SendAsync(cmd, cancellationToken);
+
+            if (!result.IsSuccess)
+                return result.ToActionResult();
+
+            Response.Cookies.Delete(
+                "refreshToken",
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Path = "/Identity"
+                });
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken(CancellationToken cancellationToken = default)
+        {
+            var refreshToken = Request.Cookies["refreshToken"];
+
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                return Unauthorized();
+
+            var cmd = new RefreshAccessTokenCommand(refreshToken);
+
+            var result = await _dispatcher.SendAsync(cmd, cancellationToken);
+
+            if (!result.IsSuccess)
+                return result.ToActionResult();
+
+            Response.Cookies.Append(
+                "refreshToken",
+                result.Value.RefreshToken.Token,
+                new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = result.Value.RefreshToken.ExpiresAtUtc,
+                    Path = "/Identity"
+                }
+             );
+
+            var response = new
+            {
+                result.Value.AccessToken
+            };
+
+            return Ok(response);
         }
     }
 }

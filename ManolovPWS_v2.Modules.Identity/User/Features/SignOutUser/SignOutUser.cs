@@ -7,7 +7,7 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.SignOutUser
 {
-    public sealed record SignOutCommand() : ICommand;
+    public sealed record SignOutCommand(string RefreshToken) : ICommand;
 
     public sealed class SignOutCommandHandler(ICurrentUser<UserId> currentUser, IAuthService authService)
         : ICommandHandler<SignOutCommand>
