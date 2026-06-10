@@ -1,12 +1,10 @@
 ﻿using ManolovPWS_v2.Api.Contracts.Identity;
 using ManolovPWS_v2.Api.Maps;
 using ManolovPWS_v2.Api.Services;
-using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Modules.Identity.User.Features.ManageTokens;
 using ManolovPWS_v2.Modules.Identity.User.Features.RegisterUser;
 using ManolovPWS_v2.Modules.Identity.User.Features.SignInUser;
 using ManolovPWS_v2.Modules.Identity.User.Features.SignOutUser;
-using ManolovPWS_v2.Shared.Abstractions.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +12,9 @@ namespace ManolovPWS_v2.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class IdentityController(IDispatcher dispatcher, ICurrentUser<UserId> currentUser) : ControllerBase
+    public class AuthController(IDispatcher dispatcher) : ControllerBase
     {
         private readonly IDispatcher _dispatcher = dispatcher;
-        private readonly ICurrentUser<UserId> _currentUser = currentUser;
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -42,12 +39,12 @@ namespace ManolovPWS_v2.Api.Controllers
         [HttpPost("sign-in")]
         public async Task<IActionResult> SignInUser([FromBody] SignInRequest request)
         {
-            var query = new SignInUserCommand(
+            var cmd = new SignInUserCommand(
                 UserNameOrEmail: request.UserNameOrEmail,
                 Password: request.Password
                 );
 
-            var result = await _dispatcher.SendAsync(query);
+            var result = await _dispatcher.SendAsync(cmd);
             if (!result.IsSuccess)
                 return result.ToActionResult();
 
@@ -60,7 +57,7 @@ namespace ManolovPWS_v2.Api.Controllers
                     Secure = true,
                     SameSite = SameSiteMode.None,
                     Expires = result.Value.RefreshToken.ExpiresAtUtc,
-                    Path = "/Identity"
+                    Path = "/Auth"
                 }
              );
 
@@ -71,16 +68,6 @@ namespace ManolovPWS_v2.Api.Controllers
             };
 
             return Ok(response);
-        }
-
-        [Authorize]
-        [HttpGet("current-user")]
-        public async Task<IActionResult> GetCurrentUser()
-        {
-            if (_currentUser.IsAuthenticated)
-                return Ok(_currentUser);
-
-            return Unauthorized();
         }
 
         [Authorize]
@@ -105,7 +92,7 @@ namespace ManolovPWS_v2.Api.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.None,
-                    Path = "/Identity"
+                    Path = "/Auth"
                 });
 
             return Ok();
@@ -136,7 +123,7 @@ namespace ManolovPWS_v2.Api.Controllers
                     Secure = true,
                     SameSite = SameSiteMode.None,
                     Expires = result.Value.RefreshToken.ExpiresAtUtc,
-                    Path = "/Identity"
+                    Path = "/Auth"
                 }
              );
 

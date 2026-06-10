@@ -137,6 +137,47 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
                 ? Result.Success()
                 : Result.Failure(result.Errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
         }
+        public async Task<ITaskResult> AddUserToRoleAsync(string userId, string roleName, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user is null)
+                return Result.Failure([new InfraError(Code: "UserNotFound", Message: $"User with ID '{userId}' not found.")]);
+
+            if (!RoleExists(roleName))
+                return Result.Failure([new InfraError(Code: "RoleNotFound", Message: $"Role '{roleName}' does not exist.")]);
+
+            if (await _userManager.IsInRoleAsync(user, roleName))
+                return Result.Failure([new InfraError(Code: "UserAlreadyInRole", Message: $"User is already in the '{roleName}' role.")]);
+
+            var result = await _userManager.AddToRoleAsync(user, roleName);
+
+            return result.Succeeded
+                ? Result.Success()
+                : Result.Failure(result.Errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
+        }
+        public async Task<ITaskResult> RemoveUserFromRoleAsync(string userId, string roleName, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user is null)
+                return Result.Failure([new InfraError(Code: "UserNotFound", Message: $"User with ID '{userId}' not found.")]);
+
+            if (!RoleExists(roleName))
+                return Result.Failure([new InfraError(Code: "RoleNotFound", Message: $"Role '{roleName}' does not exist.")]);
+
+            if (!await _userManager.IsInRoleAsync(user, roleName))
+                return Result.Failure([new InfraError(Code: "UserNotInRole", Message: $"User is not in the '{roleName}' role.")]);
+
+            var result = await _userManager.RemoveFromRoleAsync(user, roleName);
+
+            return result.Succeeded
+                ? Result.Success()
+                : Result.Failure(result.Errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
+        }
 
         // Helper methods
         private static bool PermissionExists(string permissionName)

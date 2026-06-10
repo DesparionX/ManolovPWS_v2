@@ -56,7 +56,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 Certificates: user.MapCertificates()
                 );
 
-        public static AuthUserReadModel ToAuthUserRm(this Domain.Models.User.User user)
+        public static CompactUserReadModel ToCompactUserRm(this Domain.Models.User.User user)
             => new(
                 Id: user.Id.Value,
                 UserName: user.UserName.Value,

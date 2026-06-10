@@ -57,7 +57,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Features.SignInUser
             if(!refreshTokenResult.IsSuccess)
                 return Result<SignInResponse>.Failure([IdentityAppErrors.UnableToAuthenticate, .. refreshTokenResult.Errors]);
 
-            var response = new SignInResponse(accessToken, refreshTokenResult.Value, user.ToAuthUserRm());
+            var response = new SignInResponse(accessToken, refreshTokenResult.Value, user.ToCompactUserRm());
 
             return Result<SignInResponse>.Success(response);
         }
