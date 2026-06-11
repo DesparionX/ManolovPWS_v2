@@ -51,6 +51,19 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
             };
         }
 
+        public static void ApplyChanges(this DbProject toProject, Project fromProject)
+        {
+            toProject.Name = fromProject.Name.Value;
+            toProject.Description = fromProject.Description.Value;
+            toProject.ProjectState = fromProject.State.Value.ToString();
+            toProject.LiveUrl = fromProject.LiveUrl?.Value.ToString();
+            toProject.GitHubUrl = fromProject.GitHubUrl?.Value.ToString();
+            toProject.UpdatedDate = fromProject.UpdatedDate?.Value;
+            toProject.Gallery = fromProject.Gallery;
+            toProject.Thumb = fromProject.Thumb.Value.ToString();
+            toProject.Stack = fromProject.ProjectStack;
+        }
+
         public static IReadOnlyList<Project> ToDomainList(this IReadOnlyList<DbProject> projects)
             => projects.Select(p => p.ToDomain()).ToList();
 

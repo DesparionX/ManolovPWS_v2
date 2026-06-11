@@ -41,6 +41,15 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
             };
         }
 
+        public static void ApplyChanges(this DbPost toPost, Post fromPost)
+        {
+            toPost.Title = fromPost.Title.Value;
+            toPost.Content = fromPost.Content;
+            toPost.PublishedDate = fromPost.PublishedDate.Value;
+            toPost.UpdatedDate = fromPost.UpdatedDate?.Value;
+            toPost.IsPinned = fromPost.IsPinned;
+        }
+
         public static IReadOnlyList<Post> ToDomainList(this IReadOnlyList<DbPost> posts)
             => posts.Select(p => p.ToDomain()).ToList();
 

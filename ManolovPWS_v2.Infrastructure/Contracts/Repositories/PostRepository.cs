@@ -47,8 +47,10 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
         }
         public async Task<ITaskResult> SaveAsync(Post entity, CancellationToken cancellationToken = default)
         {
-            var dbPost = entity.ToDbEntity();
+            var dbPost = await _context.Posts.FindAsync([entity.Id.Value], cancellationToken)
+                ?? throw DbExceptions.PostNotFound(entity.Id.Value);
 
+            dbPost.ApplyChanges(entity);
             _context.Posts.Update(dbPost);
 
             await _context.SaveChangesAsync(cancellationToken);

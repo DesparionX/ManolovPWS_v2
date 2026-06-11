@@ -47,9 +47,11 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
         }
         public async Task<ITaskResult> SaveAsync(Project entity, CancellationToken cancellationToken = default)
         {
-            var projectEntity = entity.ToDbEntity();
-            
-            _context.Projects.Update(projectEntity);
+            var dbProject = await _context.Projects.FindAsync([entity.Id.Value], cancellationToken: cancellationToken)
+                ?? throw DbExceptions.ProjectNotFound(entity.Id.Value);
+
+            dbProject.ApplyChanges(entity);
+            _context.Projects.Update(dbProject);
 
             await _context.SaveChangesAsync(cancellationToken);
 
