@@ -1,6 +1,6 @@
 ﻿namespace ManolovPWS_v2.Modules.Identity.User.Shared.SharedProperties
 {
-    public sealed record Skill(
+    public sealed record SkillDto(
         string Name,
         int Level,
         string Type,

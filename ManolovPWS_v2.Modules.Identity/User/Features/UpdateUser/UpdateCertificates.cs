@@ -8,7 +8,7 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateCertificatesCommand(IEnumerable<Shared.SharedProperties.Certificate> NewCertificates) : ICommand;
+    public sealed record UpdateCertificatesCommand(IEnumerable<Shared.SharedProperties.CertificateDto> NewCertificates) : ICommand;
 
     public sealed class UpdateCertificatesCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
                 : ICommandHandler<UpdateCertificatesCommand>

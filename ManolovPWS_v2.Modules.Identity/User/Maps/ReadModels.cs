@@ -67,23 +67,23 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 ProfilePictureUrl: user.ProfilePicture?.Url.ToString()
                 );
 
-        public static List<Contact> MapContacts(this Domain.Models.User.User user)
-            => user.Contacts.Items.Select(c => new Contact(
+        public static List<ContactDto> MapContacts(this Domain.Models.User.User user)
+            => user.Contacts.Items.Select(c => new ContactDto(
                 Network: c.Network,
                 ProfileName: c.ProfileName,
                 FullUrl: c.FullUrl.ToString()
                 )).ToList();
 
-        public static List<Skill> MapSkills(this Domain.Models.User.User user)
-            => user.Skills.Skills.Select(s => new Skill(
+        public static List<SkillDto> MapSkills(this Domain.Models.User.User user)
+            => user.Skills.Skills.Select(s => new SkillDto(
                 Name: s.Name.Value,
                 Level: s.Level.Value,
                 Type: s.Type.ToString(),
                 Category: s.Category.Name
                 )).ToList();
 
-        public static List<Language> MapLanguages(this Domain.Models.User.User user)
-            => user.Skills.Languages.Select(l => new Language(
+        public static List<LanguageDto> MapLanguages(this Domain.Models.User.User user)
+            => user.Skills.Languages.Select(l => new LanguageDto(
                 LanguageName: l.Language.Value,
                 ReadingLevel: l.Level?.Reading.ToString(),
                 WritingLevel: l.Level?.Writing.ToString(),
@@ -91,8 +91,8 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 IsNative: l.IsNative
                 )).ToList();
 
-        public static List<Job> MapExperience(this Domain.Models.User.User user)
-            => user.Experience.Jobs.Select(j => new Job(
+        public static List<JobDto> MapExperience(this Domain.Models.User.User user)
+            => user.Experience.Jobs.Select(j => new JobDto(
                 Title: j.Title.Value,
                 Company: j.Company.Value,
                 Description: j.Description.Value,
@@ -100,8 +100,8 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 EndDate: j.Period.EndDate
                 )).ToList();
 
-        public static List<Education> MapEducation(this Domain.Models.User.User user)
-            => user.EducationHistory.EducationEntries.Select(e => new Education(
+        public static List<EducationDto> MapEducation(this Domain.Models.User.User user)
+            => user.EducationHistory.EducationEntries.Select(e => new EducationDto(
                 SchoolName: e.School.Name,
                 SchoolType: e.School.Type,
                 Degree: e.Degree.Value,
@@ -110,8 +110,8 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 EndDate: e.StudyPeriod.EndDate
                 )).ToList();
 
-        public static List<Certificate> MapCertificates(this Domain.Models.User.User user)
-            => user.Certificates.Items.Select(c => new Certificate(
+        public static List<CertificateDto> MapCertificates(this Domain.Models.User.User user)
+            => user.Certificates.Items.Select(c => new CertificateDto(
                 Title: c.Title.Value,
                 Issuer: c.Issuer.Value,
                 DateObtained: c.Date.Value,

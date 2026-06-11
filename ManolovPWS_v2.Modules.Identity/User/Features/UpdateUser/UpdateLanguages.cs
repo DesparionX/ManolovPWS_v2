@@ -8,15 +8,15 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateLanguageCommand(IEnumerable<Shared.SharedProperties.Language> NewLanguages) : ICommand;
+    public sealed record UpdateLanguagesCommand(IEnumerable<Shared.SharedProperties.LanguageDto> NewLanguages) : ICommand;
 
     public sealed class UpdateLanguageCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
-            : ICommandHandler<UpdateLanguageCommand>
+            : ICommandHandler<UpdateLanguagesCommand>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
 
-        public async Task<ITaskResult> HandleAsync(UpdateLanguageCommand command, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult> HandleAsync(UpdateLanguagesCommand command, CancellationToken cancellationToken = default)
         {
             var newLanguages = command.NewLanguages.ToDomainLanguages();
 

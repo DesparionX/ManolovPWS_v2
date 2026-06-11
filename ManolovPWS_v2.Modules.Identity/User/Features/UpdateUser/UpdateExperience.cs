@@ -8,7 +8,7 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateExperienceCommand(IEnumerable<Shared.SharedProperties.Job> Experience) : ICommand;
+    public sealed record UpdateExperienceCommand(IEnumerable<Shared.SharedProperties.JobDto> Experience) : ICommand;
 
     public sealed class UpdateExperienceCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
         : ICommandHandler<UpdateExperienceCommand>

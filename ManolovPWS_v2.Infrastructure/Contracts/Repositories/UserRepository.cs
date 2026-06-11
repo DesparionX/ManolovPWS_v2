@@ -68,7 +68,12 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var result = await _userManager.UpdateAsync(entity.ToDbEntity());
+            var dbUser = await _userManager.FindByIdAsync(entity.Id.Value.ToString())
+                ?? throw DbExceptions.UserNotFound(entity.Id.Value.ToString());
+
+            dbUser.ApplyChanges(entity);
+
+            var result = await _userManager.UpdateAsync(dbUser);
 
             return result.ToInfraTaskResult();
         }

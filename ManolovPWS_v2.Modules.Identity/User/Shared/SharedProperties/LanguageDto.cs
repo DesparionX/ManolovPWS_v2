@@ -1,6 +1,6 @@
 ﻿namespace ManolovPWS_v2.Modules.Identity.User.Shared.SharedProperties
 {
-    public sealed record Language(
+    public sealed record LanguageDto(
         string LanguageName,
         string? ReadingLevel,
         string? WritingLevel,

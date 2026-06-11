@@ -8,7 +8,7 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateEducationHistoryCommand(IEnumerable<Shared.SharedProperties.Education> NewEducationHistory) : ICommand;
+    public sealed record UpdateEducationHistoryCommand(IEnumerable<Shared.SharedProperties.EducationDto> NewEducationHistory) : ICommand;
 
     public sealed class UpdateEducationHistoryCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
                 : ICommandHandler<UpdateEducationHistoryCommand>

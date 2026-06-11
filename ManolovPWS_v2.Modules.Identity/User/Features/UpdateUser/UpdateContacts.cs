@@ -8,7 +8,7 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser
 {
-    public sealed record UpdateContactsCommand(IEnumerable<Shared.SharedProperties.Contact> NewContacts) : ICommand;
+    public sealed record UpdateContactsCommand(IEnumerable<Shared.SharedProperties.ContactDto> NewContacts) : ICommand;
 
     public sealed class UpdateContactsCommandHandler(IUserRepository userRepository, ICurrentUser<UserId> currentUser)
         : ICommandHandler<UpdateContactsCommand>

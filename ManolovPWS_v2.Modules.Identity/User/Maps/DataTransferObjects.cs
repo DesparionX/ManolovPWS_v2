@@ -8,10 +8,10 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
 {
     public static class DataTransferObjects
     {
-        public static IEnumerable<Contact> ToDomainContacts(this IEnumerable<Shared.SharedProperties.Contact> contacts)
+        public static IEnumerable<Contact> ToDomainContacts(this IEnumerable<Shared.SharedProperties.ContactDto> contacts)
             => contacts.Select(c => Contact.Create(c.Network, c.ProfileName, c.FullUrl));
 
-        public static IEnumerable<Skill> ToDomainSkills(this IEnumerable<Shared.SharedProperties.Skill> skills)
+        public static IEnumerable<Skill> ToDomainSkills(this IEnumerable<Shared.SharedProperties.SkillDto> skills)
             => skills.Select(s => Skill.Create(
                 SkillName.Create(s.Name),
                 SkillTypeExtensions.FromString(s.Type),
@@ -19,7 +19,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 SkillLevel.Create(s.Level)
             ));
 
-        public static IEnumerable<LanguageSkill> ToDomainLanguages(this IEnumerable<Shared.SharedProperties.Language> languages)
+        public static IEnumerable<LanguageSkill> ToDomainLanguages(this IEnumerable<Shared.SharedProperties.LanguageDto> languages)
             => languages.Select(l => l.IsNative
                 ? LanguageSkill.CreateNative(LanguageName.Create(l.LanguageName))
                 : LanguageSkill.CreateNonNative(
@@ -32,7 +32,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 )
             );
 
-        public static IEnumerable<Job> ToDomainExperience(this IEnumerable<Shared.SharedProperties.Job> experiences)
+        public static IEnumerable<Job> ToDomainExperience(this IEnumerable<Shared.SharedProperties.JobDto> experiences)
             => experiences.Select(e => Job.Create(
                 JobTitle.Create(e.Title),
                 CompanyName.Create(e.Company),
@@ -43,7 +43,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 )
             ));
 
-        public static IEnumerable<Education> ToDomainEducation(this IEnumerable<Shared.SharedProperties.Education> educationHistory)
+        public static IEnumerable<Education> ToDomainEducation(this IEnumerable<Shared.SharedProperties.EducationDto> educationHistory)
             => educationHistory.Select(e => Education.Create(
                 School.Create(e.SchoolName, e.SchoolType),
                 Degree.Create(e.Degree),
@@ -54,7 +54,7 @@ namespace ManolovPWS_v2.Modules.Identity.User.Maps
                 )
             ));
 
-        public static IEnumerable<Certificate> ToDomainCertificates(this IEnumerable<Shared.SharedProperties.Certificate> certificates)
+        public static IEnumerable<Certificate> ToDomainCertificates(this IEnumerable<Shared.SharedProperties.CertificateDto> certificates)
             => certificates.Select(c => Certificate.Create(
                 CertificationTitle.Create(c.Title),
                 CertificationIssuer.Create(c.Issuer),

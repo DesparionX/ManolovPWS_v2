@@ -1,6 +1,6 @@
 ﻿namespace ManolovPWS_v2.Modules.Identity.User.Shared.SharedProperties
 {
-    public sealed record Job(
+    public sealed record JobDto(
         string Title,
         string Company,
         string Description,

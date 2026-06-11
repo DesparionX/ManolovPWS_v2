@@ -21,11 +21,11 @@ namespace ManolovPWS_v2.Modules.Identity.User.Shared.ReadModels
         string? ProfilePictureUrl,
         DateOnly BirthDate,
         string Gender,
-        IReadOnlyList<Contact> Contacts,
-        IReadOnlyList<Skill> Skills,
-        IReadOnlyList<Language> Languages,
-        IReadOnlyList<Job> Experience,
-        IReadOnlyList<Education> EducationHistory,
-        IReadOnlyList<Certificate> Certificates
+        IReadOnlyList<ContactDto> Contacts,
+        IReadOnlyList<SkillDto> Skills,
+        IReadOnlyList<LanguageDto> Languages,
+        IReadOnlyList<JobDto> Experience,
+        IReadOnlyList<EducationDto> EducationHistory,
+        IReadOnlyList<CertificateDto> Certificates
         );
 }

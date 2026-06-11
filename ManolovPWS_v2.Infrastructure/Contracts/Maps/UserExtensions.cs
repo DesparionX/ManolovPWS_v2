@@ -66,6 +66,26 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Maps
             return dbUser;
         }
 
+        public static void ApplyChanges(this DbUser toUser, User fromUser)
+        {
+            toUser.Email = fromUser.Email.Value;
+            toUser.FirstName = fromUser.Name.FirstName;
+            toUser.MiddleName = fromUser.Name.MiddleName;
+            toUser.LastName = fromUser.Name.LastName;
+            toUser.Profession = fromUser.Profession.Value;
+            toUser.Summary = fromUser.Summary?.Value;
+            toUser.BirthDate = fromUser.BirthDate.Value;
+            toUser.Gender = fromUser.Gender.Value.ToString();
+            toUser.Contacts = fromUser.Contacts;
+            toUser.PhoneNumber = fromUser.PhoneNumber?.Value;
+            toUser.Address = fromUser.Address;
+            toUser.ProfilePictureUrl = fromUser.ProfilePicture?.Url.ToString();
+            toUser.Skills = fromUser.Skills;
+            toUser.Experience = fromUser.Experience;
+            toUser.EducationHistory = fromUser.EducationHistory;
+            toUser.Certificates = fromUser.Certificates;
+        }
+
         public static IReadOnlyList<User> ToDomainList(this IReadOnlyList<DbUser> users)
             => users.Select(u => u.ToDomain()).ToList();
 
