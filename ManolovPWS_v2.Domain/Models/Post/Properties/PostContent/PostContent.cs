@@ -37,7 +37,7 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
         internal PostContent UpdateContext(PostContext newContext)
             => new(newContext, Thumb, Gallery);
 
-        internal PostContent UpdateThumb(PostPicture thumb)
+        internal PostContent UpdateThumb(PostPicture? thumb)
             => new(Context, thumb, Gallery);
 
 

@@ -31,7 +31,7 @@ namespace ManolovPWS_v2.Modules.Content.Post.Features.AddPost
             var title = PostTitle.Create(command.Title);
             
             var context = PostContext.Create(command.Context);
-            var thumb = command.Thumb is not null ? PostPicture.Create(command.Thumb) : null;
+            var thumb = string.IsNullOrWhiteSpace(command.Thumb) ? null : PostPicture.Create(command.Thumb);
             var gallery = command.Gallery is not null ? PostGallery.Create(command.Gallery.ToPostPictures()) : null;
 
             var content = PostContent.Create(context, thumb, gallery);

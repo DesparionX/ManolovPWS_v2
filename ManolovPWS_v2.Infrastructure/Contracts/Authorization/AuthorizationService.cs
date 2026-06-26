@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
 {
-    public sealed class AuthorizationService(UserManager<DbUser> userManager, RoleManager<IdentityRole<Guid>> roleManager)
+    public sealed class AuthorizationService(UserManager<DbUser> userManager)
         : IAuthorizationService
     {
         private readonly UserManager<DbUser> _userManager = userManager;

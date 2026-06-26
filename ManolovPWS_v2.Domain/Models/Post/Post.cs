@@ -95,7 +95,7 @@ namespace ManolovPWS_v2.Domain.Models.Post
 
             return With(content: withUpdatedContext);
         }
-        public Post UpdateThumb(PostPicture newThumb)
+        public Post UpdateThumb(PostPicture? newThumb)
         {
             var withUpdatedThumb = Content.UpdateThumb(newThumb);
 
