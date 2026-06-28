@@ -7,7 +7,7 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 {
-    public sealed record UpdateProjectStackCommand(string ProjectId, IEnumerable<string> NewStack) : ICommand;
+    public sealed record UpdateProjectStackCommand(string ProjectId, IReadOnlyCollection<string> NewStack) : ICommand;
 
     public sealed class UpdateProjectStackCommandHandler(IProjectRepository projectRepository)
         : ICommandHandler<UpdateProjectStackCommand>
@@ -19,7 +19,6 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
             var projectId = ProjectId.From(command.ProjectId);
 
             var result = await _repository.FindByIdAsync(projectId, cancellationToken);
-
             if (!result.IsSuccess)
                 return Result.Failure([ProjectAppErrors.ProjectNotFound]);
 

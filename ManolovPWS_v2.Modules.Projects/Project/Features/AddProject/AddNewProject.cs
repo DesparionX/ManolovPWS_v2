@@ -33,8 +33,8 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.AddProject
             var projectName = ProjectName.Create(command.Name);
             var description = ProjectDescription.Create(command.Description);
             var projectState = ProjectState.FromString(command.ProjectState);
-            var liveUrl = command.LiveUrl is not null ? ProjectLiveUrl.Create(command.LiveUrl) : null;
-            var gitHubUrl = command.GitHubUrl is not null ? ProjectGitHubUrl.Create(command.GitHubUrl) : null;
+            var liveUrl = string.IsNullOrWhiteSpace(command.LiveUrl) ? null : ProjectLiveUrl.Create(command.LiveUrl);
+            var gitHubUrl = string.IsNullOrWhiteSpace(command.GitHubUrl) ? null : ProjectGitHubUrl.Create(command.GitHubUrl);
             var galleryPictures = command.GalleryPictures is not null ? ProjectGallery.Create(command.GalleryPictures.ToProjectPictures()) : null;
             var projectStack = ProjectStack.Create(command.ProjectStack.ToProjectStack());
             var thumbUrl = ProjectPicture.Create(command.ThumbUrl);

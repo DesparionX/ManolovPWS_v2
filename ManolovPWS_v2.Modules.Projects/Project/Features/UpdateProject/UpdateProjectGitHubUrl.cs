@@ -16,18 +16,17 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
         public async Task<ITaskResult> HandleAsync(UpdateProjectGitHubUrl command, CancellationToken cancellationToken = default)
         {
             var newGitHubUrl = ProjectGitHubUrl.Create(command.NewGitHubUrl);
-
             var projectId = ProjectId.From(command.ProjectId);
 
             var result = await _repository.FindByIdAsync(projectId, cancellationToken);
-
             if (!result.IsSuccess)
-                return Result.Failure([ProjectAppErrors.ProjectNotFound]);
+                return Result.Failure([ProjectAppErrors.ProjectNotFound, ..result.Errors]);
 
             var project = result.Value;
+            if (project.GitHubUrl is not null && project.GitHubUrl.Equals(newGitHubUrl))
+                return Result.Success();
 
             var updated = project.UpdateGitHubUrl(newGitHubUrl);
-
             var saveResult = await _repository.SaveAsync(updated, cancellationToken);
 
             return saveResult.IsSuccess

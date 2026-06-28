@@ -6,14 +6,14 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
 {
-    public sealed record UpdateProjectState(string ProjectId, string NewState) : ICommand;
+    public sealed record UpdateProjectStateCommand(string ProjectId, string NewState) : ICommand;
 
     public sealed class UpdateProjectStateCommandHandler(IProjectRepository projectRepository)
-        : ICommandHandler<UpdateProjectState>
+        : ICommandHandler<UpdateProjectStateCommand>
     {
         private readonly IProjectRepository _repository = projectRepository;
 
-        public async Task<ITaskResult> HandleAsync(UpdateProjectState command, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult> HandleAsync(UpdateProjectStateCommand command, CancellationToken cancellationToken = default)
         {
             var newState = ProjectState.FromString(command.NewState);
 
@@ -22,10 +22,12 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
             var result = await _repository.FindByIdAsync(projectId, cancellationToken);
 
             if (!result.IsSuccess)
-                return Result.Failure([ProjectAppErrors.ProjectNotFound]);
+                return Result.Failure([ProjectAppErrors.ProjectNotFound, .. result.Errors]);
 
             var project = result.Value;
-
+            if(project.State.Equals(newState))
+                return Result.Success();
+        
             var updated = project.UpdateState(newState);
 
             var saveResult = await _repository.SaveAsync(updated, cancellationToken);

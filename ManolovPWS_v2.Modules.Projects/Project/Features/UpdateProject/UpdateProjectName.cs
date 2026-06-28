@@ -19,14 +19,14 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
             var projectId = ProjectId.From(command.ProjectId);
 
             var result = await _repository.FindByIdAsync(projectId, cancellationToken);
-
             if (!result.IsSuccess)
                 return Result.Failure([ProjectAppErrors.ProjectNotFound]);
 
             var project = result.Value;
+            if (project.Name.Equals(newName))
+                return Result.Success();
 
             var updated = project.UpdateName(newName);
-
             var saveResult = await _repository.SaveAsync(updated, cancellationToken);
 
             return saveResult.IsSuccess

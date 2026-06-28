@@ -5,8 +5,10 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Maps
 {
     public static class DataTransferObjects
     {
-        public static IEnumerable<ProjectPicture> ToProjectPictures (this IEnumerable<string> urls)
-            => urls.Select(picture => ProjectPicture.Create(picture));
+        public static IEnumerable<ProjectPicture> ToProjectPictures(this IEnumerable<string> urls)
+            => urls
+                .Where(u => !string.IsNullOrWhiteSpace(u))
+                .Select(ProjectPicture.Create);
 
         public static IEnumerable<StackTag> ToProjectStack(this IEnumerable<string> stackItems)
             => stackItems.Select(item => StackTag.Create(item));

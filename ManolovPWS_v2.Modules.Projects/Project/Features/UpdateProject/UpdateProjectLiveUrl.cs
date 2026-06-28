@@ -15,18 +15,17 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.UpdateProject
         public async Task<ITaskResult> HandleAsync(UpdateProjectLiveUrlCommand command, CancellationToken cancellationToken = default)
         {
             var newLiveUrl = ProjectLiveUrl.Create(command.NewLiveUrl);
-
             var projectId = ProjectId.From(command.ProjectId);
 
             var result = await _repository.FindByIdAsync(projectId, cancellationToken);
-
             if (!result.IsSuccess)
-                return Result.Failure([ProjectAppErrors.ProjectNotFound]);
+                return Result.Failure([ProjectAppErrors.ProjectNotFound, ..result.Errors]);
 
             var project = result.Value;
+            if (project.LiveUrl is not null && project.LiveUrl.Equals(newLiveUrl))
+                return Result.Success();
 
             var updated = project.UpdateLiveUrl(newLiveUrl);
-
             var saveResult = await _repository.SaveAsync(updated, cancellationToken);
 
             return saveResult.IsSuccess
