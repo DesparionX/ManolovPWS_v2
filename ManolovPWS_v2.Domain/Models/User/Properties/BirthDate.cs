@@ -22,10 +22,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static void ValidateBirthDate(DateOnly value)
         {
             if (value > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidBirthDateException("Birth date cannot be in the future.");
+                throw new InvalidBirthDateException("Birth date cannot be in the future.", "BirthDateInTheFuture");
 
             if (value < DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-120)))
-                throw new InvalidBirthDateException("No way you are 120yo :D !");
+                throw new InvalidBirthDateException("No way you are 120yo :D !", "TooOld!");
         }
 
         // Equality

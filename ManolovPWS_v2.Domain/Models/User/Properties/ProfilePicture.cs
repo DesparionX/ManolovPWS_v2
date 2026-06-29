@@ -21,7 +21,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static Uri ValidatedPictureUrl(string url)
         {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
-                throw new InvalidUriException("Entered URL is invalid.");
+                throw new InvalidUriException("Entered URL is invalid.", "InvalidURL");
 
             return uri;
         }

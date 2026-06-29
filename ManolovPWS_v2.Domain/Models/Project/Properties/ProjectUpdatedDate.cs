@@ -30,7 +30,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static void ValidateUpdatedDate(DateOnly value)
         {
             if (value > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidProjectDateException("Updated date cannot be in the future.");
+                throw new InvalidProjectDateException("Updated date cannot be in the future.", "UpdateDateInTheFuture");
         }
 
         // Equality

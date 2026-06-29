@@ -31,7 +31,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
                 var parsed = util.Parse(rawNumber, region);
 
                 if (!util.IsValidNumber(parsed))
-                    throw new InvalidPhoneNumberException("Invalid phone number.");
+                    throw new InvalidPhoneNumberException("Invalid phone number.", "InvalidPhoneNumber");
                 
                 var normalized = util.Format(parsed, PhoneNumberFormat.E164);
 
@@ -39,7 +39,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
             }
             catch (NumberParseException)
             {
-                throw new InvalidPhoneNumberException("Invalid phone number.");
+                throw new InvalidPhoneNumberException("Invalid phone number.", "InvalidPhoneNumber");
             }
         }
 

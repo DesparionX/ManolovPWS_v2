@@ -21,10 +21,10 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static void ValidateProjectDescription(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidProjectDescriptionException("Project description cannot be null or empty.");
+                throw new InvalidProjectDescriptionException("Project description cannot be null or empty.", "ProjectDescriptionNullOrEmpty");
 
             if (value.Length > 10000)
-                throw new InvalidProjectDescriptionException("Project description must be less than 10 000 characters.");
+                throw new InvalidProjectDescriptionException("Project description must be less than 10 000 characters.", "ProjectDescriptionTooLong");
         }
 
         // Equality

@@ -23,7 +23,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         private static void ValidateIssuer(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidCertificateException("Certification issuer cannot be null or empty.", "InvalidIssuer");
+                throw new InvalidCertificateException("Certification issuer cannot be null or empty.", "NullOrEmptyIssuer");
         }
 
         // Equality

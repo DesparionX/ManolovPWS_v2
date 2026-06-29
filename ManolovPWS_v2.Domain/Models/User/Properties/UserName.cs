@@ -14,11 +14,11 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new InvalidUserNameException("User name cannot be null or whitespace.");
+                throw new InvalidUserNameException("User name cannot be null or whitespace.", "NullOrEmptyUserName");
             }
             if (value.Length < 3 || value.Length > 20)
             {
-                throw new InvalidUserNameException("User name must be between 3 and 20 characters long.");
+                throw new InvalidUserNameException("User name must be between 3 and 20 characters long.", "UserNameTooLong");
             }
             return new UserName(value);
         }

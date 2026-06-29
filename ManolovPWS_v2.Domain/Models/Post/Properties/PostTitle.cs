@@ -22,7 +22,7 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties
         private static void ValidatePostTitle(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidPostTitleException("PostTitle cannot be null or empty.");
+                throw new InvalidPostTitleException("PostTitle cannot be null or empty.", "InvalidPostTitle");
         }
 
         // Equality

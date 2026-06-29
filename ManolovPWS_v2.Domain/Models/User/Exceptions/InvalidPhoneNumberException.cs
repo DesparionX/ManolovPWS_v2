@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ManolovPWS_v2.Domain.Errors;
 
 namespace ManolovPWS_v2.Domain.Models.User.Exceptions
 {
-    public sealed class InvalidPhoneNumberException(string message) : Exception(message)
-    {
-    }
+    public sealed class InvalidPhoneNumberException(string message, string code) 
+        : DomainException(message, code);
 }

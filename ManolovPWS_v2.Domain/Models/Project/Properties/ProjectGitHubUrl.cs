@@ -24,7 +24,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static Uri ValidatedGitHubUrl(string url)
         {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
-                throw new InvalidProjectGitHubUrlException("Entered URL is invalid.");
+                throw new InvalidProjectGitHubUrlException("Entered URL is invalid.", "InvalidURL");
 
             return uri;
         }

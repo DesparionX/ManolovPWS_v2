@@ -25,9 +25,9 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         private static void ValidateSchool(string name, string type)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new InvalidEducationException("School name cannot be empty.", "InvalidSchoolName");
+                throw new InvalidEducationException("School name cannot be empty.", "NullOrEmptySchoolName");
             if (string.IsNullOrWhiteSpace(type))
-                throw new InvalidEducationException("School type cannot be empty.", "InvalidSchoolType");
+                throw new InvalidEducationException("School type cannot be empty.", "NullOrEmptySchoolType");
         }
 
         // Equality

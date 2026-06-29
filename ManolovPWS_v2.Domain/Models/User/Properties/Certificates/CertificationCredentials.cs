@@ -26,10 +26,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         private static Uri ValidateCredentials(string credentialId, string credentialUrl)
         {
             if (string.IsNullOrWhiteSpace(credentialId))
-                throw new InvalidCertificateException("Credential ID cannot be null or empty.", "InvalidCertificateCredentialId");
+                throw new InvalidCertificateException("Credential ID cannot be null or empty.", "NullOrEmptyCrerdentialID");
 
             if (!Uri.TryCreate(credentialUrl, UriKind.Absolute, out var uri))
-                throw new InvalidUriException("Entered URL is invalid.");
+                throw new InvalidUriException("Entered URL is invalid.", "InvalidURL");
 
             return uri;
         }

@@ -27,11 +27,11 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static ProjectStateType Parse(string value)
         {
             if (string.IsNullOrEmpty(value))
-                throw new InvalidProjectStateException("State cannot be null or empty.");
+                throw new InvalidProjectStateException("State cannot be null or empty.", "NullOrEmptyState");
 
             if (!Enum.TryParse<ProjectStateType>(value, ignoreCase: true, out var parsed)
                 || !Enum.IsDefined(parsed))
-                throw new InvalidProjectStateException("Invalid project state.");
+                throw new InvalidProjectStateException("Invalid project state.", "InvalidProjectState");
 
             return parsed;
         }

@@ -1,6 +1,7 @@
-﻿namespace ManolovPWS_v2.Domain.Models.User.Exceptions
+﻿using ManolovPWS_v2.Domain.Errors;
+
+namespace ManolovPWS_v2.Domain.Models.User.Exceptions
 {
-    public sealed class InvalidProfessionException(string message) : Exception(message)
-    {
-    }
+    public sealed class InvalidProfessionException(string message, string code)
+        : DomainException(message, code);
 }

@@ -24,7 +24,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         private static void ValidateDegree(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidEducationException("Degree cannot be null or empty.", "InvalidDegree");
+                throw new InvalidEducationException("Degree cannot be null or empty.", "NullOrEmptyDegree");
         }
 
         // Equality

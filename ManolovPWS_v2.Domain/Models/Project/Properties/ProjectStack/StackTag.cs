@@ -24,10 +24,10 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties.ProjectStack
         private static void ValidateTag(string tag)
         {
             if (string.IsNullOrWhiteSpace(tag))
-                throw new InvalidProjectStackException("Stack tag cannot be null or empty.");
+                throw new InvalidProjectStackException("Stack tag cannot be null or empty.", "NullOrEmptyTag");
 
             if (tag.Length > 20)
-                throw new InvalidProjectStackException("Stack tag cannot exceed 20 characters.");
+                throw new InvalidProjectStackException("Stack tag cannot exceed 20 characters.", "TagTooLong");
         }
 
         // Equality

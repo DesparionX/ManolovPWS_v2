@@ -23,10 +23,10 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties
         private static Guid ValidatePostId(string value)
         {
             if (!Guid.TryParse(value.ToString(), out Guid id))
-                throw new InvalidPostIdException("This is not a valid GUID.");
+                throw new InvalidPostIdException("This is not a valid GUID.", "InvalidGUID");
 
             if (id == Guid.Empty)
-                throw new InvalidPostIdException("GUID cannot be null or empty.");
+                throw new InvalidPostIdException("GUID cannot be null or empty.", "EmptyOrNullGUID");
 
             return id;
         }

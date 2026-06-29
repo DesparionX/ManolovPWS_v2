@@ -35,16 +35,16 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         private static void ValidateSkill(SkillName name, SkillLevel level, SkillType type, SkillCategory category)
         {
             if (name is null || string.IsNullOrWhiteSpace(name.Value))
-                throw new InvalidSkillException("Skill name cannot be null.", "InvalidSkillName");
+                throw new InvalidSkillException("Skill name cannot be null.", "NullOrEmptySkillName");
 
             if (level is null)
-                throw new InvalidSkillException("Skill level cannot be null.", "InvalidSkillLevel");
+                throw new InvalidSkillException("Skill level cannot be null.", "NullOrEmptySkillLevel");
 
             if (!IsValidSkillType(type))
                 throw new InvalidSkillException("Skill type is invalid.", "InvalidSkillType");
 
             if (category is null || string.IsNullOrWhiteSpace(category.Name))
-                throw new InvalidSkillException("Skill category cannot be null.", "InvalidSkillCategory");
+                throw new InvalidSkillException("Skill category cannot be null.", "NullOrEmptySkillCategory");
         }
 
         private static bool IsValidSkillType(SkillType type) =>

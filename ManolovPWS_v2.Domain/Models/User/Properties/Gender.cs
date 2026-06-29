@@ -23,11 +23,11 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static GenderType Parsed(string value)
         {
             if (string.IsNullOrEmpty(value))
-                throw new InvalidGenderException("Gender cannot be null or empty.");
+                throw new InvalidGenderException("Gender cannot be null or empty.", "NullOrEmptyGender");
 
             if (!Enum.TryParse<GenderType>(value, ignoreCase: true, out var parsed)
                 || !Enum.IsDefined(parsed))
-                throw new InvalidGenderException("Invalid gender.");
+                throw new InvalidGenderException("Invalid gender.", "InvalidGender");
 
             return parsed;
         }

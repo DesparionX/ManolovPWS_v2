@@ -24,10 +24,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static void Validate(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidProfessionException("Profession cannot be null or empty.");
+                throw new InvalidProfessionException("Profession cannot be null or empty.", "NullOrEmptyProfession");
 
             if (value.Length > 30)
-                throw new InvalidProfessionException("Profession cannot exceed 30 characters.");
+                throw new InvalidProfessionException("Profession cannot exceed 30 characters.", "ProfessionTooLong");
         }
 
         // Equality

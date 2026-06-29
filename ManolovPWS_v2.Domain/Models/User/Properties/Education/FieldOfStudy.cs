@@ -24,7 +24,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         private static void ValidateFieldOfStudy(string value)
         {
             if (string.IsNullOrEmpty(value))
-                throw new InvalidEducationException("Field of study cannot be null or empty.", "InvalidFieldOfStudy");
+                throw new InvalidEducationException("Field of study cannot be null or empty.", "NullOrEmptyFieldOfStudy");
         }
 
         // Equality

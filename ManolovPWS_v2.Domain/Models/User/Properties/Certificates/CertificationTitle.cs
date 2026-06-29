@@ -24,7 +24,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         private static void ValidateTitle(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidCertificateException("Certification title cannot be null or empty.", "InvalidCertificationTitle");
+                throw new InvalidCertificateException("Certification title cannot be null or empty.", "NullOrEmptyTitle");
         }
 
         // Equality

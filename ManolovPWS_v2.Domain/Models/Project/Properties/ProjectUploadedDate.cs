@@ -22,7 +22,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static void ValidateUploadedDate(DateOnly value)
         {
             if (value > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidProjectDateException("Uploaded date cannot be in the future.");
+                throw new InvalidProjectDateException("Uploaded date cannot be in the future.", "UploadDateInTheFuture");
         }
 
         // Equality

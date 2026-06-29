@@ -22,7 +22,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static Uri ValidatedLiveUrl(string url)
         {
             if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
-                throw new InvalidProjectLiveUrlException("Entered URL is invalid.");
+                throw new InvalidProjectLiveUrlException("Entered URL is invalid.", "InvalidURL");
 
             return uri;
         }

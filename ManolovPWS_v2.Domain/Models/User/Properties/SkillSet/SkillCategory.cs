@@ -28,7 +28,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         private static void ValidateSkillCategory(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new InvalidSkillException("Skill category name cannot be null or empty.", "InvalidSkillCategory");
+                throw new InvalidSkillException("Skill category name cannot be null or empty.", "NullOrEmptySkillCategory");
         }
 
         // Equality

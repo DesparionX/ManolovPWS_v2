@@ -25,10 +25,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Education
         private static void ValidateStudyPeriod(DateOnly startDate, DateOnly? endDate)
         {
             if (startDate > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidEducationException("Start date cannot be in the future.", "InvalidStudyStartDate");
+                throw new InvalidEducationException("Start date cannot be in the future.", "StartDateInTheFuture");
 
             if (endDate is not null && endDate < startDate)
-                throw new InvalidEducationException("End date cannot be earlier than start date.", "InvalidStudyEndDate");
+                throw new InvalidEducationException("End date cannot be earlier than start date.", "EarlierEndDate");
         }
 
         // Equality

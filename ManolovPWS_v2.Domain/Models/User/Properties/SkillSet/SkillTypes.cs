@@ -13,7 +13,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         public static SkillType FromString(string type)
         {
             if(!Enum.TryParse<SkillType>(type, ignoreCase: true, out var result))
-                throw new InvalidSkillException($"Invalid skill type: {type}");
+                throw new InvalidSkillException($"Invalid skill type: {type}", "InvalidSkillType");
 
             return result;
         }

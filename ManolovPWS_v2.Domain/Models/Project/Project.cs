@@ -246,7 +246,7 @@ namespace ManolovPWS_v2.Domain.Models.Project
         private static void ValidateUpdateDate(ProjectUploadedDate uploaded, ProjectUpdatedDate? updated)
         {
             if (updated is not null && updated.Value < uploaded.Value)
-                throw new InvalidProjectDateException("Updated date cannot be earlier than uploaded date.");
+                throw new InvalidProjectDateException("Updated date cannot be earlier than uploaded date.", "EarliereUpdateDate");
         }
     }
 }

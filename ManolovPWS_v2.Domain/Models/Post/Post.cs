@@ -151,7 +151,7 @@ namespace ManolovPWS_v2.Domain.Models.Post
         private static void ValidateUpdateDate(PostPublishedDate published, PostUpdatedDate? updated)
         {
             if (updated is not null && updated.Value < published.Value)
-                throw new InvalidPostUpdatedDateException("Updated date cannot be earlier than uploaded date.");
+                throw new InvalidPostUpdatedDateException("Updated date cannot be earlier than uploaded date.", "EarlierUpdateDate");
         }
     }
 }

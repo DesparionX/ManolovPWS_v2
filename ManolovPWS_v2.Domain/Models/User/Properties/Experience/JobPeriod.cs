@@ -28,10 +28,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         private static void ValidateJobPeriod(DateOnly startDate, DateOnly? endDate)
         {
             if (startDate > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidExperienceException("Start date cannot be in the future.", "InvalidJobStartDate");
+                throw new InvalidExperienceException("Start date cannot be in the future.", "JobStartDateInTheFuture");
 
             if (endDate.HasValue && endDate < startDate)
-                throw new InvalidExperienceException("End date cannot be earlier than start date.", "InvalidJobEndDate");
+                throw new InvalidExperienceException("End date cannot be earlier than start date.", "EarlierJobEndDate");
         }
 
         // Equality

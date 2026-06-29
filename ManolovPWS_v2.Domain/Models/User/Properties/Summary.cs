@@ -27,10 +27,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static void Validate(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidSummaryException("Summary cannot be empty.");
+                throw new InvalidSummaryException("Summary cannot be empty.", "NullOrEmptySummary");
 
             if (value.Length > 5000)
-                throw new InvalidSummaryException("Summary cannot exceed 1000 characters.");
+                throw new InvalidSummaryException("Summary cannot exceed 1000 characters.", "SummaryTooLong");
         }
 
         // Equality

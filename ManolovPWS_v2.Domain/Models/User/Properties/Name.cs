@@ -39,16 +39,16 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static void ValidateName(string firstName,string middleName, string lastName)
         {
             if (string.IsNullOrWhiteSpace(firstName))
-                throw new InvalidNameException("First name cannot be null or empty.");
+                throw new InvalidNameException("First name cannot be null or empty.", "NullOrEmptyFirstName");
 
             if (string.IsNullOrWhiteSpace(lastName))
-                throw new InvalidNameException("Last name cannot be null or empty.");
+                throw new InvalidNameException("Last name cannot be null or empty.", "NullOrEmptyLastName");
 
             if (firstName.Length > 20 || lastName.Length > 20)
-                throw new InvalidNameException("First or last name cannot exceed 20 characters.");
+                throw new InvalidNameException("First or last name cannot exceed 20 characters.", "FirstNameTooLong");
 
             if (!IsAlphabetic(firstName) || !IsAlphabetic(middleName) || !IsAlphabetic(lastName))
-                throw new InvalidNameException("First, middle and last names must contain only alphabetic characters.");
+                throw new InvalidNameException("First, middle and last names must contain only alphabetic characters.", "InvalidName");
         }
 
         private static bool IsAlphabetic(string value) =>

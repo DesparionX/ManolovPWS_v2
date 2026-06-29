@@ -21,7 +21,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         public static CerfLevel FromString(string level)
         {
             if (!Enum.TryParse(level, ignoreCase: true, out CerfLevel result))
-                throw new InvalidSkillException($"Invalid CEFR level: {level}");
+                throw new InvalidSkillException($"Invalid CEFR level: {level}", "InvalidCERFLevel");
 
             return result;
         }

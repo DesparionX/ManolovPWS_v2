@@ -1,7 +1,4 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
@@ -26,7 +23,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         private static void ValidateJobTitle(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidExperienceException("Job title cannot be empty or whitespace.", "InvalidJobTitle");
+                throw new InvalidExperienceException("Job title cannot be empty or whitespace.", "NullOrEmptyJobTitle");
             if (value.Length > 100)
                 throw new InvalidExperienceException("Job title cannot exceed 100 characters.", "JobTitleTooLong");
         }

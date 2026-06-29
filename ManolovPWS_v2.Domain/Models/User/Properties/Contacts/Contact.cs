@@ -30,13 +30,13 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Contacts
         private static void ValidateNetwork(string network)
         {
             if (string.IsNullOrWhiteSpace(network))
-                throw new InvalidContactException("Network cannot be null or empty.", "InvalidNetworkName");
+                throw new InvalidContactException("Network cannot be null or empty.", "NullOrEmptyNetwork");
         }
 
         private static void ValidateProfileName(string profileName)
         {
             if (string.IsNullOrWhiteSpace(profileName))
-                throw new InvalidContactException("Profile name cannot be null or empty.", "InvalidProfileName");
+                throw new InvalidContactException("Profile name cannot be null or empty.", "NullOrEmptyProfileName");
         }
 
         private static Uri ValidateUrl(string url)

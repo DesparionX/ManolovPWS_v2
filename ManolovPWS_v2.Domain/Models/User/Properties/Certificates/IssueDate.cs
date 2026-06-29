@@ -24,7 +24,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         private static void ValidateDate(DateOnly date)
         {
             if (date > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidCertificateException("Issue date cannot be in the future.", "InvalidCertificationDate");
+                throw new InvalidCertificateException("Issue date cannot be in the future.", "CertificationDateInTheFuture");
         }
 
         // Equality

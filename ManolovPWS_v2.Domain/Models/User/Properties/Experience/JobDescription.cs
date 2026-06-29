@@ -27,7 +27,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         private static void ValidateDescription(string description)
         {
             if (string.IsNullOrWhiteSpace(description))
-                throw new InvalidExperienceException("Job description is null or white space", "InvalidJobDescription");
+                throw new InvalidExperienceException("Job description is null or white space", "NullOrEmptyJobDescription");
             if (description.Length > 5000)
                 throw new InvalidExperienceException("Job exceeds the maximum characters limit.", "JobDescriptionTooLong");
         }

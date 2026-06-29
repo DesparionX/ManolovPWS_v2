@@ -25,7 +25,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static void ValidateProjectName(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidProjectNameException("ProjectName cannot be null or empty.");
+                throw new InvalidProjectNameException("ProjectName cannot be null or empty.", "ProjectNameNullOrEmpty");
         }
 
         // Equality

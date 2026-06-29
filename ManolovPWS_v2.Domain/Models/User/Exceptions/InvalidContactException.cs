@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ManolovPWS_v2.Domain.Errors;
 
 namespace ManolovPWS_v2.Domain.Models.User.Exceptions
 {
-    public sealed class InvalidContactException(string message, string code) : Exception($"{message}, {code}")
-    {
-    }
+    public sealed class InvalidContactException(string message, string code) 
+        : DomainException(message, code);
 }

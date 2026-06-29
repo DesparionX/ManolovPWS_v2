@@ -24,10 +24,10 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         private static Guid ValidateProjectId(string value)
         {
             if (!Guid.TryParse(value.ToString(), out Guid id))
-                throw new InvalidProjectIdException("This is not a valid GUID.");
+                throw new InvalidProjectIdException("This is not a valid GUID.", "InvalidGUID");
 
             if (id == Guid.Empty)
-                throw new InvalidProjectIdException("GUID cannot be null or empty.");
+                throw new InvalidProjectIdException("GUID cannot be null or empty.", "NullOrEmptyGUID");
 
             return id;
         }

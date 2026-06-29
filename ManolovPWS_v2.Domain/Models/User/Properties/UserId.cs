@@ -23,10 +23,10 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static Guid ValidateUserId(string value)
         {
             if (!Guid.TryParse(value.ToString(), out Guid id))
-                throw new InvalidUserIdException("This is not a valid GUID.");
+                throw new InvalidUserIdException("This is not a valid GUID.", "InvalidGUID");
 
             if (id == Guid.Empty)
-                throw new InvalidUserIdException("GUID cannot be null or empty.");
+                throw new InvalidUserIdException("GUID cannot be null or empty.", "NullOrEmptyGUID");
 
             return id;
         }

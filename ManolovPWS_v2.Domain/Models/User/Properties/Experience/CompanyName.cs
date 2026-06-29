@@ -27,7 +27,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         private static void ValidateCompanyName(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidExperienceException("Company name cannot be null or empty.", "InvalidCompanyName");
+                throw new InvalidExperienceException("Company name cannot be null or empty.", "NullOrEmptyCompany");
             if (value.Length > 100)
                 throw new InvalidExperienceException("Company name cannot exceed 100 characters.", "CompanyNameTooLong");
         }

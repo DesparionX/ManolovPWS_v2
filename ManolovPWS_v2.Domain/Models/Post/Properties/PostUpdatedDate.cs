@@ -25,7 +25,7 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties
         private static void ValidateUpdatedDate(DateOnly value)
         {
             if (value > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidPostUpdatedDateException("Updated date cannot be in the future.");
+                throw new InvalidPostUpdatedDateException("Updated date cannot be in the future.", "UpdateDateInTheFuture");
         }
 
         // Equality

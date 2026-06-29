@@ -30,16 +30,16 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         private static void ValidateJob(JobTitle title, CompanyName company, JobDescription description, JobPeriod period)
         {
             if (title is null)
-                throw new InvalidExperienceException("Title is null.");
+                throw new InvalidExperienceException("Title is null.", "NullOrEmptyJobTitle");
 
             if (company is null)
-                throw new InvalidExperienceException("Company is null.");
+                throw new InvalidExperienceException("Company is null.", "NullOrEmptyCompany");
 
             if (description is null)
-                throw new InvalidExperienceException("Description is null.");
+                throw new InvalidExperienceException("Description is null.", "NullOrEmptyDescription");
 
             if (period is null)
-                throw new InvalidExperienceException("Period is null.");
+                throw new InvalidExperienceException("Period is null.", "NullOrEmptyPeriod");
         }
 
         // Equality

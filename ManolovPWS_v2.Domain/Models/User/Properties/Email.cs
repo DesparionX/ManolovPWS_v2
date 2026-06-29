@@ -14,7 +14,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         public static Email Create(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new InvalidEmailException("Email cannot be null or empty.");
+                throw new InvalidEmailException("Email cannot be null or empty.", "NullOrEmptyEmail");
 
             try
             {
@@ -23,7 +23,7 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
             }
             catch
             {
-                throw new InvalidEmailException("Email format is invalid.");
+                throw new InvalidEmailException("Email format is invalid.", "InvalidEmailFormat");
             }
         }
 

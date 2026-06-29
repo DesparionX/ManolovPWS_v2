@@ -60,49 +60,49 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties
         private static void ValidateCountry(string country)
         {
             if (string.IsNullOrWhiteSpace(country))
-                throw new InvalidAddressException("Country cannot be null or empty.");
+                throw new InvalidAddressException("Country cannot be null or empty.", "NullOrEmptyCountry");
 
             if (country.Length > 20)
-                throw new InvalidAddressException("Country cannot be longer than 20 characters.");
+                throw new InvalidAddressException("Country cannot be longer than 20 characters.", "CountryTooLong");
         }
         private static void ValidateRegion(string region)
         {
             if (string.IsNullOrWhiteSpace(region))
-                throw new InvalidAddressException("Region cannot be null or empty.");
+                throw new InvalidAddressException("Region cannot be null or empty.", "NullOrEmptyRegion");
             if (region.Length > 40)
-                throw new InvalidAddressException("Region cannot be longer than 40 characters.");
+                throw new InvalidAddressException("Region cannot be longer than 40 characters.", "RegionTooLong");
         }
         private static void ValidateMunicipality(string municipality)
         {
             if (string.IsNullOrWhiteSpace(municipality))
-                throw new InvalidAddressException("Municipality cannot be null or empty.");
+                throw new InvalidAddressException("Municipality cannot be null or empty.", "NullOrEmptyMunicipality");
 
             if (municipality.Length > 40)
-                throw new InvalidAddressException("Municipality cannot be longer than 40 characters.");
+                throw new InvalidAddressException("Municipality cannot be longer than 40 characters.", "MunicipalityTooLong");
         }
         private static void ValidateCity(string city)
         {
             if (string.IsNullOrWhiteSpace(city))
-                throw new InvalidAddressException("City cannot be null or empty.");
+                throw new InvalidAddressException("City cannot be null or empty.", "NullOrEmptyCity");
 
             if (city.Length > 40)
-                throw new InvalidAddressException("City cannot be longer than 40 characters.");
+                throw new InvalidAddressException("City cannot be longer than 40 characters.", "CityTooLong");
         }
         private static void ValidateStreet(string street)
         {
             if (string.IsNullOrWhiteSpace(street))
-                throw new InvalidAddressException("Street cannot be null or empty.");
+                throw new InvalidAddressException("Street cannot be null or empty.", "NullOrEmptyStreet");
 
             if (street.Length > 100)
-                throw new InvalidAddressException("Street cannot be longer than 100 characters.");
+                throw new InvalidAddressException("Street cannot be longer than 100 characters.", "StreetTooLong");
         }
         private static void ValidatePostalCode(string postalCode)
         {
             if (string.IsNullOrWhiteSpace(postalCode))
-                throw new InvalidAddressException("Postal code cannot be null or empty.");
+                throw new InvalidAddressException("Postal code cannot be null or empty.", "NullOrEmptyPostalCode");
 
             if (postalCode.Length > 15)
-                throw new InvalidAddressException("Postal code cannot be longer than 15 characters.");
+                throw new InvalidAddressException("Postal code cannot be longer than 15 characters.", "PostalCodeTooLong");
         }
 
         // Equality
