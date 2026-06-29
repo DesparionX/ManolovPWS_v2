@@ -23,6 +23,7 @@ builder.AddServiceDefaults();
 
 
 // Add services to the container.
+builder.Services.AddExceptionHandlers();
 builder.Services.AddApiServices();
 builder.Services.AddInfrastructure(builder.Configuration, connectionString);
 builder.Services.AddApplication();
@@ -38,6 +39,9 @@ builder.Services.AddConfiguredOpenApi();
 builder.Services.AddApiCors(builder.Configuration);
 
 var app = builder.Build();
+
+// Using all exception handlers.
+app.UseExceptionHandler();
 
 // Seed initial data
 await app.SeedDataAsync();

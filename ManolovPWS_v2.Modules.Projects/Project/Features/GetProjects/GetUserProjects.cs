@@ -1,6 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Domain.Models.User.Properties;
-using ManolovPWS_v2.Modules.Projects.Exceptions;
 using ManolovPWS_v2.Modules.Projects.Project.Maps;
 using ManolovPWS_v2.Modules.Projects.Project.Shared.ReadModels;
 using ManolovPWS_v2.Modules.Projects.Results;
