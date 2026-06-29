@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="CV\Shared\Properties\" />
-    <Folder Include="Exceptions\" />
   </ItemGroup>
 
   <ItemGroup>

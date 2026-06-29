@@ -8,6 +8,7 @@ namespace ManolovPWS_v2.Modules.Projects.Results
     {
         // CRUD errors
         public static ProjectAppError ProjectCreationFailed => new("Failed to create the project.", ErrorCodes.ActionFailed);
+        public static ProjectAppError UserNotFound => new("User with given ID could not be found.", ErrorCodes.NotFound);
         public static ProjectAppError ProjectNotFound => new("Project not found.", ErrorCodes.NotFound);
         public static ProjectAppError NoProjectsFound => new("No projects found.", ErrorCodes.NotFound);
         public static ProjectAppError ProjectUpdateFailed => new("Failed to update the project.", ErrorCodes.ActionFailed);

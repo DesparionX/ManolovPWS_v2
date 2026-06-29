@@ -16,11 +16,12 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Features.GetProjects
     {
         private readonly IProjectRepository _repository = projectRepository;
         
-        public async Task<ITaskResult<IReadOnlyList<ProjectReadModel>>> HandleAsync(GetUserProjectsQuery request, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<IReadOnlyList<ProjectReadModel>>> HandleAsync(GetUserProjectsQuery query, CancellationToken cancellationToken = default)
         {
-            if (request is null || string.IsNullOrWhiteSpace(request.UserId))
-                throw new ProjectsAppException("Request is null or UserId is invalid.", "InvalidRequest");
-            var userId = UserId.From(request.UserId);
+            if (string.IsNullOrWhiteSpace(query.UserId))
+                return Result<IReadOnlyList<ProjectReadModel>>.Failure([ProjectAppErrors.UserNotFound]);
+
+            var userId = UserId.From(query.UserId);
 
             var result = await _repository.FindByOwnerIdAsync(userId, cancellationToken);
 
