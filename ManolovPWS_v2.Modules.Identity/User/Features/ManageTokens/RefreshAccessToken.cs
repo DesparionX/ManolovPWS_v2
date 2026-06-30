@@ -1,6 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Contracts.Repositories;
 using ManolovPWS_v2.Modules.Identity.Results;
-using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authorization;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Token;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;

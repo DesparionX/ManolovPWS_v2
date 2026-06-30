@@ -1,19 +1,22 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Infrastructure.Contracts.Results;
+using ManolovPWS_v2.Infrastructure.Exceptions;
 using ManolovPWS_v2.Infrastructure.Persistance;
 using ManolovPWS_v2.Infrastructure.Persistance.Entities;
 using ManolovPWS_v2.Modules.Identity.Results;
-using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
+using ManolovPWS_v2.Modules.Identity.User.Auth.Token;
 using ManolovPWS_v2.Shared.Abstractions.Results;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication
 {
-    public sealed class RefreshTokensService(AppDbContext context) : IRefreshTokensService
+    public sealed class RefreshTokensService(AppDbContext context, UserManager<DbUser> userManager) : IRefreshTokensService
     {
         private readonly AppDbContext _context = context;
+        private readonly UserManager<DbUser> _userManager = userManager;
 
         public async Task<ITaskResult<RefreshToken>> CreateTokenAsync(UserId userId, CancellationToken cancellationToken = default)
         {
@@ -85,6 +88,22 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authentication
 
             _context.RefreshTokens.Update(token);
             await _context.SaveChangesAsync(cancellationToken);
+
+            return Result.Success();
+        }
+
+        public async Task<ITaskResult> RevokeAllUserTokensAsync(UserId userId, CancellationToken cancellationToken = default)
+        {
+            var userInDb = await _userManager.FindByIdAsync(userId.Value.ToString())
+                ?? throw DbExceptions.UserNotFound(userId.Value);
+
+            await _context.RefreshTokens
+                .Where(t => t.UserId.Equals(userInDb.Id) && t.RevokedAtUtc == null)
+                .ExecuteUpdateAsync(
+                    setters => setters.SetProperty(
+                        t => t.RevokedAtUtc,
+                        DateTime.UtcNow),
+                    cancellationToken);
 
             return Result.Success();
         }

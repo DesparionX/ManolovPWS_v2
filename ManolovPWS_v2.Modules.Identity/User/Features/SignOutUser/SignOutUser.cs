@@ -1,6 +1,7 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Modules.Identity.Results;
 using ManolovPWS_v2.Modules.Identity.User.Auth.Authentication;
+using ManolovPWS_v2.Modules.Identity.User.Auth.Token;
 using ManolovPWS_v2.Shared.Abstractions.CQRS;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
 using ManolovPWS_v2.Shared.Abstractions.Results;

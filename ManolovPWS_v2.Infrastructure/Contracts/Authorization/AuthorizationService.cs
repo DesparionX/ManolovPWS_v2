@@ -91,7 +91,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
 
             return Result<bool>.Success(hasPermission);
         }
-        public async Task<ITaskResult> GiveUserPermission(string userId, string permissionName, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult> GiveUserPermissionAsync(string userId, string permissionName, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -114,7 +114,7 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Authorization
                 ? Result.Success()
                 : Result.Failure(result.Errors.Select(e => new InfraError(e.Code, e.Description)).ToList());
         }
-        public async Task<ITaskResult> RevokeUserPermission(string userId, string permissionName, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult> RevokeUserPermissionAsync(string userId, string permissionName, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
