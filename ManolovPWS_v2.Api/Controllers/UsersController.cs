@@ -17,7 +17,7 @@ namespace ManolovPWS_v2.Api.Controllers
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
 
         [Authorize(Roles = Roles.Owner)]
-        [HttpGet("users")]
+        [HttpGet]
         public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken = default)
         {
             var q = new GetAllUsersQuery();
@@ -27,7 +27,7 @@ namespace ManolovPWS_v2.Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("users/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(string id, CancellationToken cancellationToken = default)
         {
             var isOwner = _currentUser.IsAuthenticated && _currentUser.IsInRole(Roles.Owner);
