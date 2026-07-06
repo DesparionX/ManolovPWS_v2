@@ -2,6 +2,7 @@
 using ManolovPWS_v2.Api.Maps;
 using ManolovPWS_v2.Api.Services;
 using ManolovPWS_v2.Modules.Identity.User.Features.Admin;
+using ManolovPWS_v2.Modules.Identity.User.Shared.ReadModels;
 using ManolovPWS_v2.Shared.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ namespace ManolovPWS_v2.Api.Controllers
 
         // Roles endpoints
 
+        [ProducesResponseType<UserRolesReadModel>(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpGet("users/{id}/roles")]
         public async Task<IActionResult> GetUserRoles(string id, CancellationToken cancellationToken = default)
@@ -30,6 +32,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpPost("users/{id}/roles")]
         public async Task<IActionResult> AddUserToRole(string id, [FromBody] UserRoleRequest request, CancellationToken cancellationToken = default)
@@ -43,6 +46,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpDelete("users/{id}/roles")]
         public async Task<IActionResult> RemoveUserFromRole(string id, [FromBody] UserRoleRequest request, CancellationToken cancellationToken = default)
@@ -59,6 +63,7 @@ namespace ManolovPWS_v2.Api.Controllers
 
         // Permissions endpoints
 
+        [ProducesResponseType<UserPermissionsReadModel>(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpGet("users/{id}/permissions")]
         public async Task<IActionResult> GetUserPermissions(string id, CancellationToken cancellationToken = default)
@@ -71,6 +76,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpPost("users/{id}/permissions")]
         public async Task<IActionResult> GiveUserPermission(string id, [FromBody] UserPermissionRequest request, CancellationToken cancellationToken = default)
@@ -84,6 +90,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpDelete("users/{id}/permissions")]
         public async Task<IActionResult> RevokeUserPermission(string id, [FromBody] UserPermissionRequest request, CancellationToken cancellationToken = default)

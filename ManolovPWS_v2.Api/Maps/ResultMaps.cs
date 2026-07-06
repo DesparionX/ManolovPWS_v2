@@ -1,4 +1,5 @@
-﻿using ManolovPWS_v2.Shared.Abstractions.Errors;
+﻿using ManolovPWS_v2.Api.Errors;
+using ManolovPWS_v2.Shared.Abstractions.Errors;
 using ManolovPWS_v2.Shared.Abstractions.Results;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,18 +19,19 @@ namespace ManolovPWS_v2.Api.Maps
 
         private static IActionResult WithErrors(IReadOnlyList<IError> errors)
         {
-            var primaryError = errors[0]
+            var errorList = errors.Select(e => new ApiError(e.Code, e.Message)).ToList();
+            var primaryError = errorList[0]
                 ?? throw new InvalidOperationException("Errors collection is empty.");
 
             return primaryError.Code switch
             {
-                ErrorCodes.ActionFailed => new BadRequestObjectResult(errors),
-                ErrorCodes.ValidationError => new BadRequestObjectResult(errors),
-                ErrorCodes.Unauthorized => new UnauthorizedObjectResult(errors),
-                ErrorCodes.Forbidden => new ObjectResult(errors) { StatusCode = StatusCodes.Status403Forbidden },
-                ErrorCodes.NotFound => new NotFoundObjectResult(errors),
-                ErrorCodes.Conflict => new ConflictObjectResult(errors),
-                _ => new BadRequestObjectResult(errors)
+                ErrorCodes.ActionFailed => new BadRequestObjectResult(errorList),
+                ErrorCodes.ValidationError => new BadRequestObjectResult(errorList),
+                ErrorCodes.Unauthorized => new UnauthorizedObjectResult(errorList),
+                ErrorCodes.Forbidden => new ObjectResult(errorList) { StatusCode = StatusCodes.Status403Forbidden },
+                ErrorCodes.NotFound => new NotFoundObjectResult(errorList),
+                ErrorCodes.Conflict => new ConflictObjectResult(errorList),
+                _ => new BadRequestObjectResult(errorList)
             };
         }
     }

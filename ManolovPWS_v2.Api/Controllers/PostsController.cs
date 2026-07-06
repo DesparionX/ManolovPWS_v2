@@ -5,6 +5,7 @@ using ManolovPWS_v2.Modules.Content.Post.Features.AddPost;
 using ManolovPWS_v2.Modules.Content.Post.Features.DeletePost;
 using ManolovPWS_v2.Modules.Content.Post.Features.EditPost;
 using ManolovPWS_v2.Modules.Content.Post.Features.GetPosts;
+using ManolovPWS_v2.Modules.Content.Post.Shared.ReadModels;
 using ManolovPWS_v2.Shared.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace ManolovPWS_v2.Api.Controllers
     {
         private readonly IDispatcher _dispatcher = dispatcher;
 
+        [ProducesResponseType<IReadOnlyList<PostReadModel>>(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
         {
@@ -25,6 +27,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType<PostReadModel>(StatusCodes.Status200OK)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id, CancellationToken cancellationToken = default)
         {
@@ -33,6 +36,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] NewPostRequest request, CancellationToken cancellationToken = default)
@@ -48,6 +52,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken = default)
@@ -57,6 +62,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpPut("{id}/context")]
         public async Task<IActionResult> UpdateContext(string id, [FromBody] UpdatePostContextRequest request, CancellationToken cancellationToken = default)
@@ -70,6 +76,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpPut("{id}/title")]
         public async Task<IActionResult> UpdateTitle(string id, [FromBody] UpdatePostTitleRequest request, CancellationToken cancellationToken = default)
@@ -83,6 +90,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpPut("{id}/thumb")]
         public async Task<IActionResult> UpdateThumb(string id, [FromBody] UpdatePostThumbRequest request, CancellationToken cancellationToken = default)
@@ -96,6 +104,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpPut("{id}/gallery")]
         public async Task<IActionResult> UpdateGallery(string id, [FromBody] UpdatePostGalleryRequest request, CancellationToken cancellationToken = default)
@@ -109,6 +118,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = Roles.Owner)]
         [HttpPut("{id}/pin")]
         public async Task<IActionResult> PinPost(string id, CancellationToken cancellationToken = default)

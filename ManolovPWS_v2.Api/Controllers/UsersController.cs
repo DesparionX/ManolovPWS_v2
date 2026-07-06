@@ -2,6 +2,7 @@
 using ManolovPWS_v2.Api.Services;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Modules.Identity.User.Features.GetUser;
+using ManolovPWS_v2.Modules.Identity.User.Shared.ReadModels;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
 using ManolovPWS_v2.Shared.Authorization;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +18,7 @@ namespace ManolovPWS_v2.Api.Controllers
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
 
         [Authorize(Roles = Roles.Owner)]
+        [ProducesResponseType<IReadOnlyList<CompactUserReadModel>>(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers(CancellationToken cancellationToken = default)
         {
@@ -27,6 +29,8 @@ namespace ManolovPWS_v2.Api.Controllers
         }
 
         [AllowAnonymous]
+        [ProducesResponseType<PublicUserReadModel>(StatusCodes.Status200OK)]
+        [ProducesResponseType<PrivateUserReadModel>(StatusCodes.Status200OK)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(string id, CancellationToken cancellationToken = default)
         {

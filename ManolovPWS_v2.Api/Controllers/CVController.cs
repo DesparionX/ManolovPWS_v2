@@ -1,6 +1,7 @@
 ﻿using ManolovPWS_v2.Api.Maps;
 using ManolovPWS_v2.Api.Services;
 using ManolovPWS_v2.Modules.Content.CV.Features;
+using ManolovPWS_v2.Modules.Content.CV.Shared.ReadModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ManolovPWS_v2.Api.Controllers
@@ -11,6 +12,7 @@ namespace ManolovPWS_v2.Api.Controllers
     {
         private readonly IDispatcher _dispatcher = dispatcher;
 
+        [ProducesResponseType<PublicCVReadModel>(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<IActionResult> LoadCv()
         {

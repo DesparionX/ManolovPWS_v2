@@ -16,6 +16,7 @@ namespace ManolovPWS_v2.Api.Controllers
     {
         private readonly IDispatcher _dispatcher = dispatcher;
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -36,6 +37,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType<SignInApiResponse>(StatusCodes.Status200OK)]
         [HttpPost("sign-in")]
         public async Task<IActionResult> SignInUser([FromBody] SignInRequest request)
         {
@@ -61,15 +63,16 @@ namespace ManolovPWS_v2.Api.Controllers
                 }
              );
 
-            var response = new
-            {
-                result.Value.AccessToken,
-                AuthUser = result.Value.User
-            };
+            var response = new SignInApiResponse
+            (
+                AccessToken: result.Value.AccessToken,
+                User: result.Value.User
+            );
 
             return Ok(response);
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpPost("sign-out")]
         public async Task<IActionResult> SignOutUser(CancellationToken cancellationToken = default)
@@ -98,6 +101,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return Ok();
         }
 
+        [ProducesResponseType<RefreshTokenResponse>(StatusCodes.Status200OK)]
         [AllowAnonymous]
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken(CancellationToken cancellationToken = default)
@@ -127,10 +131,10 @@ namespace ManolovPWS_v2.Api.Controllers
                 }
              );
 
-            var response = new
-            {
-                result.Value.AccessToken
-            };
+            var response = new RefreshTokenResponse
+            (
+                AccessToken: result.Value.AccessToken
+            );
 
             return Ok(response);
         }

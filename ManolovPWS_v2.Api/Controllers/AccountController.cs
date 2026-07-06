@@ -4,6 +4,7 @@ using ManolovPWS_v2.Api.Services;
 using ManolovPWS_v2.Domain.Models.User.Properties;
 using ManolovPWS_v2.Modules.Identity.User.Features.GetUser;
 using ManolovPWS_v2.Modules.Identity.User.Features.UpdateUser;
+using ManolovPWS_v2.Modules.Identity.User.Shared.ReadModels;
 using ManolovPWS_v2.Shared.Abstractions.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ namespace ManolovPWS_v2.Api.Controllers
         private readonly ICurrentUser<UserId> _currentUser = currentUser;
         private readonly IDispatcher _dispatcher = dispatcher;
 
+        [ProducesResponseType<PrivateUserReadModel>(StatusCodes.Status200OK)]
         [HttpGet("me")]
         public async Task<IActionResult> LoadProfile()
         {
@@ -28,6 +30,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("name")]
         public async Task<IActionResult> UpdateName([FromBody] UpdateNameRequest request, CancellationToken cancellationToken = default)
         {
@@ -41,6 +44,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("email")]
         public async Task<IActionResult> UpdateEmail([FromBody] UpdateEmailRequest request, CancellationToken cancellationToken = default)
         {
@@ -49,6 +53,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("address")]
         public async Task<IActionResult> UpdateAddress([FromBody] UpdateAddressRequest request, CancellationToken cancellationToken = default)
         {
@@ -65,6 +70,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("birth-date")]
         public async Task<IActionResult> UpdateBirthDate([FromBody] UpdateBirthDateRequest request, CancellationToken cancellationToken = default)
         {
@@ -73,6 +79,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("gender")]
         public async Task<IActionResult> UpdateGender([FromBody] UpdateGenderRequest request, CancellationToken cancellationToken = default)
         {
@@ -81,6 +88,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("phone-number")]
         public async Task<IActionResult> UpdatePhoneNumber([FromBody] UpdatePhoneNumberRequest request, CancellationToken cancellationToken = default)
         {
@@ -89,6 +97,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("profession")]
         public async Task<IActionResult> UpdateProfession([FromBody] UpdateProfessionRequest request, CancellationToken cancellationToken = default)
         {
@@ -97,6 +106,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("summary")]
         public async Task<IActionResult> UpdateSummary([FromBody] UpdateSummaryRequest request, CancellationToken cancellationToken = default)
         {
@@ -105,6 +115,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("profile-picture")]
         public async Task<IActionResult> UpdateProfilePicture([FromBody] UpdateProfilePictureRequest request, CancellationToken cancellationToken = default)
         {
@@ -113,6 +124,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("experience")]
         public async Task<IActionResult> UpdateExperience([FromBody] UpdateExperienceRequest request, CancellationToken cancellationToken = default)
         {
@@ -120,7 +132,8 @@ namespace ManolovPWS_v2.Api.Controllers
             var result = await _dispatcher.SendAsync(cmd, cancellationToken);
             return result.ToActionResult();
         }
-
+        
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("education")]
         public async Task<IActionResult> UpdateEducation([FromBody] UpdateEducationRequest request, CancellationToken cancellationToken = default)
         {
@@ -129,6 +142,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("skills")]
         public async Task<IActionResult> UpdateSkills([FromBody] UpdateSkillsRequest request, CancellationToken cancellationToken = default)
         {
@@ -137,6 +151,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("languages")]
         public async Task<IActionResult> UpdateLanguages([FromBody] UpdateLanguagesRequest request, CancellationToken cancellationToken = default)
         {
@@ -145,6 +160,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("certificates")]
         public async Task<IActionResult> UpdateCertificates([FromBody] UpdateCertificatesRequest request, CancellationToken cancellationToken = default)
         {
@@ -153,6 +169,7 @@ namespace ManolovPWS_v2.Api.Controllers
             return result.ToActionResult();
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("contacts")]
         public async Task<IActionResult> UpdateContacts([FromBody] UpdateContactsRequest request, CancellationToken cancellationToken = default)
         {
