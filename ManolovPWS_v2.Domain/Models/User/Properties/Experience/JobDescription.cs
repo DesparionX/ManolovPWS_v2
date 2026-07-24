@@ -11,9 +11,9 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Experience
         public string Value { get; }
 
         [JsonConstructor]
-        private JobDescription(string description)
+        private JobDescription(string value)
         {
-            Value = description;
+            Value = value;
         }
 
         public static JobDescription Create(string description)

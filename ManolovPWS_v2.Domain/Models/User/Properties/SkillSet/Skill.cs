@@ -1,7 +1,4 @@
 ﻿using ManolovPWS_v2.Domain.Models.User.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
@@ -53,7 +50,11 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         // Equality
         public bool Equals(Skill? other) =>
             other is not null &&
-            StringComparer.OrdinalIgnoreCase.Equals(Name.Value, other.Name.Value);
+            StringComparer.OrdinalIgnoreCase.Equals(Name.Value, other.Name.Value) &&
+            StringComparer.OrdinalIgnoreCase.Equals(Type.ToString(), other.Type.ToString()) &&
+            StringComparer.OrdinalIgnoreCase.Equals(Category.Name, other.Category.Name) &&
+            Level.Value == other.Level.Value;
+
 
         public override bool Equals(object? obj) => Equals(obj as Skill);
         public override int GetHashCode() => Name.GetHashCode();

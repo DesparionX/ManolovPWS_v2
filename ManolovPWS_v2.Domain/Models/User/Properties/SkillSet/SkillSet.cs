@@ -67,8 +67,8 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
             other is not null
             && _skills.Count == other._skills.Count
             && _languages.Count == other._languages.Count
-            && _skills.OrderBy(s => s.Name).SequenceEqual(other._skills.OrderBy(s => s.Name))
-            && _languages.OrderBy(l => l.Language).SequenceEqual(other._languages.OrderBy(l => l.Language));
+            && _skills.OrderBy(s => s.Name.Value).SequenceEqual(other._skills.OrderBy(s => s.Name.Value))
+            && _languages.OrderBy(l => l.Language.Value).SequenceEqual(other._languages.OrderBy(l => l.Language.Value));
 
         public override bool Equals(object? obj) => Equals(obj as SkillSet);
 

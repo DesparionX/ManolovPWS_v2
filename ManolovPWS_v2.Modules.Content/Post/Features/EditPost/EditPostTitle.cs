@@ -26,7 +26,7 @@ namespace ManolovPWS_v2.Modules.Content.Post.Features.EditPost
                 return Result.Failure([ContentAppErrors.PostNotFound]);
 
             var post = result.Value;
-            if (!post.AuthorId.Equals(_currentUser.Id))
+            if (!post.AuthorId.Equals(_currentUser.Id.Value))
                 return Result.Failure([ContentAppErrors.Unauthorized]);
         
             var updated = post.UpdateTitle(newTitle);

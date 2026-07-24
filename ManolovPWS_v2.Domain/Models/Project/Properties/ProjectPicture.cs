@@ -1,4 +1,5 @@
 ﻿using ManolovPWS_v2.Domain.Models.Project.Exceptions;
+using System.Text.Json.Serialization;
 
 namespace ManolovPWS_v2.Domain.Models.Project.Properties
 {
@@ -6,6 +7,7 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
     {
         public Uri Value { get; }
 
+        [JsonConstructor]
         private ProjectPicture(Uri value)
         {
             Value = value;

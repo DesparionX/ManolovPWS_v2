@@ -46,7 +46,9 @@ namespace ManolovPWS_v2.Domain.Models.Project.Properties
         public bool Equals(ProjectGallery? other) =>
             other is not null
             && _pictures.Count == other._pictures.Count
-            && _pictures.OrderBy(s => s.Value).SequenceEqual(other._pictures.OrderBy(s => s.Value));
+            && _pictures
+                .OrderBy(s => s.Value.ToString())
+                .SequenceEqual(other._pictures.OrderBy(s => s.Value.ToString()));
 
         public override bool Equals(object? obj) => Equals(obj as ProjectGallery);
 

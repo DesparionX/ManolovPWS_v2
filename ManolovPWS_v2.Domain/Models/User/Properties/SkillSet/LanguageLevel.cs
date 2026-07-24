@@ -11,9 +11,9 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.SkillSet
         public CerfLevel Speaking { get; }
 
         [JsonConstructor]
-        private LanguageLevel(CerfLevel reding, CerfLevel writing, CerfLevel speaking)
+        private LanguageLevel(CerfLevel reading, CerfLevel writing, CerfLevel speaking)
         {
-            Reading = reding;
+            Reading = reading;
             Writing = writing;
             Speaking = speaking;
         }

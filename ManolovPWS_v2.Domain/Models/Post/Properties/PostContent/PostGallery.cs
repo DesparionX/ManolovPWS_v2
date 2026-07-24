@@ -38,7 +38,9 @@ namespace ManolovPWS_v2.Domain.Models.Post.Properties.PostContent
         public bool Equals(PostGallery? other) =>
             other is not null
             && _pictures.Count == other._pictures.Count
-            && _pictures.OrderBy(s => s.Value).SequenceEqual(other._pictures.OrderBy(s => s.Value));
+            && _pictures
+                .OrderBy(s => s.Value.ToString())
+                .SequenceEqual(other._pictures.OrderBy(s => s.Value.ToString()));
 
         public override bool Equals(object? obj) => Equals(obj as PostGallery);
 

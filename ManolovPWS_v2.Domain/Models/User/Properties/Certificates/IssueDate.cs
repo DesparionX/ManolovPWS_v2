@@ -8,9 +8,9 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         public DateOnly Value { get; }
 
         [JsonConstructor]
-        private IssueDate(DateOnly date)
+        private IssueDate(DateOnly value)
         {
-            Value = date;
+            Value = value;
         }
 
         public static IssueDate Create(DateOnly date)
