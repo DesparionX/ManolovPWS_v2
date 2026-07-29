@@ -11,6 +11,7 @@ namespace ManolovPWS_v2.Infrastructure.Persistance
         public DbSet<DbProject> Projects { get; set; } = default!;
         public DbSet<DbPost> Posts { get; set; } = default!;
         public DbSet<DbRefreshToken> RefreshTokens { get; set; } = default!;
+        public DbSet<DbMessage> Messages { get; set; } = default!;
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

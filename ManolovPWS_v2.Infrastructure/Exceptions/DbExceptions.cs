@@ -31,5 +31,9 @@
 
         public static InfrastructureException PostNotFoundByAuthorId(Guid authorId) =>
             new($"No posts found for author with ID {authorId}", "PostNotFoundByAuthorId");
+
+        // Message-related exceptions
+        public static InfrastructureException MessageNotFound(Guid messageId) =>
+            new($"Message with ID {messageId} not found", "MessageNotFound");
     }
 }
