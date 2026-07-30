@@ -1,4 +1,5 @@
-﻿using ManolovPWS_v2.Modules.Content.DependencyInjection;
+﻿using ManolovPWS_v2.Modules.Contact.DependencyInjection;
+using ManolovPWS_v2.Modules.Content.DependencyInjection;
 using ManolovPWS_v2.Modules.Identity.DependencyInjection;
 using ManolovPWS_v2.Modules.Projects.DependencyInjection;
 
@@ -11,6 +12,7 @@ namespace ManolovPWS_v2.Api.DependencyInjection
             services.AddIdentityModule();
             services.AddProjectModule();
             services.AddContentModule();
+            services.AddContactModule();
             
             return services;
         }

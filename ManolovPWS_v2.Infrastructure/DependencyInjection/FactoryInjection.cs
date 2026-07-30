@@ -11,6 +11,7 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
             services.AddScoped<IUserFactory, UserFactory>();
             services.AddScoped<IPostFactory, PostFactory>();
             services.AddScoped<IProjectFactory, ProjectFactory>();
+            services.AddScoped<IMessageFactory, MessageFactory>();
 
             return services;
         }

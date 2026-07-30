@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DependencyInjection\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ManolovPWS_v2.Domain\ManolovPWS_v2.Domain.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.Infrastructure\ManolovPWS_v2.Infrastructure.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.Modules.Identity\ManolovPWS_v2.Modules.Identity.csproj" />

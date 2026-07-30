@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ManolovPWS_v2.Modules.Content.DependencyInjection
 {
-    public static class ContentModuleDI
+    public static class DependencyInjection
     {
         public static IServiceCollection AddContentModule(this IServiceCollection services)
         {
