@@ -7,14 +7,14 @@ using ManolovPWS_v2.Shared.Abstractions.Results;
 
 namespace ManolovPWS_v2.Modules.Contact.Message.Features.GetAllMessages
 {
-    public sealed record GetAllMessages : IQuery<IReadOnlyList<MessageReadModel>>;
+    public sealed record GetAllMessagesQuery : IQuery<IReadOnlyList<MessageReadModel>>;
 
     public sealed class GetAllMessagesHandler(IMessageRepository messageRepository)
-        : IQueryHandler<GetAllMessages, IReadOnlyList<MessageReadModel>>
+        : IQueryHandler<GetAllMessagesQuery, IReadOnlyList<MessageReadModel>>
     {
         private readonly IMessageRepository _messageRepository = messageRepository;
 
-        public async Task<ITaskResult<IReadOnlyList<MessageReadModel>>> HandleAsync(GetAllMessages query, CancellationToken cancellationToken = default)
+        public async Task<ITaskResult<IReadOnlyList<MessageReadModel>>> HandleAsync(GetAllMessagesQuery query, CancellationToken cancellationToken = default)
         {
             var messagesResult = await _messageRepository.GetAllAsync(cancellationToken);
             if (!messagesResult.IsSuccess)

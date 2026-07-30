@@ -2,6 +2,7 @@ using DotNetEnv;
 using ManolovPWS_v2.Api.DependencyInjection;
 using ManolovPWS_v2.Api.Extensions;
 using ManolovPWS_v2.Infrastructure.DependencyInjection;
+using Microsoft.AspNetCore.HttpOverrides;
 using Scalar.AspNetCore;
 
 // Load environment variables from .env file
@@ -42,6 +43,13 @@ var app = builder.Build();
 
 // Using all exception handlers.
 app.UseExceptionHandler();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,
+    KnownIPNetworks = {},
+    KnownProxies = {},
+});
 
 // Seed initial data
 await app.SeedDataAsync();

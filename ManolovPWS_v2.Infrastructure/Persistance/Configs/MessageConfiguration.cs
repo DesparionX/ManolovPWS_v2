@@ -50,7 +50,7 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
             // Message date properties
             message.Property(m => m.SentDate)
                 .IsRequired()
-                .HasColumnType("date");
+                .HasColumnType("timestamptz");
 
             // Message status properties
             message.Property(m => m.IsUnread)
