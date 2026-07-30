@@ -6,5 +6,6 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Results
     {
         // Authentication
         public static InfraError RefreshTokenInvalid => new(Message: "Refresh token is invalid.", Code: ErrorCodes.Unauthorized);
+
     }
 }

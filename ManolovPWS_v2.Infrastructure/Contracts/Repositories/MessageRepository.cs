@@ -3,6 +3,7 @@ using ManolovPWS_v2.Domain.Models.Message;
 using ManolovPWS_v2.Domain.Models.Message.Properties;
 using ManolovPWS_v2.Domain.Models.Message.Properties.SenderInfo;
 using ManolovPWS_v2.Infrastructure.Contracts.Maps;
+using ManolovPWS_v2.Infrastructure.Contracts.Results;
 using ManolovPWS_v2.Infrastructure.Exceptions;
 using ManolovPWS_v2.Infrastructure.Persistance;
 using ManolovPWS_v2.Shared.Abstractions.Results;
@@ -35,9 +36,11 @@ namespace ManolovPWS_v2.Infrastructure.Contracts.Repositories
             dbMessage.ApplyChanges(message);
             _context.Messages.Update(dbMessage);
 
-            await _context.SaveChangesAsync(cancellationToken);
+            var result = await _context.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return result > 0
+                ? Result.Success()
+                : Result.Failure([new InfraError(Message: "Failed to update message.", Code: "UpdateFailed")]);
         }
         public async Task<ITaskResult> RemoveAsync(MessageId id, CancellationToken cancellationToken = default)
         {
