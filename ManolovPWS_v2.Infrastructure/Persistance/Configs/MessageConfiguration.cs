@@ -40,12 +40,26 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Configs
                 .IsRequired()
                 .HasMaxLength(256);
 
-            message.Property(m => m.SenderMetadata)
-                .IsRequired()
-                .HasConversion(
-                    m => JsonSerializer.Serialize(m, JsonOptions.Default),
-                    m => JsonSerializer.Deserialize<SenderMetadata>(m, JsonOptions.Default)!)
-                .HasColumnType("jsonb");
+            // Commented out for test purposes
+            //message.Property(m => m.SenderMetadata)
+            //    .IsRequired()
+            //    .HasConversion(
+            //        m => JsonSerializer.Serialize(m, JsonOptions.Default),
+            //        m => JsonSerializer.Deserialize<SenderMetadata>(m, JsonOptions.Default)!)
+            //    .HasColumnType("jsonb");
+
+            message.OwnsOne(m => m.SenderMetadata, sender =>
+            {
+                sender.Property(s => s.IpAddress)
+                    .HasColumnName("SenderIpAddress")
+                    .IsRequired()
+                    .HasMaxLength(45);
+
+                sender.Property(s => s.UserAgent)
+                    .HasColumnName("SenderUserAgent")
+                    .IsRequired()
+                    .HasMaxLength(512);
+            });
 
             // Message date properties
             message.Property(m => m.SentDate)

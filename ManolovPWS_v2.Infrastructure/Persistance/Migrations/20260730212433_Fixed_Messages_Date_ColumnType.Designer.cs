@@ -3,6 +3,7 @@ using System;
 using ManolovPWS_v2.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ManolovPWS_v2.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260730212433_Fixed_Messages_Date_ColumnType")]
+    partial class Fixed_Messages_Date_ColumnType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,6 +44,10 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Migrations
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<string>("SenderMetadata")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
 
                     b.Property<string>("SenderName")
                         .IsRequired()
@@ -432,37 +439,6 @@ namespace ManolovPWS_v2.Infrastructure.Persistance.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ManolovPWS_v2.Infrastructure.Persistance.Entities.DbMessage", b =>
-                {
-                    b.OwnsOne("ManolovPWS_v2.Domain.Models.Message.Properties.SenderInfo.SenderMetadata", "SenderMetadata", b1 =>
-                        {
-                            b1.Property<Guid>("DbMessageId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("IpAddress")
-                                .IsRequired()
-                                .HasMaxLength(45)
-                                .HasColumnType("character varying(45)")
-                                .HasColumnName("SenderIpAddress");
-
-                            b1.Property<string>("UserAgent")
-                                .IsRequired()
-                                .HasMaxLength(512)
-                                .HasColumnType("character varying(512)")
-                                .HasColumnName("SenderUserAgent");
-
-                            b1.HasKey("DbMessageId");
-
-                            b1.ToTable("Messages");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DbMessageId");
-                        });
-
-                    b.Navigation("SenderMetadata")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ManolovPWS_v2.Infrastructure.Persistance.Entities.DbPost", b =>

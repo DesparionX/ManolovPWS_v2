@@ -49,6 +49,7 @@ namespace ManolovPWS_v2.Api.Controllers
         }
 
         [HttpPost("messages")]
+        [AllowAnonymous]
         [ProducesResponseType<MessageReadModel>(StatusCodes.Status201Created)]
         [ProducesResponseType<MessageReadModel>(StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateMessage([FromBody] NewMessageRequest request, CancellationToken cancellationToken = default)
