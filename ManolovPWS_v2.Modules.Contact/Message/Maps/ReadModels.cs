@@ -13,7 +13,7 @@ namespace ManolovPWS_v2.Modules.Contact.Message.Maps
                 SenderEmail: message.Sender.Email.Value,
                 SenderMetadata: message.Sender.Metadata.ToSenderMetadataDto(),
                 Title: message.Data.Title.Value,
-                Condext: message.Data.Context.Value,
+                Context: message.Data.Context.Value,
                 SentDate: message.SentDate.Value,
                 IsUnread: message.IsUnread
             );

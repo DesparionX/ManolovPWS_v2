@@ -8,7 +8,7 @@ namespace ManolovPWS_v2.Modules.Contact.Message.Shared.ReadModels
         string SenderEmail,
         SenderMetadataDto SenderMetadata,
         string Title,
-        string Condext,
+        string Context,
         DateTime SentDate,
         bool IsUnread
     );
