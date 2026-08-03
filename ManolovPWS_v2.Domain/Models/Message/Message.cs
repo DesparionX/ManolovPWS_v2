@@ -34,7 +34,7 @@ namespace ManolovPWS_v2.Domain.Models.Message
             sender: this.Sender,
             data: this.Data,
             sentDate: this.SentDate,
-            isUnread: true
+            isUnread: false
             );
 
         public static Message Create(
