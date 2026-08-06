@@ -40,6 +40,10 @@ builder.Services.AddControllers();
 builder.Services.AddConfiguredOpenApi();
 builder.Services.AddApiCors(builder.Configuration);
 
+// Configuring urls
+builder.ConfigUrls();
+
+
 var app = builder.Build();
 
 // Using all exception handlers.

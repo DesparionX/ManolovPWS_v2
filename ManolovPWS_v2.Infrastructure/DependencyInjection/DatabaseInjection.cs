@@ -1,4 +1,5 @@
-﻿using ManolovPWS_v2.Infrastructure.Persistance;
+﻿using ManolovPWS_v2.Infrastructure.HealthChecks;
+using ManolovPWS_v2.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,9 @@ namespace ManolovPWS_v2.Infrastructure.DependencyInjection
 
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
+
+            services.AddHealthChecks()
+                .AddCheck<DatabaseHealthCheck>("Database");
 
             return services;
         }

@@ -21,6 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions" Version="10.0.10" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.10" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="10.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.22.0" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ManolovPWS_v2.Domain\ManolovPWS_v2.Domain.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.Modules.Identity\ManolovPWS_v2.Modules.Identity.csproj" />
+    <ProjectReference Include="..\ManolovPWS_v2.ServiceDefaults\ManolovPWS_v2.ServiceDefaults.csproj" />
     <ProjectReference Include="..\ManolovPWS_v2.Shared\ManolovPWS_v2.Shared.csproj" />
   </ItemGroup>
 
