@@ -16,8 +16,9 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 // Get the connection string from configuration
-var connectionString = builder.Configuration.GetConnectionString("manolovdb_local")
-        ?? throw new InvalidOperationException("Connection string 'manolovdb_local' not found.");
+var connectionString = builder.Configuration.GetConnectionString("manolovdb")
+    ?? builder.Configuration.GetConnectionString("manolovdb_local")
+    ?? throw new InvalidOperationException("Connection strings 'manolovdb' or 'manolovdb_local' not found!");
 
 // Add service defaults from the hosting environment
 builder.AddServiceDefaults();
