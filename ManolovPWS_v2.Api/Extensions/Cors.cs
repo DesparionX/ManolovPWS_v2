@@ -18,7 +18,7 @@ namespace ManolovPWS_v2.Api.Extensions
             {
                 options.AddPolicy("Client", policy =>
                 {
-                    policy.WithOrigins(corsSettings.ClientUrl, corsSettings.LocalUrl)
+                    policy.WithOrigins(corsSettings.ClientUrl)
                           .AllowAnyHeader()
                           .AllowAnyMethod()
                           .AllowCredentials();
