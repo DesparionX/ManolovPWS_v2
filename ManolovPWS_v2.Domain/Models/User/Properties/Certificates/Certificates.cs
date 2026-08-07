@@ -35,8 +35,8 @@ namespace ManolovPWS_v2.Domain.Models.User.Properties.Certificates
         // Equality
         public bool Equals(Certificates? other) =>
             other is not null
-            && _certificates.OrderBy(c => c.Title)
-            .SequenceEqual(other._certificates.OrderBy(c => c.Title));
+            && _certificates.OrderBy(c => c.Title.Value)
+            .SequenceEqual(other._certificates.OrderBy(c => c.Title.Value));
 
         public override bool Equals(object? obj) => Equals(obj as Certificates);
 

@@ -41,8 +41,8 @@ builder.Services.AddConfiguredOpenApi();
 builder.Services.AddApiCors(builder.Configuration);
 
 // Configuring urls
-builder.ConfigUrls();
-
+if (builder.Environment.IsProduction())
+    builder.ConfigUrls();
 
 var app = builder.Build();
 
