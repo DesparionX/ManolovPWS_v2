@@ -27,6 +27,7 @@ namespace ManolovPWS_v2.Modules.Projects.Project.Maps
 
         public static CVProjectReadModel ToCVReadModel(this Domain.Models.Project.Project project)
             => new(
+                Id: project.Id.Value.ToString(),
                 Name: project.Name.Value,
                 Description: project.Description.Value,
                 State: project.State.ToString(),
